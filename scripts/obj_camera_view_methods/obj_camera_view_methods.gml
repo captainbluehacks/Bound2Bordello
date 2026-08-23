@@ -15,7 +15,7 @@ function __obj_camera_view_methods(){
 		var _tar_y = current_target.y - VIEW_H / 2 ;
 	
 		_tar_x = clamp(_tar_x, 0, room_width - VIEW_W);
-		_tar_y = clamp(_tar_y, 0, room_width - VIEW_H);
+		_tar_y = clamp(_tar_y, 0, room_height - VIEW_H);
 
 		camera_set_view_pos(VIEW, _tar_x, _tar_y);
 	};
