@@ -25,7 +25,7 @@ function __obj_camera_window_methods(){
 		if(!target_is_valid()) exit;
 
 		var _tar_x = current_target.x - VIEW_W / 2;
-		var _tar_y = current_target.y - VIEW_W / 2;
+		var _tar_y = current_target.y - VIEW_H / 2;
 
 		// Smooth Scroll
 		_tar_x = lerp(VIEW_X, _tar_x, scroll_speed);
@@ -40,7 +40,7 @@ function __obj_camera_window_methods(){
 	
 	camera_set_view_pos_clamped = function(_tar_x, _tar_y){
 		_tar_x = clamp(_tar_x, 0, room_width - VIEW_W);
-		_tar_y = clamp(_tar_y, 0, room_width - VIEW_H);
+		_tar_y = clamp(_tar_y, 0, room_height - VIEW_H);
 
 		if(VIEW_W > room_width)
 			_tar_x = room_width / 2 - VIEW_W / 2 ;
