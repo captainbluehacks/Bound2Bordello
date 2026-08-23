@@ -32,7 +32,7 @@ function __obj_camera_window_methods(){
 		_tar_y = lerp(VIEW_Y, _tar_y, scroll_speed);
 
 		_tar_x = clamp(_tar_x, 0, room_width - VIEW_W);
-		_tar_y = clamp(_tar_y, 0, room_width - VIEW_H);
+		_tar_y = clamp(_tar_y, 0, room_height - VIEW_H);
 
 		// Move camera position.
 		camera_set_view_pos(VIEW, _tar_x, _tar_y);
