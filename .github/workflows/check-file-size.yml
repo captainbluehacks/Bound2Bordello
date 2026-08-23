@@ -1,0 +1,53 @@
+name: Check File Size & LFS Guard
+
+on:
+  pull_request:
+    paths:
+      - '**.png'
+      - '**.wav'
+      - '**.ogg'
+      - '**.mp3'
+      - '**.mks'
+
+jobs:
+  check-assets:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          # We need fetch-depth: 0 to see the history and compare against master
+          fetch-depth: 0
+
+      - name: Audit Large Assets for LFS Tracking
+        run: |
+          # Define your maximum allowed size in bytes (e.g., 5MB = 5242880 bytes)
+          MAX_SIZE=5242880
+          
+          echo "Auditing changed assets... (Limit: $((MAX_SIZE/1024/1024))MB)"
+
+          # We use a while loop to safely handle filenames with spaces (common in GameMaker!)
+          git diff --name-only origin/master...HEAD | while read -r file; do
+            
+            # Only check files that actually exist in this commit
+            if [ -f "$file" ]; then
+              filesize=$(stat -c%s "$file")
+
+              # 1. Check if the file exceeds our size limit
+              if [ $filesize -gt $MAX_SIZE ]; then
+                echo "⚠️  Found large file: $file ($((filesize/1024/1024))MB)"
+                
+                # 2. Verify if this specific file is being tracked by Git LFS
+                # We check the output of 'git lfs ls-files' for the filename
+                if ! git lfs ls-files --name-only | grep -qxF "$file"; then
+                  echo "❌ ERROR: File '$file' is too large and is NOT being tracked by Git LFS!"
+                  echo "Please add this file type to your .gitattributes before merging."
+                  exit 1
+                else
+                  echo "✅ Large file '$file' is correctly handled by Git LFS. Great job!"
+                fi
+              fi
+            fi
+          done
+          
+          echo "✨ Asset audit complete. No issues found."
