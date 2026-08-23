@@ -3,25 +3,25 @@
     "layout":[
       {
         "grid_x":4,
-        "grid_y":5,
+        "grid_y":1,
         "size":1,
         "type":"cluttered"
       },
       {
         "grid_x":7,
-        "grid_y":5,
+        "grid_y":1,
         "size":0,
         "type":"cluttered"
       },
       {
         "grid_x":4,
-        "grid_y":4,
+        "grid_y":0,
         "size":1,
         "type":"cluttered"
       },
       {
         "grid_x":7,
-        "grid_y":4,
+        "grid_y":0,
         "size":0,
         "type":"cluttered"
       }
@@ -31,25 +31,25 @@
     "layout":[
            {
         "grid_x":4,
-        "grid_y":5,
+        "grid_y":1,
         "size":0,
         "type":"cluttered"
       },
       {
         "grid_x":7,
-        "grid_y":5,
+        "grid_y":1,
         "size":0,
         "type":"cluttered"
       },
       {
         "grid_x":4,
-        "grid_y":4,
+        "grid_y":0,
         "size":1,
         "type":"cluttered"
       },
       {
         "grid_x":6,
-        "grid_y":4,
+        "grid_y":0,
         "size":1,
         "type":"cluttered"
       }
@@ -59,31 +59,31 @@
     "layout":[
            {
         "grid_x":5,
-        "grid_y":5,
+        "grid_y":1,
         "size":0,
         "type":"cluttered"
       },
       {
         "grid_x":7,
-        "grid_y":5,
+        "grid_y":1,
         "size":0,
         "type":"cluttered"
       },
       {
         "grid_x":4,
-        "grid_y":4,
+        "grid_y":0,
         "size":1,
         "type":"cluttered"
       },
 	  {
         "grid_x":6,
-        "grid_y":4,
+        "grid_y":0,
         "size":0,
         "type":"cluttered"
       },
       {
         "grid_x":7,
-        "grid_y":4,
+        "grid_y":0,
         "size":0,
         "type":"cluttered"
       }
