@@ -9,8 +9,6 @@ props : layer_create(layer_type.props),
 shell : layer_create(layer_type.shell)
 }
 
-
-
 var _blueprints = define_floors();
 
 add_room_instances(_blueprints);
