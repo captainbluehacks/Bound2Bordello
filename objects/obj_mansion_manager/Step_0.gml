@@ -16,6 +16,6 @@ else if (_sel.object_index == obj_chamber) {
 	layer_sprite_yscale(room_highlight, _sel.sprite_height / sprite_get_height(spr_selected_chamber));
 		
 	// Smooth pulse using the animation frame (0..5)
-	var _t = layer_sprite_get_image_index(room_highlight) / 5.0;
-	layer_sprite_alpha(room_highlight, 0.25 + 0.2 * sin(_t * TAU));	
+	var _t = layer_sprite_get_index(room_highlight) / 5.0;
+	layer_sprite_alpha(room_highlight, 0.25 + 0.2 * sin(_t * 6.28));	
 };
