@@ -1,7 +1,8 @@
 function __obj_camera_view_methods(){
 
 	set_target = function(_target) {
-		current_target = _target;	
+		current_target = _target;
+		scroll_offset = {x: 0, y: 0};
 	}
 
 	target_is_valid = function(){
@@ -10,6 +11,8 @@ function __obj_camera_view_methods(){
 
 	snap_to_target = function(){
 		if(!target_is_valid()) exit;
+	
+		scroll_offset = {x: 0, y: 0};
 	
 		var _tar_x = current_target.x - VIEW_W / 2 ;
 		var _tar_y = current_target.y - VIEW_H / 2 ;

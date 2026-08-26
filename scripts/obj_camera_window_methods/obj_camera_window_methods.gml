@@ -24,8 +24,8 @@ function __obj_camera_window_methods(){
 	follow_target = function(){
 		if(!target_is_valid()) exit;
 
-		var _tar_x = current_target.x - VIEW_W / 2;
-		var _tar_y = current_target.y - VIEW_H / 2;
+		var _tar_x = current_target.x + scroll_offset.x - VIEW_W / 2;
+		var _tar_y = current_target.y + scroll_offset.y - VIEW_H / 2;
 
 		// Smooth Scroll
 		_tar_x = lerp(VIEW_X, _tar_x, scroll_speed);

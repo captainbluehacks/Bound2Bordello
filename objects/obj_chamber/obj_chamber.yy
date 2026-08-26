@@ -11,7 +11,10 @@
     "name":"Bound to the Bordello",
     "path":"Bound to the Bordello.yyp",
   },
-  "parentObjectId":null,
+  "parentObjectId":{
+    "name":"obj_selectable",
+    "path":"objects/obj_selectable/obj_selectable.yy",
+  },
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,

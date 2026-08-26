@@ -47,19 +47,19 @@ function process_button_action(_actionId) {
 		break;
 		
 		case UI_ACTION.UP:
-			obj_camera.current_target.y -= global.floor_h / 2;
+			obj_camera.scroll_offset.y -= global.floor_h / 2;
 		break;
 		
 		case UI_ACTION.DOWN:
-			obj_camera.current_target.y += global.floor_h / 2;		
+			obj_camera.scroll_offset.y += global.floor_h / 2;		
 		break;
 		
 		case UI_ACTION.LEFT:
-			obj_camera.current_target.x -= global.floor_h / 2;
+			obj_camera.scroll_offset.x -= global.floor_h / 2;
 		break;
 		
 		case UI_ACTION.RIGHT:
-			obj_camera.current_target.x += global.floor_h / 2;
+			obj_camera.scroll_offset.x += global.floor_h / 2;
 		break;
 	}
 	

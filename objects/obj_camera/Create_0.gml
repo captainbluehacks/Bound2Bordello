@@ -9,6 +9,7 @@ init_window();
 // Camera Controls
 current_target = {x: 300, y: 1460} ;
 scroll_speed = 0.15;
+scroll_offset = {x: 0, y: 0};
 
 // Zoom
 zoom = {
