@@ -1,7 +1,7 @@
 var _sel = obj_selection_manager.get_selection();
 
 
-if (_sel = noone && !instance_exists(_sel)) {
+if (_sel == noone && !instance_exists(_sel)) {
 	// Deselected - hide the sprite.
 	layer_sprite_alpha(room_highlight, 0);
 }
