@@ -99,7 +99,7 @@ function __obj_mansion_room_methods(){
 			show_debug_message(string(_data.grid_x)+ ", " + string(_data.grid_y) + " - " + string(_px)+ ", " + string(_py))
 			
 			// Set variables before create, as then we can pick a sprite before creation.
-			var _inst = instance_create_layer(_px, _py, mansion_layer.chamber, obj_chamber, 
+			var _inst = instance_create_layer(_px, _py, global.mansion_layer.chamber, obj_chamber, 
 				{ chamber_type : _data.type, chamber_size : _data.size } );
 			
 			// Now populate our DS Grid
