@@ -24,12 +24,12 @@
 *   **Next Day's Visitor List:** At the end of each cycle, build tomorrow night's visitor list — roll each guest's visit frequency (§7 Visit Frequency), excluding converted guests and applying the seasonal pool shift.
 
 ### Cycles per season
-I'll start with 12 cycles per season (roughly how many weeks there are in each). This may need tuning later through playtesting.
+Each season will have 12 cycles per season (~1 per week). This is subject to tuning through playtest.
 
 ## 3. World Architecture & Perspective
 *   **Visual Style:** Diegetic Paper-Doll. The game is presented as a physical, layered diorama. All UI elements (menus, buttons, resource bars) are rendered as "cutouts" of parchment, cardstock, and ink.
-* Tactile Feedback: Interaction should feel physical. Menus don't "pop up"; they slide in like cards or unfold like maps. Buttons "depress" into the background rather than glowing.
-*   **Management View (The Dollhouse):** Vertical side-cutaway perspective (Basement $\rightarrow$ Ground $\rightarrow$ Upper Floors $\rightarrow$ Attic).
+*   **Tactile Feedback**: Interaction should feel physical. Menus don't "pop up"; they slide in like cards or unfold like maps. Buttons "depress" into the background rather than glowing.
+*   **Management View (The Dollhouse):** Vertical side-cutaway perspective (Basement -> Ground -> Upper Floors -> Attic).
 *   **Interaction View:** Atmospheric scenes for The Hunt, Ally negotiations, and Signature Room events.
 **Verticality Mechanics:**
 *   **Zoning:** Certain rooms are restricted to specific floors (e.g., "Forbidden" in basement, "Luxury" on upper floors).
@@ -84,10 +84,10 @@ A bad draft (e.g., no Fear archetype) must never hard-softlock a strategy: the d
 *   **The Boudoir:** The primary engine. Modular upgrades (e.g., strap-ons, gags) determine which flavor of Mana is produced.
 
 ### Ally Gateway Rooms (Phase 1 Goals):
-*   **Morgue/Graveyard $\rightarrow$ Necromancer.**
-*   **Basic Lab $\rightarrow$ Mad Scientist.**
-*   **Ritual Room/Secret Meeting Place $\rightarrow$ Cult Leader.**
-*   **Cow Shed $\rightarrow$ Aliens.**
+*   **Morgue/Graveyard -> Necromancer.**
+*   **Basic Lab -> Mad Scientist.**
+*   **Ritual Room/Secret Meeting Place -> Cult Leader.**
+*   **Cow Shed -> Aliens.**
 
 ### Room tags
 Rooms will have tags (*luxury*, *private*, *dungeon*, etc). These will be used to determine synergies and other effects. 
@@ -145,8 +145,7 @@ The Nerd (Section 5) is the exception: her presence halts tag accumulation for h
 
 ## 10. Environmental Progression & Reclamation
 *   **The Ruin State:** The mansion begins as a series of fragmented, usable zones surrounded by blockages.
-*   **Reclamation Tiers:** Expansion is gated by minion capabilities (Clutter $\rightarrow$ Rubble $\rightarrow$ Hazards $\rightarrow$ Seals).
+*   **Reclamation Tiers:** Expansion is gated by minion capabilities (Clutter -> Rubble -> Hazards -> Seals).
 *   **Spatial Pacing:** New floors are unlocked via narrative phases, but the *usable area* within those floors is expanded through active reclamation.
 *   **Reclaiming a Room:** The player assigns a minion to the blocked zone. Each night they entice their guests into clearing the room for them (a succubus doesn't do her own manual labor). Clearing takes multiple nights, scaled by the Reclamation Tier; tags and upgrades can reduce this duration.
 *   **The Reclamation Trade-off:** A room being reclaimed produces nothing for its guests or minion that night — the same applies to rooms under upgrade. This creates a direct tension between immediate operational profit and long-term infrastructure growth.
-
