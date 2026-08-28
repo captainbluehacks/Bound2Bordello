@@ -24,10 +24,12 @@ datafiles/
         mad_scientist.json
         cult_leader.json
         aliens.json
+    progression_tracks.json     ← named degradation/recovery tracks (see MINION_STATE_SPEC.md)
 
 scripts/
     scr_chamber_types.gml       ← JSON loaders, lookup tables, floor mapping helpers
     scr_chamber_calc.gml        ← evaluation engine (gating, base, bonuses, upgrades, adjacency)
+    scr_minion_state.gml        ← minion tag/progression processing (see MINION_STATE_SPEC.md)
 
 objects/
     obj_chamber/                ← instance: holds type, grid pos, minion/client refs, upgrade
@@ -47,7 +49,8 @@ Each entry in a `chamber_types/*.json` array:
   "requires": { "minion": true, "client": true },
   "cost": { "cash": 50, "lust_mana": 10 },
   "base": { "lust_mana": 5, "value": 5 },
-  "bonuses": [ ... ]
+  "bonuses": [ ... ],
+  "minion_effects": { ... }
 }
 ```
 
@@ -61,6 +64,7 @@ Each entry in a `chamber_types/*.json` array:
 | `cost` | map (resource → int) | Secondary resources spent to build this room. Only list non-zero costs; absent keys cost 0. |
 | `base` | map (resource → int) | Flat resource output per night when prerequisites are met. Always applies (no conditions). May be empty `{}` for rooms that only produce via bonuses or abilities. |
 | `bonuses` | array of rule objects | Conditional additional outputs (see below). |
+| `minion_effects` | map (optional) | Rules for how this room modifies the minion assigned to it each night. See [Minion Effects](#minion-effects-room-side) below and [`MINION_STATE_SPEC.md`](MINION_STATE_SPEC.md) for full details. |
 
 The loader tags each entry with a `source_ally` string (derived from the filename) for build-gating and flavour, but the calculation engine ignores it.
 
@@ -138,6 +142,19 @@ Each entry in an `upgrades/*.json` array:
 ## Effective Tags
 
 A chamber's **effective tags** = its type's intrinsic `tags` + any `tags_added` from its installed upgrade. All tag-based calculations (floor counts, synergy checks) use effective tags, not just base type tags. This means installing Silk Sheets (`tags_added: ["luxury"]`) on a Boudoir makes it count toward a Luxury Studio's floor-luxury bonus.
+
+## Minion Effects (Room-Side)
+
+The optional `minion_effects` block defines how a room modifies the minion assigned to it each night. This is **not** part of the resource contribution calculation — it is processed separately by the minion state system after production resolves.
+
+Two sub-models exist:
+
+| Sub-model | Field | Purpose |
+|---|---|---|
+| Degradation / Progression | `progression_track`, `tags_per_night`, `terminal_action` | Advances a named progression track and/or applies flat tags each night. Used by ally gateway rooms (Lab, Morgue, Ritual Room, Cow Shed). |
+| Recovery | `recovery.remove_negative_per_night` | Removes negative tags from the minion per night. Used by Dormitory and similar rest rooms. |
+
+A room uses **one** sub-model or the other, not both. The full schema, progression track definitions, processing pipeline, and terminal actions are specified in [`MINION_STATE_SPEC.md`](MINION_STATE_SPEC.md).
 
 ## Calculation Pipeline
 
