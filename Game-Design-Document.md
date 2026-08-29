@@ -24,11 +24,11 @@
 *   **Next Day's Visitor List:** At the end of each cycle, build tomorrow night's visitor list — roll each guest's visit frequency (§7 Visit Frequency), excluding converted guests and applying the seasonal pool shift.
 
 ### Cycles per season
-Each season will have 12 cycles per season (~1 per week). This is subject to tuning through playtest.
+Each season will have 12 cycles (~1 per week). This is subject to tuning through playtest.
 
 ## 3. World Architecture & Perspective
 *   **Visual Style:** Diegetic Paper-Doll. The game is presented as a physical, layered diorama. All UI elements (menus, buttons, resource bars) are rendered as "cutouts" of parchment, cardstock, and ink.
-*   **Tactile Feedback**: Interaction should feel physical. Menus don't "pop up"; they slide in like cards or unfold like maps. Buttons "depress" into the background rather than glowing.
+*   **Tactile Feedback:** Interaction should feel physical. Menus don't "pop up"; they slide in like cards or unfold like maps. Buttons "depress" into the background rather than glowing.
 *   **Management View (The Dollhouse):** Vertical side-cutaway perspective (Basement -> Ground -> Upper Floors -> Attic).
 *   **Interaction View:** Atmospheric scenes for The Hunt, Ally negotiations, and Signature Room events.
 **Verticality Mechanics:**
