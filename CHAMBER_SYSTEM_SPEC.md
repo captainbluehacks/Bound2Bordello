@@ -45,11 +45,14 @@ Each entry in a `chamber_types/*.json` array:
 {
   "type": "boudoir",
   "display_name": "The Boudoir",
+  "size": "small",
   "tags": ["private", "luxury"],
+  "placement": { "floors": ["GROUND"] },
   "requires": { "minion": true, "client": true },
   "cost": { "cash": 50, "lust_mana": 10 },
   "base": { "lust_mana": 5, "value": 5 },
   "bonuses": [ ... ],
+  "aura": { ... },
   "minion_effects": { ... }
 }
 ```
@@ -58,13 +61,17 @@ Each entry in a `chamber_types/*.json` array:
 |---|---|---|
 | `type` | string | Unique ID; matches the `chamber_type` variable on the instance and the sprite naming convention. |
 | `display_name` | string | Human-readable name for UI. |
-| `tags` | string[] | Intrinsic tags carried by this room type (e.g. `"private"`, `"luxury"`, `"dungeon"`). Used in synergy/tag-count calculations. |
-| `requires.minion` | bool | If `true`, no production occurs without an assigned minion instance. **All rooms require a minion.** |
+| `size` | string (`"small"` / `"medium"` / `"large"`) | Footprint of the room; maps to the `ROOM_SIZE` enum (0/1/2) and `global.size_dims` (1×1 / 2×1 / 2×2). Used by the fixed-slot placement system to match a type to a reclaimed slot. Larger footprints touch more adjacent cells, so they feed more collectors/adders for free. |
+| `tags` | string[] | Intrinsic tags carried by this room type (e.g. `"private"`, `"luxury"`, `"dungeon"`). Used in synergy/tag-count calculations and as the input to collectors. |
+| `placement` | map (optional) | Placement restrictions. `floors`: array of FLOOR values the room may occupy; `walls`: `"interior"` / `"exterior"`. Absent = any floor/wall. Supports seasonal floor-gating and zoning. |
+| `requires.minion` | bool | If `true`, no production occurs without an assigned minion instance. If `false`, the room is **passive** (no minion needed) — used by collectors, adders, and reclamation obstacles. *(Earlier drafts stated "all rooms require a minion"; this was relaxed to allow minion-free utility/collector rooms.)* |
 | `requires.client` | bool | If `true`, no production occurs without a guest present that night. Most rooms are `true`; utility rooms (Dormitory, Inner Sanctum) are `false`. |
 | `cost` | map (resource → int) | Secondary resources spent to build this room. Only list non-zero costs; absent keys cost 0. |
-| `base` | map (resource → int) | Flat resource output per night when prerequisites are met. Always applies (no conditions). May be empty `{}` for rooms that only produce via bonuses or abilities. |
+| `base` | map (resource → int) | Flat resource output per night when prerequisites are met. Always applies (no conditions). May be empty `{}` for rooms that only produce via bonuses, aura, or abilities. |
 | `bonuses` | array of rule objects | Conditional additional outputs (see below). |
+| `aura` | map (optional) | Resource map applied to each **unique adjacent chamber** each night (see [Aura Effects](#aura-effects-adders)). Used by adder/support rooms; independent of the room's own production. |
 | `minion_effects` | map (optional) | Rules for how this room modifies the minion assigned to it each night. See [Minion Effects](#minion-effects-room-side) below and [`MINION_STATE_SPEC.md`](MINION_STATE_SPEC.md) for full details. |
+| `reclaim` | map (optional) | Present on reclamation obstacle types only — `{ tier, nights_to_clear }`. See [Reclamation Obstacles](#reclamation-obstacles). |
 
 The loader tags each entry with a `source_ally` string (derived from the filename) for build-gating and flavour, but the calculation engine ignores it.
 
@@ -108,6 +115,8 @@ Evaluated by `scr_eval_condition(chamber, condition_map)`. Returns `true`/`false
 |---|---|---|---|
 | `adjacent_room_type` | `room_type` (string or `"*"`), optional `direction` (`"above"`, `"below"`, `"left"`, `"right"`) | bool | Any adjacent chamber matches the given type. |
 | `count_tag_on_floor` | `tag` (string), `per` (int, value per match), `max` (int cap) | int | Count of unique chambers on the same floor carrying that tag (including upgrade-added tags). Capped at `max`. |
+| `count_adjacent_tag` | `tag` (string), optional `max` (int cap) | int | Count of unique adjacent chambers carrying that tag (including upgrade-added tags). Capped at `max` if present. Used by collectors to harvest a tag from neighbouring rooms into a primary resource. |
+| `clients_present_count` | — | int | Number of clients assigned to this chamber for the night. Used by scalable/overflow rooms whose output grows with occupancy (e.g., Bar, Glass Room). |
 | `minion_assigned` | — | bool | A minion instance is present in this chamber. |
 | `minion_has_tag` | `tag` (string) | bool | The assigned minion carries a specific tag. |
 | `floor_is` | `floor` (FLOOR enum value or name string) | bool | This chamber is on the specified floor. |
@@ -137,11 +146,11 @@ Each entry in an `upgrades/*.json` array:
 | `compatible_types` | string[] of room type IDs this upgrade can be installed in. `"*"` means any room. One upgrade per room (enforced at assignment). |
 | `cost` | Resource map, same convention as chamber costs. |
 | `effects` | Flat resource bonus added to the chamber's nightly output while installed. |
-| `tags_added` | string[] of tags appended to the chamber's effective tag list while installed. Affects other rooms' tag-counting bonuses. |
+| `tags_added` | string[] of tags appended to the chamber's effective tag list while installed. Affects other rooms' tag-counting bonuses and collectors. |
 
 ## Effective Tags
 
-A chamber's **effective tags** = its type's intrinsic `tags` + any `tags_added` from its installed upgrade. All tag-based calculations (floor counts, synergy checks) use effective tags, not just base type tags. This means installing Silk Sheets (`tags_added: ["luxury"]`) on a Boudoir makes it count toward a Luxury Studio's floor-luxury bonus.
+A chamber's **effective tags** = its type's intrinsic `tags` + any `tags_added` from its installed upgrade. All tag-based calculations (floor counts, adjacency counts, synergy checks) use effective tags, not just base type tags. This means installing an upgrade that adds a tag can make the room feed a new collector or trigger a neighbour's bonus.
 
 ## Minion Effects (Room-Side)
 
@@ -156,6 +165,23 @@ Two sub-models exist:
 
 A room uses **one** sub-model or the other, not both. The full schema, progression track definitions, processing pipeline, and terminal actions are specified in [`MINION_STATE_SPEC.md`](MINION_STATE_SPEC.md).
 
+## Aura Effects (Adders)
+
+The optional `aura` block lets a chamber contribute resources to its **neighbours** rather than to itself. This is the mechanism behind adder/support rooms (e.g., Laundry, Shower), which buff adjacent production rooms.
+
+```json
+"aura": { "stock": 1, "influence": 1 }
+```
+
+- `aura` is a resource map applied to **each unique adjacent chamber** once per night.
+- It is independent of the adder's own prerequisites — adders are typically `requires.minion: false`, so they buff neighbours even when unstaffed (the "errand" animation where a neighbouring minion drops in to do the task is presentation only, with no mechanical cost).
+- An aura applies **once per unique neighbour**, using the same one-cell-ring adjacency scan + `ds_set` dedup as elsewhere, and does not apply to the adder itself.
+- Aura contributions are additive on top of the target chamber's own base/bonus/upgrade totals.
+
+### Processing order
+
+Aura is resolved as a **separate pass after** all per-chamber totals are computed (see [Nightly Sum](#nightly-sum)). This guarantees an adder buffs a neighbour's *final* total, and that two adjacent adders both apply to the same target without ordering dependencies.
+
 ## Calculation Pipeline
 
 `scr_calculate_chamber(chamber_instance)` executes in order:
@@ -165,11 +191,14 @@ A room uses **one** sub-model or the other, not both. The full schema, progressi
 3. **Bonus rules.** For each rule in `bonuses[]`: evaluate its condition against the live grid. If triggered, apply `effects` (or `effects_per_match × count`). Record a breakdown line per triggered rule.
 4. **Upgrade contribution.** If an upgrade is installed and compatible: add its `effects` to the total. Record a breakdown line.
 
-Return value: `{ total: map, lines: array, active: bool }`.
+Return value: `{ total: map, lines: array, active: bool }`. Aura is **not** part of this per-chamber calculation — it is applied to neighbours in the nightly-sum aura pass (see [Aura Effects](#aura-effects-adders)).
 
 ## Nightly Sum
 
-`scr_calculate_night_earnings()` iterates every cell of `mansion_map`, deduplicates multi-cell rooms via a `ds_set`, calls `scr_calculate_chamber` on each unique instance, and accumulates all `.total` maps into one grand total. Inactive chambers contribute 0.
+`scr_calculate_night_earnings()` runs in two passes:
+
+1. **Per-chamber totals.** Iterate every cell of `mansion_map`, deduplicate multi-cell rooms via a `ds_set`, call `scr_calculate_chamber` on each unique instance, and accumulate all `.total` maps into one grand total. Inactive chambers contribute 0.
+2. **Aura pass.** For each chamber carrying an `aura`, apply it to every unique adjacent chamber's accumulated total (see [Aura Effects](#aura-effects-adders)).
 
 A variant, `scr_get_night_summary()`, additionally partitions results into `active_rooms[]` and `inactive_rooms[]` (with reasons) for the end-of-cycle "Reckoning" screen.
 
@@ -183,7 +212,7 @@ Chambers occupy 1×1, 2×1, or 2×2 cells on the grid (per `global.size_dims`). 
 4. Read each cell from `mansion_map`; skip `-1` (empty) and non-instance values.
 5. Deduplicate via `ds_set` (a multi-cell neighbour will appear in multiple ring cells).
 
-This correctly handles all size combinations without special-casing.
+This correctly handles all size combinations without special-casing, and is shared by the bonus conditions (`adjacent_room_type`, `count_adjacent_tag`) and the aura pass.
 
 ## Floor Mapping
 
@@ -198,6 +227,23 @@ The grid is 10 columns × 8 rows. Floor is derived from `grid_y`:
 
 Two helper functions: `scr_grid_y_to_floor(y)` and `scr_floor_to_grid_rows(floor) → [min, max]`. The floor is computed at instance creation from the passed `grid_y` and stored on the instance.
 
+Floors are also gated by season (Spring = Ground only; each later season unlocks another floor). A room's `placement.floors` further restricts which of the *available* floors it may occupy, so seasonal availability and per-room zoning compose.
+
+## Reclamation Obstacles
+
+Certain chamber types represent blocked zones in the Ruin State (GDD §10): `cluttered`, `rubble`, `hazards`, `seals`. They are **pre-placed by layout data** (not built by the player), produce nothing (`base: {}`, no bonuses, `requires.minion: false`), and carry an optional `reclaim` block:
+
+```json
+"reclaim": { "tier": 2, "nights_to_clear": 4 }
+```
+
+| Field | Type | Purpose |
+|---|---|---|
+| `tier` | int | Reclamation tier (1 = Clutter … 4 = Seals). Higher tiers take longer and may require specific minion capabilities. |
+| `nights_to_clear` | int | Base number of nights to clear once a minion is assigned. Tags/upgrades can reduce this duration. |
+
+The full clearing mechanic — assigning a minion, per-night progress, and replacing the obstacle with a buildable slot — is specified in GDD §10 (Environmental Progression & Reclamation). Obstacle types have no `size` of their own; they occupy whatever footprint their pre-placed layout cell defines.
+
 ## obj_chamber Instance Variables
 
 Set at creation (via `instance_create_layer` argument map or post-creation):
@@ -205,11 +251,11 @@ Set at creation (via `instance_create_layer` argument map or post-creation):
 | Variable | Type | Source / Notes |
 |---|---|---|
 | `chamber_type` | string | From blueprint JSON; matches a type definition ID. |
-| `chamber_size` | int (ROOM_SIZE enum) | 0=small, 1=medium, 2=large. |
+| `chamber_size` | int (ROOM_SIZE enum) | 0=small, 1=medium, 2=large. Derived from the type's `size` field for buildable rooms; taken from layout data for pre-placed obstacles. |
 | `grid_x`, `grid_y` | int | Top-left cell position on `mansion_map`. Passed from blueprint layout data. |
 | `floor` | FLOOR enum | Derived: `scr_grid_y_to_floor(grid_y)`. |
-| `minion` | instance or `no` | Assigned minion (persistent across nights). Set during Day Phase management. |
-| `client` | instance or `no` | Guest present this night. Set during Night Phase funnel; reset each cycle. |
+| `minion` | instance or `no` | Assigned minion (persistent across nights). Set during Day Phase management. May be `no` for passive rooms (`requires.minion: false`). |
+| `client` | instance or `no` | Guest present this night. Set during Night Phase funnel; reset each cycle. Scalable rooms may track multiple clients for `clients_present_count`. |
 | `upgrade_id` | string or `""` | Installed upgrade ID, or empty if none. One per room max. |
 
 ## Resource Keys (convention)
@@ -219,7 +265,7 @@ Resource names used in all JSON maps and the global resource tracker:
 - Primary: `"value"`, `"power"`, `"stock"`
 - Secondary: `"cash"`, `"lust_mana"`, `"humiliation_mana"`, `"fear_mana"`, `"influence"`
 
-These are string keys in JSON and map keys in GML. A `scr_resource_display_name(key)` helper maps them to player-facing labels ("Lust Mana", "Cash", etc.) for UI rendering.
+These are string keys in JSON and map keys in GML. A `scr_resource_display_name(key)` helper maps them to player-facing labels ("Lust Mana", "Cash", etc.) for UI rendering. Collectors convert harvested tags into **primary** resources; producers emit **secondary** resources (and carry the tags collectors read).
 
 ## Extensibility Notes
 
@@ -227,4 +273,6 @@ These are string keys in JSON and map keys in GML. A `scr_resource_display_name(
 - **New upgrade** → add a JSON entry to the appropriate upgrades file. No code changes.
 - **New condition type** → add one `case` in `scr_eval_condition`. JSON schema unchanged.
 - **New resource type** → add it to the global resource tracker and any relevant JSON cost/effect maps. Existing entries simply don't reference it (absent = 0).
+- **New aura/adder room** → add an `aura` map to the type; the nightly-sum aura pass picks it up automatically. No code changes.
+- **New reclamation tier** → add an obstacle type with a `reclaim` block. The clearing pipeline reads `tier`/`nights_to_clear` generically.
 - **New ally** → create `chamber_types/<ally>.json` + `upgrades/<ally>.json`, add both paths to the loader arrays. Calculation engine is agnostic to source.

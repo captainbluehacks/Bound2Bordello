@@ -1,0 +1,192 @@
+[
+  {
+    "type": "boudoir",
+    "display_name": "The Boudoir",
+    "size": "small",
+    "tags": ["sex", "tips"],
+    "placement": { "floors": ["GROUND"] },
+    "requires": { "minion": true, "client": true },
+    "cost": { "cash": 40, "lust_mana": 8 },
+    "base": { "lust_mana": 5, "cash": 2 },
+    "bonuses": []
+  },
+  {
+    "type": "glory_hole",
+    "display_name": "The Glory Hole",
+    "size": "small",
+    "tags": ["tips", "degradation"],
+    "placement": { "floors": ["GROUND"] },
+    "requires": { "minion": true, "client": true },
+    "cost": { "cash": 35, "humiliation_mana": 6 },
+    "base": { "cash": 4, "humiliation_mana": 1 },
+    "bonuses": []
+  },
+  {
+    "type": "massage_parlour",
+    "display_name": "The Massage Parlour",
+    "size": "small",
+    "tags": ["flirt"],
+    "placement": { "floors": ["GROUND"] },
+    "requires": { "minion": true, "client": true },
+    "cost": { "cash": 40, "influence": 6 },
+    "base": { "influence": 4, "cash": 1 },
+    "bonuses": []
+  },
+  {
+    "type": "bar",
+    "display_name": "The Bar",
+    "size": "medium",
+    "tags": ["tips", "flirt"],
+    "placement": { "floors": ["GROUND"] },
+    "requires": { "minion": true, "client": true },
+    "cost": { "cash": 70, "influence": 8 },
+    "base": { "influence": 2 },
+    "bonuses": [
+      {
+        "id": "bar_client_scale",
+        "description": "+1 Cash per client present",
+        "effects_per_match": { "cash": 1 },
+        "condition": { "type": "clients_present_count" }
+      }
+    ]
+  },
+  {
+    "type": "glass_room",
+    "display_name": "The Glass Room",
+    "size": "medium",
+    "tags": ["sex"],
+    "placement": { "floors": ["GROUND"] },
+    "requires": { "minion": true, "client": true },
+    "cost": { "cash": 65, "lust_mana": 10 },
+    "base": { "cash": 1 },
+    "bonuses": [
+      {
+        "id": "glass_client_scale",
+        "description": "+2 Lust Mana per client present",
+        "effects_per_match": { "lust_mana": 2 },
+        "condition": { "type": "clients_present_count" }
+      }
+    ]
+  },
+  {
+    "type": "smoking_room",
+    "display_name": "The Smoking Room",
+    "size": "medium",
+    "tags": ["flirt"],
+    "placement": { "floors": ["GROUND"] },
+    "requires": { "minion": true, "client": true },
+    "cost": { "cash": 70, "influence": 8 },
+    "base": { "stock": 1 },
+    "bonuses": [
+      {
+        "id": "smoking_client_scale",
+        "description": "+2 Influence per client present",
+        "effects_per_match": { "influence": 2 },
+        "condition": { "type": "clients_present_count" }
+      }
+    ]
+  },
+  {
+    "type": "counting_room",
+    "display_name": "The Counting Room",
+    "size": "small",
+    "tags": ["utility"],
+    "requires": { "minion": false, "client": false },
+    "cost": { "cash": 55 },
+    "base": {},
+    "bonuses": [
+      {
+        "id": "value_from_tips",
+        "description": "+1 Value per adjacent 'tips' tag",
+        "effects_per_match": { "value": 1 },
+        "condition": { "type": "count_adjacent_tag", "tag": "tips" }
+      }
+    ]
+  },
+  {
+    "type": "mana_crystal",
+    "display_name": "The Mana Crystal",
+    "size": "small",
+    "tags": ["utility", "sacred"],
+    "requires": { "minion": false, "client": false },
+    "cost": { "cash": 60 },
+    "base": {},
+    "bonuses": [
+      {
+        "id": "power_from_sex",
+        "description": "+1 Power per adjacent 'sex' tag",
+        "effects_per_match": { "power": 1 },
+        "condition": { "type": "count_adjacent_tag", "tag": "sex" }
+      }
+    ]
+  },
+  {
+    "type": "filing_room",
+    "display_name": "The Filing Room",
+    "size": "small",
+    "tags": ["utility"],
+    "requires": { "minion": false, "client": false },
+    "cost": { "cash": 55 },
+    "base": {},
+    "bonuses": [
+      {
+        "id": "stock_from_flirt",
+        "description": "+1 Stock per adjacent 'flirt' tag",
+        "effects_per_match": { "stock": 1 },
+        "condition": { "type": "count_adjacent_tag", "tag": "flirt" }
+      }
+    ]
+  },
+  {
+    "type": "laundry",
+    "display_name": "The Laundry",
+    "size": "small",
+    "tags": ["utility"],
+    "requires": { "minion": false, "client": false },
+    "cost": { "cash": 30 },
+    "base": {},
+    "aura": { "stock": 1, "influence": 1 }
+  },
+  {
+    "type": "shower",
+    "display_name": "The Shower",
+    "size": "small",
+    "tags": ["utility"],
+    "requires": { "minion": false, "client": false },
+    "cost": { "cash": 30 },
+    "base": {},
+    "aura": { "lust_mana": 1, "influence": 1 }
+  },
+  {
+    "type": "cluttered",
+    "display_name": "Cluttered Room",
+    "tags": ["obstacle"],
+    "requires": { "minion": false, "client": false },
+    "base": {},
+    "reclaim": { "tier": 1, "nights_to_clear": 2 }
+  },
+  {
+    "type": "rubble",
+    "display_name": "Rubble",
+    "tags": ["obstacle"],
+    "requires": { "minion": false, "client": false },
+    "base": {},
+    "reclaim": { "tier": 2, "nights_to_clear": 4 }
+  },
+  {
+    "type": "hazards",
+    "display_name": "Hazards",
+    "tags": ["obstacle"],
+    "requires": { "minion": false, "client": false },
+    "base": {},
+    "reclaim": { "tier": 3, "nights_to_clear": 6 }
+  },
+  {
+    "type": "seals",
+    "display_name": "Sealed Room",
+    "tags": ["obstacle", "forbidden"],
+    "requires": { "minion": false, "client": false },
+    "base": {},
+    "reclaim": { "tier": 4, "nights_to_clear": 8 }
+  }
+]
