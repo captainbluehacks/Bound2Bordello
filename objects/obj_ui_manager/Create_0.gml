@@ -39,7 +39,7 @@ function process_button_action(_actionId) {
 		break;
 		
 		case UI_ACTION.DONE:
-		
+			obj_game_manager.end_turn();
 		break;
 		
 		case UI_ACTION.NEXT_MINION:
