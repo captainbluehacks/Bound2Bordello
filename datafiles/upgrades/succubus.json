@@ -1,0 +1,31 @@
+[
+  {
+    "id": "silk_sheets",
+    "display_name": "Silk Sheets",
+    "compatible_types": ["boudoir"],
+    "cost": { "cash": 25 },
+    "effects": { "lust_mana": 2 }
+  },
+  {
+    "id": "whip_set",
+    "display_name": "Whip & Chain Set",
+    "compatible_types": ["boudoir", "glory_hole"],
+    "cost": { "cash": 30, "humiliation_mana": 5 },
+    "effects": { "humiliation_mana": 2 },
+    "tags_added": ["degradation"]
+  },
+  {
+    "id": "tip_jar",
+    "display_name": "Tip Jar",
+    "compatible_types": ["bar", "glass_room", "smoking_room"],
+    "cost": { "cash": 20 },
+    "effects": { "cash": 3 }
+  },
+  {
+    "id": "aromatic_oils",
+    "display_name": "Aromatic Oils",
+    "compatible_types": ["massage_parlour"],
+    "cost": { "cash": 25, "influence": 4 },
+    "effects": { "influence": 2 }
+  }
+]
