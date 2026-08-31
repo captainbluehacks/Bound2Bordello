@@ -17,7 +17,7 @@ function scr_calculate_chamber(_chamber) {
             _reason = "No minion assigned";
         }
         
-        if (_active && _req.client && !(array_length(_chamber.client) != 0 && is_instance(_chamber.client))) {
+        if (_active && _req.client && !(array_length(_chamber.client) > 0)) {
             _active = false;
             _reason = "No client present";
         }
@@ -137,12 +137,12 @@ function scr_calculate_night_earnings() {
     
     // Iterate the mansion_map grid, collecting unique chamber instances
     var _seen = ds_set_create();
-    var _w = ds_grid_width(mansion_map);
-    var _h = ds_grid_height(mansion_map);
+    var _w = ds_grid_width(global.mansion_map);
+    var _h = ds_grid_height(global.mansion_map);
     
     for (var _x = 0; _x < _w; _x++) {
         for (var _y = 0; _y < _h; _y++) {
-            var _inst = ds_grid_get(mansion_map, _x, _y);
+            var _inst = ds_grid_get(global.mansion_map, _x, _y);
             if (_inst == -1) continue;
             if (!is_instance(_inst)) continue;
             if (ds_set_find(_seen, _inst) != -1) continue;  // skip duplicates from multi-cell rooms

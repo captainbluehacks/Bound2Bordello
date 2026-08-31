@@ -14,5 +14,5 @@ for (var i = 0; i < ds_list_size(_tags); i++) {
 // Runtime state
 minion = noone;          // assigned minion instance (or no)
 client = [];	
-upgrades_id = noone;        // list of upgrade IDs installed this cycle
+upgrade_id = noone;        // list of upgrade IDs installed this cycle
 is_reclaiming = false;

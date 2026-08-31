@@ -195,7 +195,7 @@ function scr_get_effective_tags(_chamber) {
     ds_list_destroy(_base_tags);
     
     // Upgrade tags
-    if (_chamber.upgrade_id != no && _chamber.upgrade_id != "") {
+    if (_chamber.upgrade_id != noone && _chamber.upgrade_id != "") {
         var _upg = scr_get_upgrade(_chamber.upgrade_id);
         if (_upg != undefined && map_exists(_upg, "tags_added")) {
             for (var i = 0; i < array_length(_upg.tags_added); i++) {
@@ -220,7 +220,7 @@ function scr_count_tag_on_floor(_chamber, _tag, _max) {
     
     // Determine which row(s) of the grid correspond to this chamber's floor
     // (Your FLOOR enum maps to grid_y ranges — adjust to your layout)
-    var _floor_rows = scr_get_floor_row_range(_chamber.floor);
+    var _floor_rows = scr_get_floor_row_range(_chamber.y);
     
     for (var _y = _floor_rows[0]; _y <= _floor_rows[1]; _y++) {
         for (var _x = 0; _x < ds_grid_width(mansion_map); _x++) {
@@ -248,11 +248,16 @@ function scr_get_floor_row_range(_y) {
     // Adjust these ranges to match your actual grid layout:
     // e.g. basement = rows 6-7, ground = rows 4-5, first = rows 2-3, attic = rows 0-1
 	if (_y == 6 or _y==7) return [6,7];
-	if (_y == 5 or _y==4) return [5,4];
-	if (_y == 3 or _y==2) return [3,2];
+	if (_y == 5 or _y==4) return [4,5];
+	if (_y == 3 or _y==2) return [2,3];
 	if (_y == 1 or _y==0) return [0,1];
 	
 	return noone;
 	
 }
 
+// Upgrades
+
+function scr_get_upgrade(_upgrade_id) {
+	return [];
+};

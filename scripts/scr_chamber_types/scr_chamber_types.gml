@@ -51,7 +51,7 @@ function __obj_mansion_chamber_type_methods(){
 	/// @return {ds_list} List of tag strings for this type.
 	function scr_get_chamber_tags(_type_string) {
 	    var _def = scr_get_chamber_type(_type_string);
-	    if (_def == undefined) return ds_list_create();
+	    if (_def == undefined || !_def.exists("tags")) return ds_list_create();
     
 	    var _tags = ds_list_create();
 	    var _tag_array = _def.tags;
