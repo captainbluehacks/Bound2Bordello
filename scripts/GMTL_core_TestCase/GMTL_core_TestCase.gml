@@ -44,7 +44,7 @@ function TestCase(_val, _args) constructor {
 			__gmtl_internal_fn_stacktrace();
 			
 			array_push(gmtl_test_log, $"> expect({__internal_value}){__not_str_method}.toBe({_expectedResult}):");
-			array_push(gmtl_test_log, $"- Expected Result: {__not_str_expected == "" ? _expectedResult : $"{__not_str_expected} {_expectedResult}"}");
+			array_push(gmtl_test_log, $"- Expected Result: {__not_str_expected == "" ? _expectedResult : ""}{__not_str_expected} {_expectedResult}");
 			array_push(gmtl_test_log, $"- Received Result: {__internal_value}");
 			gmtl_test_status = __gmtl_test_status.FAILED;
 			gmtl_suite_continue = false;
@@ -76,7 +76,7 @@ function TestCase(_val, _args) constructor {
 			__gmtl_internal_fn_stacktrace();
 			
 			array_push(gmtl_test_log, $"> expect({__internal_value}){__not_str_method}.toBeEqual({_expectedResult}):");
-			array_push(gmtl_test_log, $"- Expected Result: {__not_str_expected == "" ? _expectedResult : $"{__not_str_expected} {_expectedResult}"}");
+			array_push(gmtl_test_log, $"- Expected Result: {__not_str_expected == "" ? _expectedResult : ""}{__not_str_expected} {_expectedResult}");
 			array_push(gmtl_test_log, $"- Received Result: {__internal_value}");
 			gmtl_test_status = __gmtl_test_status.FAILED;
 			gmtl_suite_continue = false;
@@ -109,7 +109,7 @@ function TestCase(_val, _args) constructor {
 		if (!_isValid) {
 			__gmtl_internal_fn_stacktrace();
 			array_push(gmtl_test_log, $"> expect({__internal_value}){__not_str_method}.toHaveReturned():");
-			array_push(gmtl_test_log, $"- Expected Result: {__not_str_expected == "" ? "true" : $"{__not_str_expected} true"}");
+			array_push(gmtl_test_log, $"- Expected Result: {__not_str_expected == "" ? "true" : ""}{__not_str_expected} true");
 			array_push(gmtl_test_log, $"- Received Result: {__internal_value}");
 			gmtl_test_status = __gmtl_test_status.FAILED;
 			gmtl_suite_continue = false;
@@ -141,7 +141,7 @@ function TestCase(_val, _args) constructor {
 			}
 			
 			array_push(gmtl_test_log, $"> expect({__internal_value}, {__internal_args}).toHaveReturnedWith({_expectedResult}):");
-			array_push(gmtl_test_log, $"- Expected Result: {__not_str_expected == "" ? _expectedResult : $"{__not_str_expected} {_expectedResult}"}");
+			array_push(gmtl_test_log, $"- Expected Result: {__not_str_expected == "" ? _expectedResult : ""}{__not_str_expected} {_expectedResult}");
 			array_push(gmtl_test_log, $"- Received Result: {_received}");
 			gmtl_test_status = __gmtl_test_status.FAILED;
 			gmtl_suite_continue = false;
@@ -179,7 +179,7 @@ function TestCase(_val, _args) constructor {
 			var _type_of_msg = $"<Invalid Type: {_typeOf}>";
 			_type_of_msg = (_typeInvalid ? _type_of_msg  : string(_len));
 			array_push(gmtl_test_log, $">expect({__internal_value}){__not_str_method}.toHaveLength({_n}):");
-			array_push(gmtl_test_log, $"- Expected Result: {__not_str_expected == "" ? string(_n) : $"{__not_str_expected} {_n}"}");
+			array_push(gmtl_test_log, $"- Expected Result: {__not_str_expected == "" ? string(_n) : ""}{__not_str_expected} {_n}");
 			array_push(gmtl_test_log, $"- Received Result: {_type_of_msg}");
 			gmtl_test_status = __gmtl_test_status.FAILED;
 			gmtl_suite_continue = false;
@@ -230,7 +230,7 @@ function TestCase(_val, _args) constructor {
 			var _expected_message = (!_valueIsUndefined ? _expected_not_undefined_msg : _expected_undefined_msg);
 			
 			array_push(gmtl_test_log, $"> expect({__internal_value}){__not_str_method}.toHaveProperty({_key}, {_value}):");
-			array_push(gmtl_test_log, $"- Expected Result: {__not_str_expected == "" ? _expected_message : $"{__not_str_expected} {_expected_message}"}");
+			array_push(gmtl_test_log, $"- Expected Result: {__not_str_expected == "" ? _expected_message : ""}{__not_str_expected} {_expected_message}");
 			
 			if (_typeInvalid) {
 				array_push(gmtl_test_log, $"- Received Result: <Invalid Type: {_typeOf}>");
@@ -404,7 +404,7 @@ function TestCase(_val, _args) constructor {
 			__gmtl_internal_fn_stacktrace();
 			
 			array_push(gmtl_test_log, $"> expect({__internal_value}){__not_str_method}.toBeFalsy():");
-			array_push(gmtl_test_log, $"- Expected Result: {__not_str_expected == "" ? "false" : $"{__not_str_expected} false"}");
+			array_push(gmtl_test_log, $"- Expected Result: {__not_str_expected == "" ? "false" : ""}{__not_str_expected} false");
 			array_push(gmtl_test_log, $"- Received Result: true");
 			gmtl_test_status = __gmtl_test_status.FAILED;
 			gmtl_suite_continue = false;
@@ -502,7 +502,7 @@ function TestCase(_val, _args) constructor {
 		if (!_isValid) {
 			__gmtl_internal_fn_stacktrace();
 			array_push(gmtl_test_log, $"> expect(spy){__not_str_method}.toHaveBeenCalled():");
-			array_push(gmtl_test_log, $"- Expected Result: {__not_str_expected == "" ? "called at least once" : $"{__not_str_expected} called"}");
+			array_push(gmtl_test_log, $"- Expected Result: {__not_str_expected == "" ? "called at least once" : ""}{__not_str_expected} called");
 			array_push(gmtl_test_log, $"- Received Result: called {__internal_value.calls} time(s)");
 			gmtl_test_status = __gmtl_test_status.FAILED;
 			gmtl_suite_continue = false;
@@ -528,7 +528,7 @@ function TestCase(_val, _args) constructor {
 		if (!_isValid) {
 			__gmtl_internal_fn_stacktrace();
 			array_push(gmtl_test_log, $"> expect(spy){__not_str_method}.toHaveBeenCalledTimes({_n}):");
-			array_push(gmtl_test_log, $"- Expected Result: {__not_str_expected == "" ? string(_n) : $"{__not_str_expected} {_n}"} call(s)");
+			array_push(gmtl_test_log, $"- Expected Result: {__not_str_expected == "" ? string(_n) : ""}{__not_str_expected} {_n} call(s)");
 			array_push(gmtl_test_log, $"- Received Result: {__internal_value.calls} call(s)");
 			gmtl_test_status = __gmtl_test_status.FAILED;
 			gmtl_suite_continue = false;
@@ -563,7 +563,7 @@ function TestCase(_val, _args) constructor {
 		if (!_isValid) {
 			__gmtl_internal_fn_stacktrace();
 			array_push(gmtl_test_log, $"> expect(spy){__not_str_method}.toHaveBeenCalledWith({_args}):");
-			array_push(gmtl_test_log, $"- Expected Result: {__not_str_expected == "" ? string(_args) : $"{__not_str_expected} {_args}"}");
+			array_push(gmtl_test_log, $"- Expected Result: {__not_str_expected == "" ? string(_args) : ""}{__not_str_expected} {_args}");
 			array_push(gmtl_test_log, $"- Received Result: {_history_len > 0 ? string(_call_history) : "never called"}");
 			gmtl_test_status = __gmtl_test_status.FAILED;
 			gmtl_suite_continue = false;

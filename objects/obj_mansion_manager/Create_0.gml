@@ -2,6 +2,10 @@
 __obj_mansion_room_methods();
 setup_constants();
 
+// Load chamber types
+scr_load_chamber_types();
+
+
 // Setup layers
 mansion_layer = {
 chamber : layer_create(layer_type.chambers), 

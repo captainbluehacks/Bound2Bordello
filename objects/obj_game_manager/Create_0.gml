@@ -14,8 +14,8 @@ current_season = season.spring; // We start in spring.
 cycle = 1;                      // Cycle goes from 1 to 12
 current_period = period.day;    // Start in Day mode
 
-// Helper functions
 
+// Helper functions
 get_period = function() {
 	return current_period ;
 };
@@ -29,6 +29,8 @@ end_turn = function(){
 	if (current_period == period.day) {
 		// Carry out end of day actions
 		show_debug_message("End of Day " + string(cycle));
+		show_debug_message(string(scr_calculate_night_earnings()));
+		
 		
 		current_period = period.night;
 	} else if (current_period == period.night) {
