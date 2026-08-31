@@ -235,7 +235,6 @@ function scr_count_tag_on_floor(_chamber, _tag, _max) {
 				if (_eff_tags[t] == _tag) { _count++; break; }
 			}
 
-            ds_list_destroy(_tags);
         }
     }
     

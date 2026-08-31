@@ -9,7 +9,7 @@ my_tags = [];
 for (var i = 0; i < ds_list_size(_tags); i++) {
     array_push(my_tags, ds_list_find_value(_tags, i));
 }
-ds_list_destroy(_tags);
+
 
 // Runtime state
 minion = noone;          // assigned minion instance (or no)

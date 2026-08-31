@@ -1,9 +1,12 @@
 // Initialise our script
+__obj_mansion_chamber_type_methods() ;
 __obj_mansion_room_methods();
-setup_constants();
 
 // Load chamber types
 scr_load_chamber_types();
+
+// Setup Room Constants
+setup_constants();
 
 
 // Setup layers
