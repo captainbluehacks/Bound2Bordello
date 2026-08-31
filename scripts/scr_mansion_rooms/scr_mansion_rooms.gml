@@ -92,7 +92,7 @@ function __obj_mansion_room_methods(){
 		
 		// Our room has space for background before the grid actually starts.
 		var _offset_x = 960; 
-		var _offset_y = 320;
+		var _offset_y = 320;	
 		
 		// Iterate through our room list and create instances for each.
 		for (var chamber = 0; chamber < array_length(_blueprints); chamber++) {
@@ -153,7 +153,7 @@ function scr_get_adjacent_chambers(_chamber) {
             if (_inst == -1 || !is_instance(_inst)) continue;
             if (_inst == _chamber) continue;
             
-            // Deduplicate (multi-cell neighbours will appear multiple times)
+            // Deduplicate (multi-cell neighbours will appear in multiple ring cells)
             if (ds_set_find(_seen, _inst) != -1) continue;
             ds_set_add(_seen, _inst);
             ds_list_add(_result, _inst);
@@ -186,6 +186,45 @@ function scr_check_adjacent(_chamber, _cond) {
     
     ds_list_destroy(_adj);
     return false;
+}
+
+/// @description Check whether a neighbour touches the subject on a given side.
+/// Strict adjacency only: the neighbour must share an edge with the subject's
+/// bounding box (no diagonals). Multi-cell rooms are compared by their full
+/// bounding boxes, not just top-left corners.
+/// @param {instance} _subject   The chamber being evaluated.
+/// @param {instance} _neighbour A neighbouring chamber instance.
+/// @param {string} _direction   "up", "down", "left" or "right".
+/// @return {bool} True if the neighbour is strictly in that direction of the subject.
+function scr_is_in_direction(_subject, _neighbour, _direction) {
+    var _s = global.size_dims[_subject.chamber_size];
+    var _n = global.size_dims[_neighbour.chamber_size];
+
+    // Subject bounding box (top-left + size)
+    var _sx1 = _subject.grid_x;
+    var _sy1 = _subject.grid_y;
+    var _sx2 = _sx1 + _s.w - 1;   // inclusive right edge
+    var _sy2 = _sy1 + _s.h - 1;   // inclusive bottom edge
+
+    // Neighbour bounding box (top-left + size)
+    var _nx1 = _neighbour.grid_x;
+    var _ny1 = _neighbour.grid_y;
+    var _nx2 = _nx1 + _n.w - 1;
+    var _ny2 = _ny1 + _n.h - 1;
+
+    switch (_direction) {
+        case "up":     // neighbour's bottom edge touches subject's top edge, with horizontal overlap
+            return (_ny2 == _sy1) && (_nx1 <= _sx2) && (_nx2 >= _sx1);
+        case "down":   // neighbour's top edge touches subject's bottom edge, with horizontal overlap
+            return (_ny1 == _sy2 + 1) && (_nx1 <= _sx2) && (_nx2 >= _sx1);
+        case "left":   // neighbour's right edge touches subject's left edge, with vertical overlap
+            return (_nx2 == _sx1 - 1) && (_ny1 <= _sy2) && (_ny2 >= _sy1);
+        case "right":  // neighbour's left edge touches subject's right edge, with vertical overlap
+            return (_nx1 == _sx2 + 1) && (_ny1 <= _sy2) && (_ny2 >= _sy1);
+        default:
+            show_debug_message("Unknown adjacency direction: " + string(_direction));
+            return false;
+    }
 }
 
 /// @description Get all effective tags for a chamber (type tags + upgrade tags).
@@ -265,7 +304,6 @@ function scr_get_floor_row_range(_y) {
 // Upgrades
 
 function scr_get_upgrade(_upgrade_id) {
-	return undefined;
+	return [];
 };
-
 
