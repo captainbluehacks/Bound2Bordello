@@ -19,6 +19,11 @@ global.size_dims = [
 	{ w : 2, h : 2, name : "large"}
 	] ;
 
+// Shared grid tracking which chamber instance occupies each cell.
+// Global because it is read by many objects (chambers, minions) via the
+// query functions below, not just obj_mansion_manager.
+global.mansion_map = noone;
+
 function __obj_mansion_room_methods(){
 	
 	setup_constants = function() {
@@ -29,12 +34,12 @@ function __obj_mansion_room_methods(){
 		// Create a grid for tracking chambers.
 		var _grid_width = 10;
 		var _grid_height = 8;
-		mansion_map = ds_grid_create(_grid_width, _grid_height);
+		global.mansion_map = ds_grid_create(_grid_width, _grid_height);
 		
 		// Set everything to unassigned.
-		ds_grid_set_region(mansion_map, 0, 0, _grid_width -1, _grid_height - 1, -1);
+		ds_grid_set_region(global.mansion_map, 0, 0, _grid_width -1, _grid_height - 1, -1);
 	}
-	
+
 
 	define_floors = function() {
 		
@@ -87,7 +92,7 @@ function __obj_mansion_room_methods(){
 		
 		// Our room has space for background before the grid actually starts.
 		var _offset_x = 960; 
-		var _offset_y = 320;		
+		var _offset_y = 320;	
 		
 		// Iterate through our room list and create instances for each.
 		for (var chamber = 0; chamber < array_length(_blueprints); chamber++) {
@@ -112,7 +117,7 @@ function __obj_mansion_room_methods(){
 				for (var yy = 0; yy < global.size_dims[_data.size].h; yy++) {
 					
 					// Store the instance ID in the grid for fast lookup later
-					ds_grid_set(mansion_map, _data.grid_x + xx, _data.grid_y + yy, _inst);
+					ds_grid_set(global.mansion_map, _data.grid_x + xx, _data.grid_y + yy, _inst);
 				}
 			}
 		}
@@ -141,10 +146,10 @@ function scr_get_adjacent_chambers(_chamber) {
             if (_x >= _gx && _x < _gx + _gw && _y >= _gy && _y < _gy + _gh) continue;
             
             // Bounds check
-            if (_x < 0 || _x >= ds_grid_width(mansion_map)) continue;
-            if (_y < 0 || _y >= ds_grid_height(mansion_map)) continue;
+            if (_x < 0 || _x >= ds_grid_width(global.mansion_map)) continue;
+            if (_y < 0 || _y >= ds_grid_height(global.mansion_map)) continue;
             
-            var _inst = ds_grid_get(mansion_map, _x, _y);
+            var _inst = ds_grid_get(global.mansion_map, _x, _y);
             if (_inst == -1 || !is_instance(_inst)) continue;
             if (_inst == _chamber) continue;
             
@@ -223,8 +228,8 @@ function scr_count_tag_on_floor(_chamber, _tag, _max) {
     var _floor_rows = scr_get_floor_row_range(_chamber.floor);
     
     for (var _y = _floor_rows[0]; _y <= _floor_rows[1]; _y++) {
-        for (var _x = 0; _x < ds_grid_width(mansion_map); _x++) {
-            var _inst = ds_grid_get(mansion_map, _x, _y);
+        for (var _x = 0; _x < ds_grid_width(global.mansion_map); _x++) {
+            var _inst = ds_grid_get(global.mansion_map, _x, _y);
             if (_inst == -1 || !is_instance(_inst)) continue;
             if (ds_set_find(_seen, _inst) != -1) continue;
             ds_set_add(_seen, _inst);
@@ -247,6 +252,7 @@ function scr_count_tag_on_floor(_chamber, _tag, _max) {
 function scr_get_floor_row_range(_y) {
     // Adjust these ranges to match your actual grid layout:
     // e.g. basement = rows 6-7, ground = rows 4-5, first = rows 2-3, attic = rows 0-1
+    
 	if (_y == 6 or _y==7) return [6,7];
 	if (_y == 5 or _y==4) return [5,4];
 	if (_y == 3 or _y==2) return [3,2];
@@ -255,4 +261,3 @@ function scr_get_floor_row_range(_y) {
 	return noone;
 	
 }
-
