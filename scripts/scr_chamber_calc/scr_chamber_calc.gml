@@ -43,7 +43,7 @@ function scr_calculate_chamber(_chamber) {
         var _res = _base_keys[i];
         _total[_res] = (_total.exists(_res) ? _total[_res] : 0) + _base[_res];
     }
-    
+   
     // Record the base line for UI
     array_push(_lines, {
         label: "Base",

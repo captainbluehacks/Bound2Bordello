@@ -5,9 +5,8 @@ __obj_mansion_room_methods();
 // Load chamber types
 scr_load_chamber_types();
 
-// Setup Room Constants
+// Setup Room Constants	    
 setup_constants();
-
 
 // Setup layers
 mansion_layer = {

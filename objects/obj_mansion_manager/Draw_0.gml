@@ -1,8 +1,8 @@
 var _sel = obj_selection_manager.get_selection();
 
-if (_sel.object_index == obj_chamber) {
+if (_sel != noone && instance_exists(_sel) && _sel.object_index == obj_chamber) {
 	
-	var _result = scr_calculate_chamber(selected_chamber);
+	var _result = scr_calculate_chamber(_sel);
 
 	var _x = x;
 	var _y = y;
