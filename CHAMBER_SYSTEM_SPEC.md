@@ -113,7 +113,7 @@ Evaluated by `scr_eval_condition(chamber, condition_map)`. Returns `true`/`false
 
 | `condition.type` | Parameters | Returns | Meaning |
 |---|---|---|---|
-| `adjacent_room_type` | `room_type` (string or `"*"`), optional `direction` (`"above"`, `"below"`, `"left"`, `"right"`) | bool | Any adjacent chamber matches the given type. |
+| `adjacent_room_type` | `room_type` (string or `"*"`), optional `direction` (`"up"`, `"down"`, `"left"`, `"right"`) | bool | Any adjacent chamber matches the given type. When `direction` is set, only chambers strictly touching that side of the room count (edge-touching adjacency, no diagonals — see [Directional Adjacency](#directional-adjacency)). |
 | `count_tag_on_floor` | `tag` (string), `per` (int, value per match), `max` (int cap) | int | Count of unique chambers on the same floor carrying that tag (including upgrade-added tags). Capped at `max`. |
 | `count_adjacent_tag` | `tag` (string), optional `max` (int cap) | int | Count of unique adjacent chambers carrying that tag (including upgrade-added tags). Capped at `max` if present. Used by collectors to harvest a tag from neighbouring rooms into a primary resource. |
 | `clients_present_count` | — | int | Number of clients assigned to this chamber for the night. Used by scalable/overflow rooms whose output grows with occupancy (e.g., Bar, Glass Room). |
@@ -161,7 +161,7 @@ Two sub-models exist:
 | Sub-model | Field | Purpose |
 |---|---|---|
 | Degradation / Progression | `progression_track`, `tags_per_night`, `terminal_action` | Advances a named progression track and/or applies flat tags each night. Used by ally gateway rooms (Lab, Morgue, Ritual Room, Cow Shed). |
-| Recovery | `recovery.remove_negative_per_night` | Removes negative tags from the minion per night. Used by Dormitory and similar rest rooms. |
+| Recovery | `recovery.remove_negative_per_night` | Removes negative tags from the minion each night. Used by Dormitory and similar rest rooms. |
 
 A room uses **one** sub-model or the other, not both. The full schema, progression track definitions, processing pipeline, and terminal actions are specified in [`MINION_STATE_SPEC.md`](MINION_STATE_SPEC.md).
 
@@ -213,6 +213,19 @@ Chambers occupy 1×1, 2×1, or 2×2 cells on the grid (per `global.size_dims`). 
 5. Deduplicate via `ds_set` (a multi-cell neighbour will appear in multiple ring cells).
 
 This correctly handles all size combinations without special-casing, and is shared by the bonus conditions (`adjacent_room_type`, `count_adjacent_tag`) and the aura pass.
+
+### Directional Adjacency
+
+The optional `direction` parameter on `adjacent_room_type` narrows a match to chambers touching a specific side of the subject room. It accepts `"up"`, `"down"`, `"left"` or `"right"` (screen-space: up = lower `grid_y`).
+
+Implemented by `scr_is_in_direction(subject, neighbour, direction)`. The check is **strict edge-touching adjacency** — no diagonals — and compares full bounding boxes so multi-cell rooms work correctly:
+
+- A neighbour is **"up"** if its bottom edge touches the subject's top edge with horizontal overlap.
+- A neighbour is **"down"** if its top edge touches the subject's bottom edge with horizontal overlap.
+- A neighbour is **"left"** if its right edge touches the subject's left edge with vertical overlap.
+- A neighbour is **"right"** if its left edge touches the subject's right edge with vertical overlap.
+
+A room can satisfy more than one direction at once (e.g. a 2×1 room directly above a 2×1 room is both "up" and, for overlapping columns, counts as up across its full width). Diagonal-only contact never matches any direction.
 
 ## Floor Mapping
 
