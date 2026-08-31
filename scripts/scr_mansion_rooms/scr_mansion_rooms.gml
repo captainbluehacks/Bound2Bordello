@@ -265,7 +265,7 @@ function scr_get_floor_row_range(_y) {
 // Upgrades
 
 function scr_get_upgrade(_upgrade_id) {
-	return [];
+	return undefined;
 };
 
 
