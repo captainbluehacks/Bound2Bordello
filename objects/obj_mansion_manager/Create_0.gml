@@ -21,3 +21,5 @@ add_room_instances(_blueprints);
 
 room_highlight = layer_sprite_create(mansion_layer.props, 0,0, spr_selected_chamber);
 layer_sprite_alpha(room_highlight, 0);
+
+selected_obj = noone;

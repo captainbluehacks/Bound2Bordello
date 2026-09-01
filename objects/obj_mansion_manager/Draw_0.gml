@@ -1,13 +1,11 @@
-var _sel = obj_selection_manager.get_selection();
+if (selected_obj != noone && instance_exists(selected_obj) && selected_obj.object_index == obj_chamber) {
 
-if (_sel != noone && instance_exists(_sel) && _sel.object_index == obj_chamber) {
-	
-	var _result = scr_calculate_chamber(_sel);
+	var _result = scr_calculate_chamber(selected_obj);
 
 	var _x = x;
 	var _y = y;
 
-	draw_text(_x, _y, "=== " + selected_chamber.display_name + " ===");
+	draw_text(_x, _y, "=== " + string(selected_obj) + " ===");
 	_y += 24;
 
 	for (var i = 0; i < array_length(_result.lines); i++) {
