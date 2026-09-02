@@ -8,12 +8,12 @@ if (selected_obj != noone && instance_exists(selected_obj) && selected_obj.objec
 draw_text(_x, _y, "=== " + string(selected_obj) + " ===");
 _y += 24;
 
-	for (var i = 0; i < array_length(_result.lines); i++) {		var _line = _result.lines[i];    
+	for (var i = 0; i < array_length(_result.lines); i++) {		var _line = _result.lines[i];
 
 		// Draw the label and description	draw_text(_x, _y, _line.detail);
-		_y += 16;    
+		_y += 16;
 
-		// Draw each resource effect as "+5 Lust Mana" etc.	var _keys = map_get_keys(_line.effects);
+		// Draw each resource effect as "+5 Lust Mana" etc.	var _keys = scr_map_get_keys(_line.effects);
 		for (var k = 0; k < array_length(_keys); k++) {			draw_text(_x + 12, _y, "+" + string(_line.effects[_keys[k]]) + " " + scr_resource_display_name(_keys[k]));
 			_y += 14;
 		}
@@ -23,7 +23,7 @@ _y += 24;
 	// Total
 draw_text(_x, _y, "--- TOTAL ---");
 _y += 20;
-	var _total_keys = map_get_keys(_result.total);
+	var _total_keys = scr_map_get_keys(_result.total);
 	for (var i = 0; i < array_length(_total_keys); i++) {		draw_text(_x, _y, scr_resource_display_name(_total_keys[i]) + ": " + string(_result.total[_total_keys[i]]));
 		_y += 16;
 	}
