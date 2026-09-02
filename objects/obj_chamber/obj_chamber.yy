@@ -8,8 +8,8 @@
   "name":"obj_chamber",
   "overriddenProperties":[],
   "parent":{
-    "name":"Bound to the Bordello",
-    "path":"Bound to the Bordello.yyp",
+    "name":"Chamber",
+    "path":"folders/Chamber.yy",
   },
   "parentObjectId":{
     "name":"obj_selectable",
@@ -31,6 +31,8 @@
   "properties":[
     {"$GMObjectProperty":"v2","%Name":"chamber_type","filters":[],"listItems":[],"multiselect":false,"name":"chamber_type","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"\"cluttered\"","varType":2,},
     {"$GMObjectProperty":"v2","%Name":"chamber_size","filters":[],"listItems":[],"multiselect":false,"name":"chamber_size","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"0","varType":1,},
+    {"$GMObjectProperty":"v2","%Name":"grid_x","filters":[],"listItems":[],"multiselect":false,"name":"grid_x","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"0","varType":1,},
+    {"$GMObjectProperty":"v2","%Name":"grid_y","filters":[],"listItems":[],"multiselect":false,"name":"grid_y","rangeEnabled":false,"rangeMax":10.0,"rangeMin":0.0,"resourceType":"GMObjectProperty","resourceVersion":"2.0","value":"0","varType":1,},
   ],
   "resourceType":"GMObject",
   "resourceVersion":"2.0",

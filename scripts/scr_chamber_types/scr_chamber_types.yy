@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_chamber_types",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_chamber_types",
+  "parent":{
+    "name":"Mansion",
+    "path":"folders/Mansion.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

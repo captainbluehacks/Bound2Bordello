@@ -1,5 +1,11 @@
 // Initialise our script
+__obj_mansion_chamber_type_methods() ;
 __obj_mansion_room_methods();
+
+// Load chamber types
+scr_load_chamber_types();
+
+// Setup Room Constants	    
 setup_constants();
 
 // Setup layers
@@ -15,3 +21,5 @@ add_room_instances(_blueprints);
 
 room_highlight = layer_sprite_create(mansion_layer.props, 0,0, spr_selected_chamber);
 layer_sprite_alpha(room_highlight, 0);
+
+selected_obj = noone;

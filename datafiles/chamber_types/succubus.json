@@ -6,8 +6,8 @@
     "tags": ["sex", "tips"],
     "placement": { "floors": ["GROUND"] },
     "requires": { "minion": true, "client": true },
-    "cost": { "cash": 40, "lust_mana": 8 },
-    "base": { "lust_mana": 5, "cash": 2 },
+    "cost": { "cash": 40, "lust": 8 },
+    "base": { "lust": 5, "cash": 2 },
     "bonuses": []
   },
   {
@@ -17,8 +17,8 @@
     "tags": ["tips", "degradation"],
     "placement": { "floors": ["GROUND"] },
     "requires": { "minion": true, "client": true },
-    "cost": { "cash": 35, "humiliation_mana": 6 },
-    "base": { "cash": 4, "humiliation_mana": 1 },
+    "cost": { "cash": 35, "humiliation": 6 },
+    "base": { "cash": 4, "humiliation": 1 },
     "bonuses": []
   },
   {
@@ -57,13 +57,13 @@
     "tags": ["sex"],
     "placement": { "floors": ["GROUND"] },
     "requires": { "minion": true, "client": true },
-    "cost": { "cash": 65, "lust_mana": 10 },
+    "cost": { "cash": 65, "lust": 10 },
     "base": { "cash": 1 },
     "bonuses": [
       {
         "id": "glass_client_scale",
         "description": "+2 Lust Mana per client present",
-        "effects_per_match": { "lust_mana": 2 },
+        "effects_per_match": { "lust": 2 },
         "condition": { "type": "clients_present_count" }
       }
     ]
@@ -155,7 +155,7 @@
     "requires": { "minion": false, "client": false },
     "cost": { "cash": 30 },
     "base": {},
-    "aura": { "lust_mana": 1, "influence": 1 }
+    "aura": { "lust": 1, "influence": 1 }
   },
   {
     "type": "cluttered",
