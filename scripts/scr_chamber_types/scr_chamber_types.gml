@@ -74,9 +74,9 @@ function __obj_mansion_chamber_type_methods(){
 	        case "power"          : return "Power";
 	        case "stock"          : return "Stock";
 	        case "cash"           : return "Cash";
-	        case "lust_mana"      : return "Lust Mana";
-	        case "humiliation_mana": return "Humiliation Mana";
-	        case "fear_mana"       : return "Fear Mana";
+	        case "lust"      : return "Lust Mana";
+	        case "humiliation": return "Humiliation Mana";
+	        case "fear"       : return "Fear Mana";
 	        case "influence"      : return "Influence";
 	        // Add any new resources here
 	        default: return _resourceKey;   // fallback
