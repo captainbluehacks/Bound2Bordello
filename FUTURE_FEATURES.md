@@ -76,11 +76,15 @@ Each assigned minion rolls `apply_chance` once per night, then the actions apply
 
 **Nerd protection carve-out** (GDD §5): if the best friend is *nerd* (no tags), they and every minion in their assigned room are exempt from `minion_effects` application that night. Implementation: one boolean check per chamber before its effect roll; no other system needs to know.
 
-### Night resolution order (extended pipeline)
+### Night resolution order (full pipeline)
 
-Inserted after step 3 (Production & Contribution) of the [`CHAMBER_SYSTEM_SPEC.md`](CHAMBER_SYSTEM_SPEC.md) pipeline:
+The complete night-phase pipeline, with this feature's step inserted:
 
 ```
+1. Funnel — assign clients to chambers (clients[] populated).
+2. Production — scr_calculate_night_earnings() → apply resources.
+3. The Hunt — player optionally converts a guest into a minion (guest destroyed;
+   their current-night income is already banked from step 2; all future income lost).
 4. Minion Status Resolution   ← this feature
    For each minion, per their current chamber:
      a. Apply minion_effects (chance roll → actions).
@@ -93,9 +97,12 @@ Inserted after step 3 (Production & Contribution) of the [`CHAMBER_SYSTEM_SPEC.m
            (e.g., removed or set back one chain step).
         3. On "cull" (index 0): destroy the minion instance, clear from chamber.minions[],
            append final history line.
-   d. Random room-flavoured history entries roll here too (chance per chamber type, pool keyed by chamber — see MINION_SYSTEM_SPEC.md §History).
+   d. Random room-flavoured history entries roll here too (chance per chamber type,
+      pool from chamber's `history_flavour` array — see CHAMBER_SYSTEM_SPEC.md).
 5. Story beats / narrative triggers.
-6. Cycle rollover: cycle += 1; refill guest pool to fixed size.
+6. Cycle rollover: cycle += 1; build next night's visitor list from the fixed pool
+   (converted guests excluded permanently). At season boundaries, generate and add
+   the new season's town guests to the pool (GDD §7 seasonal pools).
 ```
 
 ### What changes when this ships
@@ -181,7 +188,6 @@ Rest rooms are ordinary chambers: they have `occupancy` (default 1), can hold on
   "tags": ["rest"],
   "occupancy": 3,
   "cost": { "cash": 60 },
-  "contribution_rule": null,
   "minion_effects": {
     "apply_chance": 1.0,
     "actions": [
@@ -200,7 +206,6 @@ Rest rooms are ordinary chambers: they have `occupancy` (default 1), can hold on
 | `occupancy` (≥1) | How many minions can rest simultaneously; Dormitory example uses 3 so multiple staff rotate through one room. Single-occupancy "Quiet Corner" variant = same schema, occupancy 1, cheaper. |
 | `minion_effects.actions[]` | Standard actions from the tag pipeline: `remove_tag` on specific chain links (reverses progression by one step per night at apply_chance), or `hold_progression` (suppresses this room's own *and* any carried-over advancement this night — effectively "freezes" the minion). |
 | `minion_effects.recovery_actions[]` *(reserved, new field)* | Specialised recovery entries for rest rooms: e.g., chance to pull a terminal tag back one step before its outcome rolls. Add this key only when implementing; until then rest = remove_tag + hold_progression, which covers most of the design space without it. |
-| `contribution_rule` | Typically null (rest produces nothing). A future "Comfort" chamber could grant a small cash bonus for each fully-rested minion (no degraded/experimented tags present) — same existing schema, no new machinery. |
 
 ### Interaction with the tag pipeline
 
@@ -218,8 +223,121 @@ Rest rooms are ordinary chambers: they have `occupancy` (default 1), can hold on
 
 ---
 
+## 4. Tag Effects Table & Write/Read Boundary
+
+### Design intent
+
+A data-driven table mapping each tag ID to its mechanical effects (production modifiers, assignment restrictions, client value bonuses, etc.). Currently tags are applied/removed by the state system but their gameplay effects are ad-hoc. This becomes a formal `datafiles/tag_effects.json` (or equivalent) that all systems consult.
+
+### Write/Read Boundary Principle
+
+The tag system operates on a strict **write/read separation**:
+
+- **Writers** (conversion templates, minion upgrades, room `minion_effects`, reclamation completion) add or remove tag strings to/from the minion's flat `tags` array. They do not interpret what a tag means.
+- **Readers** (chamber bonus rules via `minion_has_tag`, the tag-effects table, reclamation gates, appearance resolution, UI display) query for tag *presence* and apply their own logic. They do not mutate tags.
+
+No system both writes and reads the same tag in the same pass. This keeps the single flat array as the sole mechanical surface and prevents circular dependencies between systems.
+
+### Example entries (illustrative — to be authored with content)
+
+```json
+// datafiles/tag_effects.json
+[
+  { "tag": "bionic_hand",   "effects": { "production_speed_lab": 1.10 } },
+  { "tag": "experimented",  "effects": { "fear_mana_resistance": -5, "value_to_scientist_client": 2 } },
+  { "tag": "scarred",       "effects": { "assignment_penalty_luxury": true } },
+  { "tag": "devoted",       "effects": { "lust_mana_bonus_any_room": 1 } }
+]
+```
+
+| Field | Purpose |
+|---|---|
+| `tag` | Tag ID (same string used everywhere else). |
+| `effects` | Map of effect keys → values. Effect keys are interpreted by whichever system reads them (chamber calc, assignment validation, client income, etc.). New effect keys are added as systems need them; absent = no effect. |
+
+### What changes when this ships
+
+| Area | Change |
+|---|---|
+| Data file | Author `tag_effects.json` with entries for all tags in use. |
+| Chamber calc / assignment / client income | Consult the effects table when evaluating bonuses, restrictions, or value modifiers. |
+| UI | Minion panel shows active tag effects as tooltips ("+10% Lab speed", "Cannot staff Luxury rooms"). |
+| No schema changes to existing systems — they already read tags; this just centralises *what* the tags do. |
+
+---
+
+## 5. Information Ascent — Gated Backstory & Preference Reveal
+
+### Design intent
+
+In v1, a guest's backstory text and its contributed tags are freely visible in the client panel. This feature adds **progressive information gating** via Influence spending, creating an information-ascent loop:
+
+1. **Unknown (default):** Guest shows name + town/season origin only. Backstory hidden; tags hidden.
+2. **Background revealed** (spend Influence): Backstory text becomes visible. The player now has narrative context but not yet the mechanical tag list.
+3. **Preferences revealed** (spend additional Influence or a separate action): The guest's full tag list is shown. This also unlocks the **conversion-cost discount** for that specific client (GDD §7).
+
+This creates a decision: spend scarce Influence to learn what a guest wants (enabling cheaper conversion and better room matching) vs. bank it for other uses (building permits, high-end upgrades). The two-layer reveal (text first, tags second) means the player gets narrative satisfaction before the mechanical payoff, pacing the information drip.
+
+### Data & implementation notes
+
+- No new data files needed — backstory and tags already exist on `obj_client`; this feature gates their *visibility* in UI.
+- Add a per-client state: `info_level` (0 = unknown, 1 = background revealed, 2 = preferences revealed). Persisted for save-system readiness.
+- Influence cost per reveal tier is data-driven (global constant or per-town scaling).
+- The conversion-cost discount (GDD §7) activates at `info_level >= 2`.
+
+### What changes when this ships
+
+| Area | Change |
+|---|---|
+| `obj_client` | Add `info_level` int field. |
+| Client panel UI | Conditionally show/hide backstory text and tag list based on `info_level`. "Reveal" button with Influence cost. |
+| Conversion cost calculation | Apply the background-knowledge discount only when `info_level >= 2`. |
+| GDD §7 / CLIENT_SYSTEM_SPEC | Update to reflect gated visibility (currently states freely visible for v1). |
+
+---
+
+## 6. Conversion Tag Hygiene — Master Remove List
+
+### Design intent
+
+Currently, each conversion template carries its own `tags_removed` array to strip contradictory tags from the inherited guest set (e.g., a *broken* minion shouldn't keep *happy*). As the tag vocabulary grows, maintaining per-template remove lists becomes error-prone: a new contradictory tag pair requires editing every template that could produce the conflict.
+
+A **master remove list** centralises this: a data-driven table mapping each tag to the set of tags it is mutually exclusive with. At conversion (and potentially at any tag-add event), the system consults this table and removes any conflicting tags automatically, regardless of which template or source added the new tag.
+
+### Data schema (proposed)
+
+```json
+// datafiles/tag_exclusions.json
+[
+  { "tag": "broken",    "excludes": ["happy", "defiant", "proud"] },
+  { "tag": "devoted",   "excludes": ["defiant", "independent"] },
+  { "tag": "terrified", "excludes": ["brave", "fearless"] }
+]
+```
+
+| Field | Purpose |
+|---|---|
+| `tag` | The tag being added. |
+| `excludes` | Tags that are removed from the minion if present when this tag is applied. Symmetric: if A excludes B, adding B also removes A (or author both directions explicitly). |
+
+### Interaction with existing systems
+
+- **Conversion templates:** Their per-template `tags_removed` arrays become optional overrides/supplements. The master list handles the common cases; a template can still specify extra removals for narrative specificity.
+- **Minion upgrades / room effects:** If a future tag-add event should also trigger exclusion checks, extend the call site to consult this table. In v1 of this feature, only conversion uses it.
+- **No schema changes** to `obj_minion` or existing data files — purely an additional lookup at tag-application time.
+
+### What changes when this ships
+
+| Area | Change |
+|---|---|
+| Data file | Author `tag_exclusions.json`. |
+| `scr_minion_tags.gml` | Extend `minion_tag_add()` (or add a wrapper) to check the exclusion table and remove conflicts. |
+| Conversion pipeline | Call the extended tag-add so exclusions apply automatically; per-template `tags_removed` still processed for any narrative-specific extras. |
+
+---
+
 ## Cross-Cutting Notes
 
-- **None of these three features change existing data-file schemas** except for clearly-marked optional additions (`recovery_actions`, draft-pool tuning fields) that are additive and backward-compatible.
-- **The single flat tag array is the contract.** All three features read/write `tags[]` via the same helpers from [`MINION_SYSTEM_SPEC.md`](MINION_SYSTEM_SPEC.md); nothing introduces a second classification surface (no hidden status enum, no good/bad flag). If any of them feels like it *needs* one, that's the signal to stop and extend this document first.
-- **Shipment order suggestion:** Tag Status Pipeline → Rest Rooms → Draft Selection. The pipeline is prerequisite for rest rooms to matter; draft selection is independent UI work that can slip without blocking either.
+- **None of these features change existing data-file schemas** except for clearly-marked optional additions (`recovery_actions`, draft-pool tuning fields, `tag_effects.json`, `tag_exclusions.json`) that are additive and backward-compatible.
+- **The single flat tag array is the contract.** All features read/write `tags[]` via the same helpers from [`MINION_SYSTEM_SPEC.md`](MINION_SYSTEM_SPEC.md); nothing introduces a second classification surface (no hidden status enum, no good/bad flag). If any of them feels like it *needs* one, that's the signal to stop and extend this document first.
+- **Shipment order suggestion:** Tag Status Pipeline → Rest Rooms → Draft Selection. The pipeline is prerequisite for rest rooms to matter; draft selection is independent UI work that can slip without blocking either. Tag Effects Table and Information Ascent are independent of the pipeline and can ship in any order relative to it. Conversion Tag Hygiene is a small refactor that becomes worthwhile once the tag vocabulary exceeds ~15 entries.
