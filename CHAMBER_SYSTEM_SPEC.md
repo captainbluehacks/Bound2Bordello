@@ -63,9 +63,10 @@ Each entry in a `chamber_types/*.json` array:
 | `display_name` | string | Human-readable name for UI. |
 | `size` | string (`"small"` / `"medium"` / `"large"`) | Footprint of the room; maps to the `ROOM_SIZE` enum (0/1/2) and `global.size_dims` (1×1 / 2×1 / 2×2). Used by the fixed-slot placement system to match a type to a reclaimed slot. Larger footprints touch more adjacent cells, so they feed more collectors/adders for free. |
 | `tags` | string[] | Intrinsic tags carried by this room type (e.g. `"private"`, `"luxury"`, `"dungeon"`). Used in synergy/tag-count calculations and as the input to collectors. |
-| `placement` | map (optional) | Placement restrictions. `floors`: array of FLOOR values the room may occupy; `walls`: `"interior"` / `"exterior"`. Absent = any floor/wall. Supports seasonal floor-gating and zoning. |
+| `placement` | map (optional) | Placement restrictions. `floors`: array of FLOOR values the room may occupy; `walls`: `"interior"` / `"exterior"`. Absent = any floor/wall. Supports per-room zoning. |
 | `requires.minion` | bool | If `true`, no production occurs without **at least one** assigned minion instance. If `false`, the room is **passive** (no minion needed) — used by collectors, adders, and reclamation obstacles. *(Earlier drafts stated "all rooms require a minion"; this was relaxed to allow minion-free utility/collector rooms.)* |
-| `requires.client` | bool | If `true`, no production occurs without a guest present that night. Most rooms are `true`; utility rooms (Dormitory, Inner Sanctum) are `false`. |
+| `requires.client` | bool | If `true`, no production occurs without **at least one** guest present that night. Most rooms are `true`; utility rooms (Dormitory, Inner Sanctum) are `false`. |
+| `client_capacity` | int (optional, default 1) | Maximum number of guests this chamber can hold simultaneously. Most rooms omit it (capacity 1). Multi-client rooms (e.g., The Bar: `"client_capacity": 4`) accept multiple guests; the `clients_present_count` condition and scalable bonuses use this count. |
 | `cost` | map (resource → int) | Secondary resources spent to build this room. Only list non-zero costs; absent keys cost 0. |
 | `base` | map (resource → int) | Flat resource output per night when prerequisites are met. Always applies (no conditions). May be empty `{}` for rooms that only produce via bonuses, aura, or abilities. |
 | `bonuses` | array of rule objects | Conditional additional outputs (see below). |
@@ -118,7 +119,7 @@ Evaluated by `scr_eval_condition(chamber, condition_map)`. Returns `true`/`false
 | `adjacent_room_type` | `room_type` (string or `"*"`), optional `direction` (`"up"`, `"down"`, `"left"`, `"right"`) | bool | Any adjacent chamber matches the given type. When `direction` is set, only chambers strictly touching that side of the room count (edge-touching adjacency, no diagonals — see [Directional Adjacency](#directional-adjacency)). |
 | `count_tag_on_floor` | `tag` (string), `per` (int, value per match), `max` (int cap) | int | Count of unique chambers on the same floor carrying that tag (including upgrade-added tags). Capped at `max`. |
 | `count_adjacent_tag` | `tag` (string), optional `max` (int cap) | int | Count of unique adjacent chambers carrying that tag (including upgrade-added tags). Capped at `max` if present. Used by collectors to harvest a tag from neighbouring rooms into a primary resource. |
-| `clients_present_count` | — | int | Number of clients assigned to this chamber for the night. Used by scalable/overflow rooms whose output grows with occupancy (e.g., Bar, Glass Room). |
+| `clients_present_count` | — | int | Number of clients in this chamber's `clients[]` array for the night. Used by scalable/overflow rooms whose output grows with occupancy (e.g., Bar, Glass Room). |
 | `minion_assigned` | — | bool | A minion instance is present in this chamber. |
 | `minion_has_tag` | `tag` (string) | bool | The assigned minion carries a specific tag. |
 | `floor_is` | `floor` (FLOOR enum value or name string) | bool | This chamber is on the specified floor. |
@@ -197,7 +198,7 @@ Aura is resolved as a **separate pass after** all per-chamber totals are compute
 
 `scr_calculate_chamber(chamber_instance)` executes in order:
 
-1. **Prerequisite gate.** Check `requires.minion` and `requires.client`. If unmet, return immediately with `{ total: {}, lines: [{ detail: reason }], active: false }`. No further evaluation.
+1. **Prerequisite gate.** Check `requires.minion` (at least one entry in `minions[]`) and `requires.client` (at least one entry in `clients[]`). If unmet, return immediately with `{ total: {}, lines: [{ detail: reason }], active: false }`. No further evaluation.
 2. **Base output.** Add all entries from the type's `base` map to the running total. Record one breakdown line.
 3. **Bonus rules.** For each rule in `bonuses[]`: evaluate its condition against the live grid. If triggered, apply `effects` (or `effects_per_match × count`). Record a breakdown line per triggered rule.
 4. **Upgrade contribution.** If an upgrade is installed and compatible: add its `effects` to the total. Record a breakdown line.
@@ -251,7 +252,18 @@ The grid is 10 columns × 8 rows. Floor is derived from `grid_y`:
 
 Two helper functions: `scr_grid_y_to_floor(y)` and `scr_floor_to_grid_rows(floor) → [min, max]`. The floor is computed at instance creation from the passed `grid_y` and stored on the instance.
 
-Floors are also gated by season (Spring = Ground only; each later season unlocks another floor). A room's `placement.floors` further restricts which of the *available* floors it may occupy, so seasonal availability and per-room zoning compose.
+### Floor Access & Reclamation Gating
+
+Floors are **not** unlocked by a simple seasonal timer. Instead, each floor's reclamation obstacles carry `requires_tags` that can only be satisfied once the player has secured the relevant ally (who grants those tags via minion effects, upgrades, or scripted events):
+
+| Floor | Reclamation Tier | Gating Mechanism |
+|---|---|---|
+| Ground | Clutter (tier 1) | No tag requirement — any minion can clear. Available from the start of Spring. |
+| Basement | Rubble/Hazards (tier 2–3) | Requires tags granted by the **Necromancer** ally (secured in Summer). Exact tags TBD via playtest. |
+| First Floor | Hazards/Seals (tier 3–4) | Requires tags granted by the **Cult Leader** ally (secured in Autumn). Exact tags TBD via playtest. |
+| Attic | Seals (tier 4) | Requires a high-level tag or combination; likely gated by final-season progression. TBD. |
+
+A room's `placement.floors` further restricts which floors it may occupy *once that floor is accessible*, so per-room zoning composes with reclamation gating. The exact tag-to-floor mapping and tier assignments are data-driven in the obstacle JSON and subject to playtest tuning.
 
 ## Reclamation Obstacles
 
@@ -299,7 +311,7 @@ Set at creation (via `instance_create_layer` argument map or post-creation):
 | `grid_x`, `grid_y` | int | Top-left cell position on `mansion_map`. Passed from blueprint layout data. |
 | `floor` | FLOOR enum | Derived: `scr_grid_y_to_floor(grid_y)`. |
 | `minions` | array of up to `occupancy` instances (`no` = empty slot) | Minions assigned to this chamber (persistent across nights). Capacity comes from the type's optional `occupancy` field, default 1 — single-slot rooms simply hold one entry. Set during Day Phase management; slots stay empty for passive rooms (`requires.minion: false`). Tag/prerequisite checks (`minion_assigned`, `minion_has_tag`) test **any** occupied slot. |
-| `client` | instance or `no` | Guest present this night. Set during Night Phase funnel; reset each cycle. Scalable rooms may track multiple clients for `clients_present_count`. |
+| `clients` | array of up to `client_capacity` instances (`no` = empty slot) | Guests present this night. Capacity comes from the type's optional `client_capacity` field, default 1. Set during Night Phase funnel; reset each cycle (all entries set to `no`). Single-client rooms simply hold one entry. The `requires.client` gate checks for at least one non-`no` entry; `clients_present_count` returns the count of occupied slots. |
 | `upgrade_id` | string or `""` | Installed upgrade ID, or empty if none. One per room max. |
 | `reclaim_nights_remaining` | int (obstacles only) | Current clearing progress. Initialised to `nights_to_clear` from the type's `reclaim` block. Decrements each night a valid minion is assigned. At 0, the obstacle converts to a buildable slot. |
 

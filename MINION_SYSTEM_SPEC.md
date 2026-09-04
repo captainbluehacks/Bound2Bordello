@@ -101,7 +101,7 @@ If tags later need categories (e.g., for UI filtering, targeted removal by type,
 
 ## Conversion
 
-Conversion is a **night-phase** action (GDD §2: The Hunt — escort a guest into a Private-tagged room). It produces one new minion and removes one guest; it is *not* an in-place mutation of the guest instance.
+Conversion is a **night-phase** action (GDD §2: The Hunt — escort a guest into a Private-tagged room). It occurs **after** production has resolved for the night; the converted guest has already generated their income for this cycle but is removed from all future earnings. It produces one new minion and removes one guest; it is *not* an in-place mutation of the guest instance.
 
 ### Template Data (`datafiles/minion_conversion_templates.json`)
 
@@ -113,7 +113,7 @@ Templates are named, player-selectable options shown on the conversion screen (s
     "id": "devotion_ritual",
     "display_name": "Rite of Devotion",
     "description": "Bind them with lust and longing. The resulting minion serves out of love.",
-    "cost": { "lust_mana": 40, "sexual_energy": 1 },
+    "cost": { "lust_mana": 40 },
     "gate": { "requires_rooms": ["boudoir"], "requires_allies": [] },
     "quirk": "devoted",
     "tags_added": ["devoted", "loyal"],
@@ -124,7 +124,7 @@ Templates are named, player-selectable options shown on the conversion screen (s
     "id": "break_ritual",
     "display_name": "The Breaking",
     "description": "Grind them down until only obedience is left.",
-    "cost": { "humiliation_mana": 40, "sexual_energy": 1 },
+    "cost": { "humiliation_mana": 40 },
     "gate": { "requires_rooms": ["sex_dungeon"], "requires_allies": [] },
     "quirk": "broken",
     "tags_added": ["broken", "compliant"],
@@ -135,7 +135,7 @@ Templates are named, player-selectable options shown on the conversion screen (s
     "id": "terror_ritual",
     "display_name": "Whisper in the Walls",
     "description": "Show them what lives beneath the floorboards.",
-    "cost": { "fear_mana": 40, "sexual_energy": 1 },
+    "cost": { "fear_mana": 40 },
     "gate": { "requires_rooms": [], "requires_allies": [] },
     "quirk": "terrified",
     "tags_added": ["terrified", "obedient"],
@@ -152,7 +152,7 @@ Templates are named, player-selectable options shown on the conversion screen (s
 | `id` | string | Unique template identifier. |
 | `display_name` | string | Player-facing name in the conversion UI list. |
 | `description` | string | One-paragraph blurb shown on hover/selection. |
-| `cost` | map | Resources paid at conversion (e.g., `{ "lust_mana": 40, ... }`). Mana flavour drives the quirk per GDD §7. **Separate from** the preference-matching discount and background-knowledge discount in GDD §7 Conversion Cost, which apply on top of this base cost. |
+| `cost` | map | Resources paid at conversion (e.g., `{ "lust_mana": 40 }`). Mana flavour drives the quirk per GDD §7. **Separate from** the preference-matching discount and background-knowledge discount in GDD §7 Conversion Cost, which apply on top of this base cost. |
 | `gate.requires_rooms` | string[] (optional) | Template is only *shown/selectable* if these chamber types exist built in the mansion. |
 | `gate.requires_allies` | string[] (optional) | Template requires these allies secured (e.g., advanced rites unlocked by ally gateways). |
 | `quirk` | string | Quirk written to the minion and added as a tag. Drives mana-flavour behaviour and friend-archetype matching. |
@@ -167,7 +167,8 @@ Cost/gate numbers above are placeholders to tune; the schema is what matters.
 ```
 function scr_convert_guest(_guest, _template) -> obj_minion:
     1. Validate gate (rooms/alleys built) and afford `cost`; pay on success.
-       The guest's night is forfeited — they generate no resources this cycle (GDD §7).
+       The guest has already produced income this night (The Hunt is after Production);
+       conversion removes them from all future earnings (GDD §7).
     2. Draw 3 random names from minion_names.json (no duplicates, excluding
        already-used minion names); present in UI. On selection use that name;
        if the player skips/defaults, keep _guest.name.
@@ -312,9 +313,9 @@ Because history is never read mechanically, writers can add entries freely witho
 
 | System | Interface |
 |---|---|
-| Chamber production (step 3 night pipeline) | Reads minion presence + `minion_has_tag` conditions from chamber bonus rules; minions never write resources directly. Multi-occupancy: a room with N minions still evaluates its contribution once per night (occupancy affects staffing, not output — unless a future rule says otherwise). |
+| Chamber production (step 2 night pipeline) | Reads minion presence + `minion_has_tag` conditions from chamber bonus rules; minions never write resources directly. Multi-occupancy: a room with N minions still evaluates its contribution once per night (occupancy affects staffing, not output — unless a future rule says otherwise). |
 | Reclamation (`reclaim` blocks) | Assignment-only gate + `nights_to_clear`; obstacle replaced by buildable slot on completion. |
-| Client system | Source of identity/tags/backstory; guest destroyed at conversion; fixed-pool income reduced permanently (GDD §7 trade-off). |
+| Client system | Source of identity/tags/backstory; guest destroyed at conversion; fixed-pool income reduced permanently (GDD §7 trade-off). The Hunt occurs after Production, so the converted guest's current-night income is already banked. |
 | Friends (GDD §5/§8) | `is_friend` minions with authored identities; best friend is the first converted minion via scripted event, not this pipeline's Hunt path. Nerd protection (halts tag accumulation for self + roommates) applies to whatever nightly tag system exists at implementation time — in v1 there are no nightly tags yet, so it's a no-op until the future pipeline lands. |
 
 ## Extensibility Notes

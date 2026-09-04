@@ -12,7 +12,7 @@
 ### Day Phase (Management & Planning)
 *   **Building:** Vertical "Dollhouse" construction. Rooms are placed on floors; adjacent (vertical / horizontal) placement creates synergies (buffs/penalties).
 *   **Personnel Management:** Assigning minions to rooms.
-*   **Minion Upgrades:** Purchasing data-driven upgrades for minions (grants tags). Available any time during the Day Phase as long as resources remain. See [`MINION_STATE_SPEC.md`](MINION_STATE_SPEC.md) § Minion Upgrades.
+*   **Minion Upgrades:** Purchasing data-driven upgrades for minions (grants tags). Available any time during the Day Phase as long as resources remain. See [`MINION_SYSTEM_SPEC.md`](MINION_SYSTEM_SPEC.md) § Minion Upgrades.
 
 ### Night Phase (Operation & Hunting)
 *   **The Funnel:** Clients arrive at the **House**. They will select **chambers** according to their preferences.
@@ -82,7 +82,7 @@ A bad draft (e.g., no Fear archetype) must never hard-softlock a strategy: the d
 *   **Inner Sanctum:** A private room which grants access to additional succubus abilities.
 *   **The Bar:** Allows one minion to deal with multiple clients
 *   **Dormitory:** Minion recovery. Removes tags from the minion's tag list (oldest first). Can hold multiple minions (occupancy > 1). Adds positive tags based on upgrades.
-*   **The Boudoir:** The primary engine. Modular upgrades (e.g., strap-ons, gags) determine which flavor of Mana is produced.
+*   **The Boudoir:** The primary engine. Its installed upgrade determines which flavor of Mana is produced (e.g., a whip set shifts output toward Humiliation; silk restraints toward Lust).
 
 ### Ally Gateway Rooms (Phase 1 Goals):
 *   **Morgue/Graveyard -> Necromancer.**
@@ -95,8 +95,8 @@ Rooms will have tags (*luxury*, *private*, *dungeon*, etc). These will be used t
 
 ## 7. Minions
 ### Conversion:
-Humans are converted using Mana + Sexual Energy. The flavor of mana used during conversion determines the minion's "Quirk" (Devoted, Broken, or Terrified).
-* **Forfeited production.** The conversion consumes that guest's night: they generate no Secondary resources that cycle. Converting therefore costs Mana *plus* one night of that client's income, reinforcing the fixed-pool trade-off (§Guest Pool).
+Humans are converted using Mana (the flavor of mana spent determines the minion's Quirk: Devoted, Broken, or Terrified).
+* **Forfeited future income.** Converting a guest removes them from the fixed pool permanently — every remaining night of their potential income across all future cycles and seasons is lost. Converting therefore costs Mana *plus* the long-term income stream that client would have generated, reinforcing the fixed-pool trade-off (§Guest Pool).
 
 ### Conversion Templates
 The player selects **one** conversion template per conversion event. Templates are data-driven (JSON) and define:
@@ -105,7 +105,7 @@ The player selects **one** conversion template per conversion event. Templates a
 - Tags removed from the guest's existing tags if present (prevents contradictions, e.g., a "broken" minion shouldn't be "happy").
 - Resource cost and availability gating (rooms built, allies secured).
 
-See [`MINION_STATE_SPEC.md`](MINION_STATE_SPEC.md) § Conversion Templates for full schema.
+See [`MINION_SYSTEM_SPEC.md`](MINION_SYSTEM_SPEC.md) § Conversion for full schema.
 
 ### Guest Pool (Fixed)
 *   **Minions are mostly converted guests.** The guest pool is generated at the start of the playthrough, not each night. Converting a guest permanently removes them from the resource-generating pool — every minion gained is income you will never earn again.
@@ -126,7 +126,7 @@ See [`MINION_STATE_SPEC.md`](MINION_STATE_SPEC.md) § Conversion Templates for f
 *   **Influence buys knowledge:** Spending Influence reveals a guest's background and preferences — which also carries a mechanical effect: it reduces that specific client's conversion cost.
 
 ### Conversion Cost
-*   Converting a client costs a large amount of temporary Mana (base ~40).
+*   Converting a client costs a large amount of Mana (base ~40).
 *   Each appropriate tag match between the room (and its upgrades) and the client's preferences reduces the cost — up to 2 tags. Example: a client tagged *dominant* + *violent* converted in the Sex Dungeon with the whip upgrade costs 20 instead of 40; converting them without an appropriate room costs full price.
 *   Background knowledge (above) applies as a further personal discount on that specific client.
 
@@ -149,7 +149,7 @@ The Nerd (Section 5) is the exception: her presence halts tag accumulation for h
 ### Minion Upgrades
 Data-driven purchases available during the Day Phase. Grant tags to the minion (specific effects are a later addition). Gated by existing tags on the minion, rooms available in the mansion, and/or quirk compatibility. First pass: a simple list; a draft/pick mechanic is planned for a later stage.
 
-See [`MINION_STATE_SPEC.md`](MINION_STATE_SPEC.md) § Minion Upgrades for full schema.
+See [`MINION_SYSTEM_SPEC.md`](MINION_SYSTEM_SPEC.md) § Minion Upgrades for full schema.
 
 ### History & Appearance
 *   **History:** Each minion carries a flavour log (`history` array). Updated by conversion (always first), terminal events, upgrades, story beats, and random room-based assignments. Entries are flavour only — mechanical effects are driven by tags, not history text.
@@ -161,10 +161,12 @@ See [`MINION_STATE_SPEC.md`](MINION_STATE_SPEC.md) § Minion Upgrades for full s
 *   **No orphan handling.** Rooms cannot be destroyed, so minion→room references never dangle due to room removal.
 
 ## 8. Narrative Progression (The Four Seasons)
-1.  **Spring: The Hustle (Survival):** Establish base, survive taxes, and build the specific room required to secure the first Ally.
-2.  **Summer: The Manager (Growth):** Scale operations, gain access to second floor, and attract a second Ally.
-3.  **Autumn: The Empire (The Crisis):** gain access to third floor; choose objectives based on current Allies/Resources.
-4.  **Winter: The Ascension (Finale):** Final choice—sacrifice allies to the demon for freedom or conquer the demon to take their place, or fail and be taken to hell.
+1.  **Spring: The Hustle (Survival):** Establish base on the Ground Floor (clutter-tier reclamation requires no special tags), survive taxes, and build the specific room required to secure the first Ally.
+2.  **Summer: The Manager (Growth):** Scale operations; securing an ally grants reclamation tags that unlock additional floors (e.g., Necromancer → Basement). Attract a second Ally. New seasonal visitors join the guest pool.
+3.  **Autumn: The Empire (The Crisis):** Further ally-granted tags open remaining floors (e.g., Cult Leader → First Floor); choose objectives based on current Allies/Resources. New seasonal visitors join the guest pool.
+4.  **Winter: The Ascension (Finale):** Final choice—sacrifice allies to the demon for freedom or conquer the demon to take their place, or fail and be taken to hell. City visitors join the guest pool.
+
+*Floor access is gated by reclamation tags granted through ally progression, not by automatic seasonal unlocks. The exact tag-to-floor mapping and balance are subject to playtest tuning.*
 
 ## 9. Technical Implementation
 *   **Engine:** Game Maker.
@@ -185,6 +187,6 @@ See [`MINION_STATE_SPEC.md`](MINION_STATE_SPEC.md) § Minion Upgrades for full s
 Items identified as needed but not yet designed in detail:
 
 *   **Save System:** The game will need a save/load system. Scope, format (JSON snapshot vs. serialised instance state), save frequency (per-cycle? manual?), and cloud/local storage approach are all open. To be designed once core systems are stabilised.
-*   **Tag Effects Table:** A data-driven table mapping each tag ID to its mechanical effects (production modifiers, assignment restrictions, client value bonuses, etc.). Currently tags are applied/removed by the state system but their gameplay effects are ad-hoc. Will become a formal `tag_effects.json` or equivalent.
+*   **Tag Effects Table:** A data-driven table mapping each tag ID to its mechanical effects (production modifiers, assignment restrictions, client value bonuses, etc.). Currently tags are applied/removed by the state system but their gameplay effects are ad-hoc. Will become a formal `tag_effects.json` or equivalent. See [`FUTURE_FEATURES.md`](FUTURE_FEATURES.md) §4.
 *   **Upgrade Draft Mechanic:** Replace the flat minion-upgrade list with a pick-N-of-M draft selection for more strategic depth. Data schema unchanged; UI/flow change only.
 *   **Minion Upgrade Specific Effects:** Beyond tag-granting, upgrades may carry direct mechanical effects (e.g., reduce progression track duration by 1 night, add a flat resource bonus). Schema extension to `minion_upgrades.json`.

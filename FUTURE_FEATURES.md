@@ -76,11 +76,15 @@ Each assigned minion rolls `apply_chance` once per night, then the actions apply
 
 **Nerd protection carve-out** (GDD §5): if the best friend is *nerd* (no tags), they and every minion in their assigned room are exempt from `minion_effects` application that night. Implementation: one boolean check per chamber before its effect roll; no other system needs to know.
 
-### Night resolution order (extended pipeline)
+### Night resolution order (full pipeline)
 
-Inserted after step 3 (Production & Contribution) of the [`CHAMBER_SYSTEM_SPEC.md`](CHAMBER_SYSTEM_SPEC.md) pipeline:
+The complete night-phase pipeline, with this feature's step inserted:
 
 ```
+1. Funnel — assign clients to chambers (clients[] populated).
+2. Production — scr_calculate_night_earnings() → apply resources.
+3. The Hunt — player optionally converts a guest into a minion (guest destroyed;
+   their current-night income is already banked from step 2; all future income lost).
 4. Minion Status Resolution   ← this feature
    For each minion, per their current chamber:
      a. Apply minion_effects (chance roll → actions).
@@ -93,9 +97,12 @@ Inserted after step 3 (Production & Contribution) of the [`CHAMBER_SYSTEM_SPEC.m
            (e.g., removed or set back one chain step).
         3. On "cull" (index 0): destroy the minion instance, clear from chamber.minions[],
            append final history line.
-   d. Random room-flavoured history entries roll here too (chance per chamber type, pool keyed by chamber — see MINION_SYSTEM_SPEC.md §History).
+   d. Random room-flavoured history entries roll here too (chance per chamber type,
+      pool from chamber's `history_flavour` array — see CHAMBER_SYSTEM_SPEC.md).
 5. Story beats / narrative triggers.
-6. Cycle rollover: cycle += 1; build next night's visitor list from the fixed pool (converted guests excluded permanently — GDD §7).
+6. Cycle rollover: cycle += 1; build next night's visitor list from the fixed pool
+   (converted guests excluded permanently). At season boundaries, generate and add
+   the new season's town guests to the pool (GDD §7 seasonal pools).
 ```
 
 ### What changes when this ships
