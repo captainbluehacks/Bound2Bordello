@@ -45,6 +45,7 @@ objects/
 |---|---|---|
 | `minion_id` | int/string | Unique ID (save-system-ready). |
 | `name` | string | Display name. Chosen at conversion from 3 random picks drawn from `minion_names.json`; if the player doesn't choose, keeps the guest's name. Friends use their archetype-based names instead. |
+| `guest_name` | string | Original guest name before conversion (retained for reference/flavour — e.g., shown in tooltips: "Formerly known as Margaret"). Friends carry their authored identity name here instead. |
 | `tags` | string[] | Single flat tag list — identity tags, quirk tag, acquired tags, upgrade-granted tags all live here unclassified (see [Tags](#tags)). |
 | `quirk` | string or `""` | Convenience mirror of the conversion template's quirk (`"devoted"`, `"broken"`, `"terrified"`, …). Also present as a tag in `tags`; kept separate for cheap UI/lookup. Friend minions carry their archetype quirk (GDD §5). |
 | `backstory` | string | Copied verbatim from the converted guest's backstory. Shown in the minion panel alongside history. |
@@ -93,6 +94,10 @@ function minion_refresh_appearance(_minion);
 ```
 
 Any code path that mutates `tags` must call `minion_refresh_appearance()` afterwards so the sprite stays in sync.
+
+### Design Principle: Categorisation Is Lookup, Not Storage
+
+If tags later need categories (e.g., for UI filtering, targeted removal by type, or grouped display), categorisation is a **lookup concern**, not a storage concern. Add a `category` field to the tag-effects data file (see [FUTURE_FEATURES.md](FUTURE_FEATURES.md) §Tag Effects Table). The minion instance's flat `tags` array remains unchanged — no `tags_positive[]` / `tags_negative[]` split, no polarity enum on the instance. This keeps the single-array invariant intact regardless of how many classification axes are added later.
 
 ## Conversion
 
@@ -168,6 +173,7 @@ function scr_convert_guest(_guest, _template) -> obj_minion:
        if the player skips/defaults, keep _guest.name.
     3. Create new obj_minion instance:
          tags        = copy(_guest.tags)
+         guest_name  = _guest.name
          backstory   = copy of _guest.backstory (verbatim)
          history     = [ { cycle: current_cycle, text: template.text } ]
          quirk       = template.quirk
@@ -257,7 +263,7 @@ While a minion is assigned to an obstacle, the obstacle produces nothing that ni
 | `id` / `display_name` / `description` | string | Same conventions as chamber upgrades. |
 | `compatible_types` | string[] | Fixed to `["minion"]`; mirrors the field name so minion and chamber upgrades share one loader if merged later. |
 | `cost` | map | Resources required at purchase (day phase, anytime). |
-| `gate.requires_tags` | string[] (optional) | Minion must carry all listed tags for the upgrade to be selectable (e.g., a *broken* minion's obedience gear). |
+| `gate.requires_tags` | string[] (optional) | Minion must carry all listed tags for the upgrade to be selectable (e.g., a *broken* minion's obedience gear). Quirk compatibility is expressed here — e.g., `["broken"]` restricts to broken-quirk minions. |
 | `gate.requires_rooms` | string[] (optional) | These chamber types must exist built (mirrors conversion template gating — e.g., lab-forged upgrades need the Basic Lab). |
 | `tags_added` | string[] | Tags applied to the minion on purchase. The entire mechanical payload in v1. |
 
@@ -289,7 +295,8 @@ Order in the file is priority order (topmost wins on multiple matches), so appea
 
 ## Backstory & History
 
-- **Backstory**: authored pool in `backstories.json` — short paragraphs with no base mechanical effect ("the bishop who shouldn't be here", "the virgin"…). A random entry is assigned when each guest/client is created (see [`CLIENT_SYSTEM_SPEC.md`](CLIENT_SYSTEM_SPEC.md)) and copied verbatim to the minion at conversion. Spending Influence reveals a guest's background (GDD §7) — i.e., it's known data gated behind UI, not generated on reveal.
+- **Backstory**: authored pool in `backstories.json` — short paragraphs with no base mechanical effect ("the bishop who shouldn't be here", "the virgin"…). A random entry is assigned when each guest/client is created (see [`CLIENT_SYSTEM_SPEC.md`](CLIENT_SYSTEM_SPEC.md)) and copied verbatim to the minion at conversion.
+- **v1 visibility:** In v1, a guest's backstory text *and* its contributed tags are **freely visible** in the client panel without spending Influence. Gated information ascent (spending Influence to progressively reveal backstory → preferences → conversion discount) is deferred — see [FUTURE_FEATURES.md](FUTURE_FEATURES.md) §Information Ascent.
 - **History**: `history[]` of `{ cycle: int, text: string }`, flavour only. Written by:
   | Source | Example |
   |---|---|
@@ -297,7 +304,7 @@ Order in the file is priority order (topmost wins on multiple matches), so appea
   | Terminal events | Cull/flee/restore outcomes (once the future status pipeline lands); also friend story terminals (Autumn capture, Winter sacrifice). |
   | Upgrades | Purchase event line. |
   | Story beats | Best-friend arc paragraphs, ally-gateway moments, authored narrative triggers. |
-  | Random room-flavoured entries | Low-chance per-night flavour lines drawn from a pool keyed to the minion's current chamber (pure presentation; never mechanical). |
+  | Random room-flavoured entries | Low-chance per-night flavour lines drawn from the chamber type's `history_flavour` array (see [`CHAMBER_SYSTEM_SPEC.md`](CHAMBER_SYSTEM_SPEC.md) §Chamber Type Definition). Pure presentation; never mechanical. |
 
 Because history is never read mechanically, writers can add entries freely without touching game logic — but any *meaningful* consequence must be expressed as a tag so effects stay on the single mechanical surface.
 

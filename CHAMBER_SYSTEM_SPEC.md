@@ -73,6 +73,7 @@ Each entry in a `chamber_types/*.json` array:
 | `occupancy` | int (optional, default 1) | Max minion instances the room can hold simultaneously (e.g., Dormitory = 3). Rooms with a single slot simply omit it. See [Minion Effects](#minion-effects-room-side). |
 | `minion_effects` | map (optional) | Rules for how this room modifies the minions assigned to it each night. See [Minion Effects](#minion-effects-room-side) below and [`MINION_STATE_SPEC.md`](MINION_STATE_SPEC.md) for full details. |
 | `reclaim` | map (optional) | Present on reclamation obstacle types only — `{ tier, nights_to_clear, requires_tags }`. See [Reclamation Obstacles](#reclamation-obstacles). |
+| `history_flavour` | string[] (optional) | Pool of random flavour text lines for the minion history system. Each night, a low-chance roll per assigned minion may append one line drawn from this array to their `history` (see [`MINION_SYSTEM_SPEC.md`](MINION_SYSTEM_SPEC.md) §History). Presentation only — never mechanical. If the pool grows too large for comfort, extract to a separate JSON file keyed by type ID. |
 
 The loader tags each entry with a `source_ally` string (derived from the filename) for build-gating and flavour, but the calculation engine ignores it.
 
