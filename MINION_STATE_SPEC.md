@@ -23,7 +23,7 @@ datafiles/
     names/
         guest_names.json            ← pool of guest/client names (randomly assigned)
         minion_names.json           ← pool of minion names (player picks from 3 at conversion)
-    backstories.json                ← pool of backstory entries (randomly assigned to guests)
+    backstories.json                ← pool of backstory entries with optional tags (randomly assigned to guests)
 
 scripts/
     scr_minion_state.gml            ← nightly processing: advance tracks, apply tags, handle terminals
@@ -85,7 +85,7 @@ The Hunt (conversion):
      a. Guest instance is removed from the active guest pool.
      b. New obj_minion instance is created.
      c. Minion's `tags` array is initialised:
-        - Start with any tags the guest carried that are transferable (preference tags, etc.).
+        - Start with any tags the guest carried that are transferable (preference tags, backstory tags, etc.).
         - Apply `tags_to_add` from the chosen template.
         - Remove any tags listed in `tags_to_remove` (if present on the guest).
      d. Minion's `backstory` is copied from the guest.
@@ -299,19 +299,49 @@ A minion's visual appearance is determined by their current tag list.
 
 ## Backstories
 
-- Stored in **`datafiles/backstories.json`** as a flat array of string entries (or objects with `id` + `text` if metadata is needed later).
+- Stored in **`datafiles/backstories.json`** as an array of objects. Each entry has a `text` field (the flavour narrative) and an optional `tags` array.
 - When the guest pool is generated, each guest is assigned a random backstory from this list (sample without replacement, same as names).
-- The backstory has **no base mechanical effect** — it is pure flavour that gives the player story material.
+- **Tag application:** If the backstory defines a non-empty `tags` array, those tags are added to the guest's tag list at creation time. This gives the flavour text mechanical weight — a "bishop" background might carry `"holy"` and `"repressed"`, affecting preference matching and conversion cost discounts. An abusive husband might carry `"dominant"`, `"violent"`. The narrative text itself has no direct effect; all mechanical impact flows through the tags it contributes.
 - At conversion, the guest's backstory is copied to `minion.backstory` and forms the first part of `history[0]` (see Conversion Process step 5e).
 
 ```json
 [
-  "A parish vicar who came looking for salvation and found something else entirely.",
-  "The town sheriff's wife. She tells herself it's only for the money.",
-  "A college professor researching the mansion's history. The research is going poorly.",
-  ...
+  {
+    "id": "parish_vicar",
+    "text": "A parish vicar who came looking for salvation and found something else entirely.",
+    "tags": ["holy", "repressed"]
+  },
+  {
+    "id": "sheriffs_wife",
+    "text": "The town sheriff's wife. She tells herself it's only for the money.",
+    "tags": ["loyal", "guilty"]
+  },
+  {
+    "id": "wife_beater",
+    "text": "A large man with a larger temper. His wife left him; he hasn't let her forget it.",
+    "tags": ["dominant", "holy", "violent"]
+  },
+  {
+    "id": "college_professor",
+    "text": "A college professor researching the mansion's history. The research is going poorly.",
+    "tags": []
+  }
 ]
 ```
+
+### Backstory Schema
+
+| Field | Type | Purpose |
+|---|---|---|
+| `id` | string | Unique identifier (used for save-state reference and potential future story-beat targeting). |
+| `text` | string | The flavour narrative shown to the player. Copied to the minion at conversion. |
+| `tags` | string[] (optional) | Tags applied to the guest's tag list when they are created. These influence preference matching, conversion cost discounts, and any tag-based effects. Empty or absent = purely cosmetic backstory with no mechanical tags contributed. |
+
+### Design Notes
+
+- Backstory tags are **in addition to** any town-bias tags randomly allocated during pool generation (GDD §7). A guest's full tag list at creation = town bias tags + backstory tags.
+- The player can see the backstory text (via Influence purchase or other reveal mechanics) but the tags it carries are only visible if the player has also revealed preferences — maintaining the information-ascent design.
+- Not every backstory needs tags. Some are pure flavour and carry an empty `tags` array.
 
 ## Progression Tracks (Data)
 

@@ -122,7 +122,7 @@ See [`MINION_STATE_SPEC.md`](MINION_STATE_SPEC.md) § Conversion Templates for f
 
 ### Preferences & Backgrounds
 *   **Preference tags:** Clients carry preference tags (e.g., a dominant client won't want to be tied up). Room tags therefore serve two roles: minion assignment compatibility *and* guest preference satisfaction.
-*   **Backgrounds:** Each guest has a random background with no base mechanical effect, giving the player story material (the bishop who shouldn't be here, the virgin, the wife-beater…). Backgrounds are stored in JSON (`datafiles/backstories.json`) and randomly assigned when the guest pool is generated. At conversion, the backstory is copied to the minion and forms part of their first history entry.
+*   **Backgrounds:** Each guest has a random background giving the player story material (the bishop who shouldn't be here, the virgin, the wife-beater…). Backgrounds are stored in JSON (`datafiles/backstories.json`) and randomly assigned when the guest pool is generated. Each backstory may carry optional tags that are applied to the guest on creation — e.g., a "parish vicar" background adds `"holy"`, `"repressed"`; an abusive husband might add `"dominant"`, `"violent"`. The narrative text itself has no mechanical effect; all impact flows through these tags, which influence preference matching and conversion cost. At conversion, the backstory is copied to the minion and forms part of their first history entry.
 *   **Influence buys knowledge:** Spending Influence reveals a guest's background and preferences — which also carries a mechanical effect: it reduces that specific client's conversion cost.
 
 ### Conversion Cost
