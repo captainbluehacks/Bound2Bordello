@@ -264,7 +264,7 @@ function scr_count_tag_on_floor(_chamber, _tag, _max) {
     
     // Determine which row(s) of the grid correspond to this chamber's floor
     // (Your FLOOR enum maps to grid_y ranges — adjust to your layout)
-    var _floor_rows = scr_get_floor_row_range(_chamber.y);
+    var _floor_rows = scr_grid_y_to_floor(_chamber.grid_y);
     
     for (var _y = _floor_rows[0]; _y <= _floor_rows[1]; _y++) {
         for (var _x = 0; _x < ds_grid_width(global.mansion_map); _x++) {
@@ -288,7 +288,7 @@ function scr_count_tag_on_floor(_chamber, _tag, _max) {
 
 
 /// @description Given a rooms Y coord, return the pair of y coords that are on the same floor.
-function scr_get_floor_row_range(_y) {
+function scr_grid_y_to_floor(_y) {
     // Adjust these ranges to match your actual grid layout:
     // e.g. basement = rows 6-7, ground = rows 4-5, first = rows 2-3, attic = rows 0-1
 
