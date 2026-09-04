@@ -13,6 +13,7 @@
     {"$GMFolder":"","%Name":"Camera","folderPath":"folders/Camera.yy","name":"Camera","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Chamber","folderPath":"folders/Chamber.yy","name":"Chamber","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Game Manager","folderPath":"folders/Game Manager.yy","name":"Game Manager","resourceType":"GMFolder","resourceVersion":"2.0",},
+    {"$GMFolder":"","%Name":"tests","folderPath":"folders/tests.yy","name":"tests","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Libraries","folderPath":"folders/Libraries.yy","name":"Libraries","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"GMTL","folderPath":"folders/Libraries/GMTL.yy","name":"GMTL","resourceType":"GMFolder","resourceVersion":"2.0",},
     {"$GMFolder":"","%Name":"Core","folderPath":"folders/Libraries/GMTL/Core.yy","name":"Core","resourceType":"GMFolder","resourceVersion":"2.0",},

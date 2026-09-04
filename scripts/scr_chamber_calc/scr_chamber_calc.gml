@@ -1,12 +1,17 @@
 /// @description Calculate a single chamber's total contribution + breakdown.
 /// @param {instance} _chamber The obj_chamber instance.
+/// @param {struct} [_type_def] Optional: A custom type definition (use this for testing!)
 /// @return {map} { total: map, lines: array }
-function scr_calculate_chamber(_chamber) {
-    var _type_def = scr_get_chamber_type(_chamber.chamber_type);
-    if (_type_def == undefined) return { total: {}, lines: [], active: false };
+function scr_calculate_chamber(_chamber, _type_def = undefined) {
+    // --- REFACTOR: Dependency Injection ---
+    // If we passed a _type_def (from a test), use it. 
+    // Otherwise, look up the real one from the game data.
+    var _actual_type_def = is_undefined(_type_def) ? scr_get_chamber_type(_chamber.chamber_type) : _type_def;
+    
+    if (_actual_type_def == undefined) return { total: {}, lines: [], active: false };
     
     // 1. Check if the chamber is actually running (Prerequisites)
-    var _gate = scr_chamber_check_prerequisites(_type_def, _chamber);
+    var _gate = scr_chamber_check_prerequisites(_actual_type_def, _chamber);
     if (!_gate.active) {
         return {
             total: {},
@@ -20,12 +25,13 @@ function scr_calculate_chamber(_chamber) {
     var _lines = []; 
     
     // 2. Process the three stages of production
-    scr_chamber_apply_base(_type_def, _total, _lines);
-    scr_chamber_apply_bonuses(_chamber, _type_def, _total, _lines);
+    scr_chamber_apply_base(_actual_type_def, _total, _lines);
+    scr_chamber_apply_bonuses(_chamber, _actual_type_def, _total, _lines);
     scr_chamber_apply_upgrades(_chamber, _total, _lines);
     
     return { total: _total, lines: _lines, active: true };
 }
+
 
 
 function scr_chamber_check_prerequisites(_type_def, _chamber) {
