@@ -64,13 +64,14 @@ Each entry in a `chamber_types/*.json` array:
 | `size` | string (`"small"` / `"medium"` / `"large"`) | Footprint of the room; maps to the `ROOM_SIZE` enum (0/1/2) and `global.size_dims` (1×1 / 2×1 / 2×2). Used by the fixed-slot placement system to match a type to a reclaimed slot. Larger footprints touch more adjacent cells, so they feed more collectors/adders for free. |
 | `tags` | string[] | Intrinsic tags carried by this room type (e.g. `"private"`, `"luxury"`, `"dungeon"`). Used in synergy/tag-count calculations and as the input to collectors. |
 | `placement` | map (optional) | Placement restrictions. `floors`: array of FLOOR values the room may occupy; `walls`: `"interior"` / `"exterior"`. Absent = any floor/wall. Supports seasonal floor-gating and zoning. |
-| `requires.minion` | bool | If `true`, no production occurs without an assigned minion instance. If `false`, the room is **passive** (no minion needed) — used by collectors, adders, and reclamation obstacles. *(Earlier drafts stated "all rooms require a minion"; this was relaxed to allow minion-free utility/collector rooms.)* |
+| `requires.minion` | bool | If `true`, no production occurs without **at least one** assigned minion instance. If `false`, the room is **passive** (no minion needed) — used by collectors, adders, and reclamation obstacles. *(Earlier drafts stated "all rooms require a minion"; this was relaxed to allow minion-free utility/collector rooms.)* |
 | `requires.client` | bool | If `true`, no production occurs without a guest present that night. Most rooms are `true`; utility rooms (Dormitory, Inner Sanctum) are `false`. |
 | `cost` | map (resource → int) | Secondary resources spent to build this room. Only list non-zero costs; absent keys cost 0. |
 | `base` | map (resource → int) | Flat resource output per night when prerequisites are met. Always applies (no conditions). May be empty `{}` for rooms that only produce via bonuses, aura, or abilities. |
 | `bonuses` | array of rule objects | Conditional additional outputs (see below). |
 | `aura` | map (optional) | Resource map applied to each **unique adjacent chamber** each night (see [Aura Effects](#aura-effects-adders)). Used by adder/support rooms; independent of the room's own production. |
-| `minion_effects` | map (optional) | Rules for how this room modifies the minion assigned to it each night. See [Minion Effects](#minion-effects-room-side) below and [`MINION_STATE_SPEC.md`](MINION_STATE_SPEC.md) for full details. |
+| `occupancy` | int (optional, default 1) | Max minion instances the room can hold simultaneously (e.g., Dormitory = 3). Rooms with a single slot simply omit it. See [Minion Effects](#minion-effects-room-side). |
+| `minion_effects` | map (optional) | Rules for how this room modifies the minions assigned to it each night. See [Minion Effects](#minion-effects-room-side) below and [`MINION_STATE_SPEC.md`](MINION_STATE_SPEC.md) for full details. |
 | `reclaim` | map (optional) | Present on reclamation obstacle types only — `{ tier, nights_to_clear }`. See [Reclamation Obstacles](#reclamation-obstacles). |
 
 The loader tags each entry with a `source_ally` string (derived from the filename) for build-gating and flavour, but the calculation engine ignores it.
@@ -154,7 +155,7 @@ A chamber's **effective tags** = its type's intrinsic `tags` + any `tags_added` 
 
 ## Minion Effects (Room-Side)
 
-The optional `minion_effects` block defines how a room modifies the minion assigned to it each night. This is **not** part of the resource contribution calculation — it is processed separately by the minion state system after production resolves.
+The optional `minion_effects` block defines how a room modifies **each** minion assigned to it each night. This is **not** part of the resource contribution calculation — it is processed separately by the minion state system after production resolves.
 
 Two sub-models exist:
 
@@ -164,6 +165,15 @@ Two sub-models exist:
 | Recovery | `recovery.remove_negative_per_night` | Removes negative tags from the minion each night. Used by Dormitory and similar rest rooms. |
 
 A room uses **one** sub-model or the other, not both. The full schema, progression track definitions, processing pipeline, and terminal actions are specified in [`MINION_STATE_SPEC.md`](MINION_STATE_SPEC.md).
+
+### Occupancy (Multi-Slot Rooms)
+
+Most rooms hold a single minion. A type may declare `"occupancy": N` to hold **up to N** distinct minion instances at once (e.g., Dormitory: `"occupancy": 3`). Rules:
+
+- The instance variable is a `ds_grid`/array of up to `N` minion references; assigning beyond capacity is blocked.
+- `minion_effects` apply **independently per assigned minion** — three minions in the Dormitory each get their own nightly recovery pass.
+- Extra occupants do **not** scale the room's resource contribution: base/bonus output stays flat regardless of how many slots are filled. Occupancy is a capacity for stacking state (recovery, progression) on multiple minions, not an output multiplier.
+- `requires.minion` remains boolean "at least one assigned." Rooms with occupancy > 1 that produce nothing can still be `requires.minion: false`.
 
 ## Aura Effects (Adders)
 
@@ -267,7 +277,7 @@ Set at creation (via `instance_create_layer` argument map or post-creation):
 | `chamber_size` | int (ROOM_SIZE enum) | 0=small, 1=medium, 2=large. Derived from the type's `size` field for buildable rooms; taken from layout data for pre-placed obstacles. |
 | `grid_x`, `grid_y` | int | Top-left cell position on `mansion_map`. Passed from blueprint layout data. |
 | `floor` | FLOOR enum | Derived: `scr_grid_y_to_floor(grid_y)`. |
-| `minion` | instance or `no` | Assigned minion (persistent across nights). Set during Day Phase management. May be `no` for passive rooms (`requires.minion: false`). |
+| `minions` | array of up to `occupancy` instances (`no` = empty slot) | Minions assigned to this chamber (persistent across nights). Capacity comes from the type's optional `occupancy` field, default 1 — single-slot rooms simply hold one entry. Set during Day Phase management; slots stay empty for passive rooms (`requires.minion: false`). Tag/prerequisite checks (`minion_assigned`, `minion_has_tag`) test **any** occupied slot. |
 | `client` | instance or `no` | Guest present this night. Set during Night Phase funnel; reset each cycle. Scalable rooms may track multiple clients for `clients_present_count`. |
 | `upgrade_id` | string or `""` | Installed upgrade ID, or empty if none. One per room max. |
 

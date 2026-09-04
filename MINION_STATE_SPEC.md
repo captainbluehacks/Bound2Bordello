@@ -194,31 +194,41 @@ function scr_process_minion_states() {
             if (ds_set_find(_seen, _chamber) != -1) continue;
             ds_set_add(_seen, _chamber);
             
-            // Only process chambers with an assigned minion AND a minion_effects block
-            if (_chamber.minion == no || !is_instance(_chamber.minion)) continue;
+            // Only process chambers with an assigned minion AND a minion_effects block.
+            // Collect the occupied slots (multi-occupancy rooms iterate each independently).
+            var _assigned = [];
+            for (var s = 0; s < array_length(_chamber.minions); s++) {
+                if (_chamber.minions[s] != no && is_instance(_chamber.minions[s])) {
+                    array_push(_assigned, _chamber.minions[s]);
+                }
+            }
+            if (array_length(_assigned) == 0) continue;
             
             var _type_def = scr_get_chamber_type(_chamber.chamber_type);
             if (_type_def == undefined) continue;
             if (!map_exists(_type_def, "minion_effects")) continue;
-            
             var _effects = _type_def.minion_effects;
-            var _minion  = _chamber.minion;
             
-            // --- Recovery rooms (Dormitory, etc.) ---
-            if (map_exists(_effects, "recovery")) {
-                scr_apply_recovery(_minion, _effects.recovery);
-                continue;  // recovery rooms do not also apply degradation
-            }
-            
-            // --- Progression track advancement ---
-            if (map_exists(_effects, "progression_track")) {
-                var _terminated = scr_advance_progression(_minion, _effects);
-                if (_terminated) continue;  // minion is gone; skip flat tags
-            }
-            
-            // --- Flat per-night tags ---
-            if (map_exists(_effects, "tags_per_night")) {
-                scr_apply_flat_tags(_minion, _effects.tags_per_night);
+            // Apply the room's effects independently to EACH assigned minion (see chamber spec: Occupancy).
+            for (var m = 0; m < array_length(_assigned); m++) {
+                var _minion = _assigned[m];
+                
+                // --- Recovery rooms (Dormitory, etc.) ---
+                if (map_exists(_effects, "recovery")) {
+                    scr_apply_recovery(_minion, _effects.recovery);
+                    continue;  // recovery rooms do not also apply degradation
+                }
+                
+                // --- Progression track advancement ---
+                if (map_exists(_effects, "progression_track")) {
+                    var _terminated = scr_advance_progression(_minion, _effects);
+                    if (_terminated) continue;  // minion is gone; skip flat tags for this one
+                }
+                
+                // --- Flat per-night tags ---
+                if (map_exists(_effects, "tags_per_night")) {
+                    scr_apply_flat_tags(_minion, _effects.tags_per_night);
+                }
             }
         }
     }
