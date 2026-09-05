@@ -1,0 +1,227 @@
+[
+  {
+    "id": "village-town_councilman",
+    "text": "A man of 'impeccable' standing who spends his days deciding whose land to seize for the next road project. He treats the town's poor like footstools and expects absolute obedience from everyone, including his own children. Behind closed doors, he craves a power dynamic he cannot control with a gavel.",
+    "tags": ["arrogant", "dominant", "corrupt"]
+  },
+  {
+    "id": "village-high_school_bully",
+    "text": "Now in his early twenties, he never quite outgrew the thrill of making others tremble. He spends his weekends idling in a loud car, picking on anyone who looks 'different' or weak. His confidence is a thin veneer over a desperate need to be dominated by something stronger than himself.",
+    "tags": ["violent", "aggressive", "insecure"]
+  },
+  {
+    "id": "village-spoilt_heir",
+    "text": "The son of the town's wealthiest landowner, he has never worked a day in his life and views people as disposable assets. He treats the staff at the bordello with a sneering condescension that masks a deep-seated boredom. He believes money can buy any experience, but he's never been truly humbled.",
+    "tags": ["elitist", "dominant", "bored"]
+  },
+  {
+    "id": "village-family_man",
+    "text": "To the neighbors, he is a pillar of the community and a devoted husband. In reality, he maintains a household of fear, using his temper to keep his wife in a state of constant anxiety. He visits the bordello not for pleasure, but to find a place where his aggression is met with something he can't intimidate.",
+    "tags": ["abusive", "violent", "repressed"]
+  },
+  {
+    "id": "village-library_clerk",
+    "text": "A soft-spoken man who has spent twenty years cataloging the town's history without ever becoming part of it. He is deeply romantic but terrified of rejection, living a life of quiet solitude in a small apartment filled with poetry books. He views the bordello as a sanctuary where he can finally be seen.",
+    "tags": ["shy", "repressed", "romantic"]
+  },
+  {
+    "id": "village-henpecked_husband",
+    "text": "A man who has spent a decade apologizing for existing. His life is a series of 'no's' and 'don'ts' dictated by a domineering spouse, leaving him emotionally starved and desperate for any form of genuine affection. He comes here seeking the warmth and validation he’s been denied at home.",
+    "tags": ["submissive", "lonely", "fragile"]
+  },
+  {
+    "id": "village-young_virgin",
+    "text": "A nervous youth who has spent more time in church than in the company of peers. He is plagued by a crushing sense of guilt over his own desires, viewing his attraction to others as a flaw to be corrected. He enters the bordello with a mixture of absolute terror and intoxicating curiosity.",
+    "tags": ["innocent", "holy", "repressed"]
+  },
+  {
+    "id": "village-lonely_widower",
+    "text": "Once a respected teacher, he now lives in a house that feels too large and far too quiet since his wife passed five years ago. He doesn't seek the thrill of the flesh so much as the feeling of another human being in the room. His heart is open, making him dangerously easy to bind.",
+    "tags": ["lonely", "gentle", "devoted"]
+  },
+  {
+    "id": "village-town_gossip",
+    "text": "He knows every secret in the village and takes great pride in being the first to whisper them. However, his power is entirely social; once he is removed from his circle of informants, he becomes a trembling wreck. He is terrified of becoming the subject of the gossip himself.",
+    "tags": ["anxious", "cowardly", "observant"]
+  },
+  {
+    "id": "village-paranoid_vet",
+    "text": "A man who returned from the war with eyes that never stop scanning the room for exits. He believes the government is tracking his every move and that the town's layout is a coded map. His fear is an engine that keeps him moving, but it has left him completely unstable.",
+    "tags": ["paranoid", "traumatized", "fragile"]
+  },
+  {
+    "id": "village-failed_artist",
+    "text": "A man who spent his youth chasing a dream of greatness only to end up painting signs for the local hardware store. He is haunted by the ghost of the man he thought he would be, leaving him in a state of perpetual existential dread. He is easily swayed by anyone who promises him a sense of belonging.",
+    "tags": ["melancholy", "insecure", "fragile"]
+  },
+  {
+    "id": "village-nervous_accountant",
+    "text": "His entire life is a series of spreadsheets and safety margins. He views the world as a chaotic place that must be managed through rigid adherence to rules. The bordello represents the ultimate chaos, and while it terrifies him, he is drawn to the idea of finally letting go of the ledger.",
+    "tags": ["rigid", "anxious", "repressed"]
+  },
+  {
+    "id": "village-sheriffs_deputy",
+    "text": "He views the badge not as a responsibility, but as a license to intimidate. He enjoys the look of fear in a citizen's eyes during a 'routine' stop and treats the town's marginalized population with open contempt. He is used to being the most feared man in any room he enters.",
+    "tags": ["authoritarian", "dominant", "corrupt"]
+  },
+  {
+    "id": "village-greedy_shopkeeper",
+    "text": "The owner of the only general store in town, he takes a perverse pleasure in price-gouging families who have no other options. He sneers at those who cannot pay their tabs on time, using debt as a leash to keep people subservient to his whims. He believes everything and everyone has a price.",
+    "tags": ["greedy", "arrogant", "cruel"]
+  },
+  {
+    "id": "village-golden_boy",
+    "text": "The town's darling—handsome, athletic, and seemingly perfect in every way. However, this image is a carefully constructed mask; in private, he is a cruel manipulator who treats people like toys to be played with and discarded. He has never been told 'no,' and the idea of losing control is intoxicating to him.",
+    "tags": ["hypocrite", "dominant", "manipulative"]
+  },
+  {
+    "id": "village-school_principal",
+    "text": "A man obsessed with 'discipline' and 'order,' he views the students under his care as raw material to be hammered into shape. He uses psychological warfare to break the spirits of those who show too much individuality, believing that fear is the only true motivator for success.",
+    "tags": ["rigid", "authoritarian", "cruel"]
+  },
+  {
+    "id": "village-clockmaker",
+    "text": "A master of intricate gears and delicate springs, he spends his days in a silent shop surrounded by the ticking of a hundred clocks. He possesses a profound capacity for tenderness but has never found someone who understands the quiet language of his heart. He seeks a connection that transcends the mechanical.",
+    "tags": ["meticulous", "lonely", "gentle"]
+  },
+  {
+    "id": "village-fallen_star",
+    "text": "Once the town's high school football hero, he lived for the roar of the crowd until a career-ending injury left him a ghost in his own hometown. He spends his days in a haze of nostalgia and regret, longing for a feeling of passion that doesn't involve a scoreboard.",
+    "tags": ["melancholy", "fragile", "longing"]
+  },
+  {
+    "id": "village-quiet_farmhand",
+    "text": "A man of immense physical strength and almost zero social presence. He does the hardest work on the largest farm in the county, yet he is treated as little more than another piece of livestock by his employers. He comes to the bordello hoping to feel like a man rather than a tool.",
+    "tags": ["hardworking", "shy", "repressed"]
+  },
+  {
+    "id": "village-doubting_deacon",
+    "text": "A pillar of the church who has spent his life preaching against the very desires that keep him awake at night. He is currently enduring a crisis of faith, finding that the more he prays for strength, the more he craves the forbidden. He is desperate for someone to tell him it's okay to want.",
+    "tags": ["holy", "conflicted", "repressed"]
+  },
+  {
+    "id": "village-stuttering_clerk",
+    "text": "He works in the town's records office, a man so socially paralyzed that he can barely look his coworkers in the eye. He lives in constant fear of making a mistake or drawing attention to himself. He is drawn to the bordello because it is a place where he doesn't have to lead—he only has to follow.",
+    "tags": ["anxious", "submissive", "fragile"]
+  },
+  {
+    "id": "village-desperate_gambler",
+    "text": "A man who has bet everything—his house, his savings, and his dignity—on the hope of one big win that will never come. He is currently on the verge of a total mental collapse, his nerves frayed to the breaking point by debt and desperation. He is as brittle as dry glass.",
+    "tags": ["unstable", "desperate", "fragile"]
+  },
+  {
+    "id": "village-oddity_collector",
+    "text": "An eccentric recluse who spends his time collecting strange taxidermy and occult curiosities in a cluttered basement. The townspeople view him with suspicion, and he has internalized that isolation as a form of protection. He is terrified of the 'normal' world but desperately wants to be part of it.",
+    "tags": ["eccentric", "isolated", "anxious"]
+  },
+  {
+    "id": "village-witness",
+    "text": "A man who claims to have seen something 'impossible' in the woods on the edge of town several years ago. No one believes him, and the isolation of his experience has left him permanently shaken. He is haunted by a fear that he cannot name, making him incredibly easy to unsettle.",
+    "tags": ["traumatized", "paranoid", "terrified"]
+  },
+  {
+    "id": "village-college_student",
+    "text": "Home for the summer from a big city university, he has brought back a suitcase full of 'liberation' pamphlets and a head full of radical ideas. He views his visit to the bordello as a sociological experiment in breaking taboos. He is eager to try everything once, just to say he did.",
+    "tags": ["curious", "idealistic", "experimental"]
+  },
+  {
+    "id": "village-mid_life_crisis",
+    "text": "A respectable insurance agent who suddenly realized at age 40 that he has spent his entire life following a script written by someone else. He has started wearing slightly louder shirts and spending his weekends seeking 'experiences' that would make his father shudder. He is desperately trying to find a version of himself that isn't boring.",
+    "tags": ["restless", "confused", "experimental"]
+  },
+  {
+    "id": "village-counter_culture_convert",
+    "text": "A former factory worker who has traded his overalls for beads and incense after discovering the 'New Age' movement. He speaks in vague terms about 'expanding one's consciousness' and views pleasure as a spiritual journey. He is far more interested in the idea of liberation than the actual act.",
+    "tags": ["eccentric", "naive", "open"]
+  },
+  {
+    "id": "village-quiet_veteran",
+    "text": "He returned home a year ago, but he never truly left the jungle. He is a man of few words who finds the silence of the village deafening and the noise of the bordello comforting. He doesn't seek pleasure so much as a distraction from the memories that surface every time he closes his eyes.",
+    "tags": ["traumatized", "stoic", "lonely"]
+  },
+  {
+    "id": "village-draft_dodger",
+    "text": "He spent two years hiding in the mountains or working under an assumed name to avoid the draft. Now that he's 'safe,' he is plagued by a crushing sense of cowardice and a feeling that he doesn't deserve the peace he has. He visits the bordello as a form of self-punishment.",
+    "tags": ["guilty", "anxious", "repressed"]
+  },
+  {
+    "id": "village-disillusioned_officer",
+    "text": "A man who believed in the mission until he saw the reality on the ground. He returned home with a deep cynicism toward authority and a broken heart. He views the world as a chaotic, cruel place, and finds solace in the bordello because it's one of the few places where honesty about desire is expected.",
+    "tags": ["cynical", "world-weary", "fragile"]
+  },
+  {
+    "id": "village-amateur_astronomer",
+    "text": "He spends his nights with a telescope on his roof, charting stars and dreaming of the lunar surface. To him, the moon landing was proof that anything is possible if you have the right tools. He views the bordello as another kind of frontier—a place to explore the unknown territories of human nature.",
+    "tags": ["dreamer", "intellectual", "curious"]
+  },
+  {
+    "id": "village-radar_technician",
+    "text": "Working at a nearby military installation, he spends his days staring at green screens and listening to the hum of high-frequency electronics. He is fascinated by systems, signals, and the way things connect. He approaches his visits with a clinical curiosity, treating pleasure like a puzzle to be solved.",
+    "tags": ["analytical", "detached", "meticulous"]
+  },
+  {
+    "id": "village-future_man",
+    "text": "A salesman for a new line of plastic home appliances who believes that the 1970s will be a utopia of chrome and convenience. He is obsessed with 'the next big thing' and views traditional morality as an obsolete piece of hardware. He wants to experience the most modern, avant-garde version of pleasure available.",
+    "tags": ["optimistic", "superficial", "experimental"]
+  },
+  {
+    "id": "village-grieving_son",
+    "text": "He lost his entire family in a sudden house fire ten years ago and has never truly left that night behind. He spends his weekends visiting the cemetery, talking to headstones as if they could answer him. He is drawn to the bordello because he finds comfort in places that feel heavy with history and loss.",
+    "tags": ["melancholy", "obsessive", "fragile"]
+  },
+  {
+    "id": "village-grave_digger",
+    "text": "A man who has spent thirty years digging holes for the town's residents. He views the living as temporary and the dead as permanent, possessing a dry, morbid sense of humor that unnerves most people. He doesn't fear death; he treats it as an old friend, making him strangely calm in the face of horror.",
+    "tags": ["morbid", "stoic", "detached"]
+  },
+  {
+    "id": "village-genealogist",
+    "text": "Obsessed with his family tree, he has spent years uncovering the dark secrets and scandals of his ancestors. He believes that blood carries memory and that the sins of the father are literally etched into the bones of the children. He views the bordello as a place where such ancestral urges come to play.",
+    "tags": ["intellectual", "obsessive", "curious"]
+  },
+  {
+    "id": "village-distressed_farmer",
+    "text": "A hardworking man whose livestock have begun appearing dead in the fields—not eaten by wolves, but surgically opened with impossible precision. He is terrified and confused, feeling a sense of cosmic insignificance that no amount of prayer can soothe. He seeks the bordello as a desperate escape from his own land.",
+    "tags": ["terrified", "paranoid", "rural"]
+  },
+  {
+    "id": "village-signal_hunter",
+    "text": "An amateur radio operator who spends his nights scanning frequencies for something 'other.' He claims to have picked up rhythmic, non-human pulses coming from the upper atmosphere and has become obsessed with decoding them. He views human interaction as a distraction from the Great Signal.",
+    "tags": ["eccentric", "analytical", "isolated"]
+  },
+  {
+    "id": "village-sightseer",
+    "text": "A man who once saw a streak of iridescent light descend into the woods behind the mansion. While he hasn't spoken of it to anyone for fear of being called mad, the experience left him feeling like a stranger in his own skin. He is drawn to the bordello because it feels as 'alien' as that night in the woods.",
+    "tags": ["haunted", "curious", "unstable"]
+  },
+  {
+    "id": "village-spiritual_void",
+    "text": "A man who has checked every box of a successful life but feels an echoing emptiness in his chest. He has begun reading forbidden texts and exploring 'alternative' philosophies, searching for a truth that the local church refuses to acknowledge. He is desperately looking for someone—or something—to lead him.",
+    "tags": ["longing", "open", "vulnerable"]
+  },
+  {
+    "id": "village-secret_society_hopeful",
+    "text": "He has always felt like he was meant for a higher circle of influence and spends his time trying to find the 'key' to the town's hidden power structures. He is fascinated by symbols, rituals, and the idea of an elite few who truly run the world. He views the bordello as a potential gateway to such secrets.",
+    "tags": ["ambitious", "curious", "manipulative"]
+  },
+  {
+    "id": "village-social_outcast",
+    "text": "A man who has never fit in anywhere, treated as a joke by his peers and a nuisance by his family. He possesses a crushing need for belonging and would do almost anything to be part of a community that truly accepts him. His desperation makes him an ideal candidate for any charismatic voice.",
+    "tags": ["lonely", "desperate", "devoted"]
+  },
+  {
+    "id": "village-fringe_patient",
+    "text": "A man suffering from a chronic ailment that traditional doctors have given up on. He has begun visiting 'unconventional' practitioners and taking experimental serums that have left him physically altered and mentally unstable. He is terrified of his own body's changes but desperate for a cure.",
+    "tags": ["fragile", "desperate", "altered"]
+  },
+  {
+    "id": "village-physical_perfectionist",
+    "text": "Obsessed with the idea of the 'Übermensch,' he spends his time experimenting with extreme diets, strange supplements, and primitive bio-hacking to push his body beyond human limits. He views weakness as a disease to be cured through science and will pay any price for an edge.",
+    "tags": ["arrogant", "obsessive", "dominant"]
+  },
+  {
+    "id": "village-disgraced_lab_tech",
+    "text": "Once a promising assistant at a university, he was fired for conducting 'unethical' experiments on himself in the middle of the night. He possesses a fragmented understanding of biology and a dangerous curiosity about what happens when you remove the safety guards from evolution.",
+    "tags": ["intellectual", "unstable", "experimental"]
+  }
+]
