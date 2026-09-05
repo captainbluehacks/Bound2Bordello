@@ -49,8 +49,8 @@ Each entry in a `chamber_types/*.json` array:
   "tags": ["private", "luxury"],
   "placement": { "floors": ["GROUND"] },
   "requires": { "minion": true, "client": true },
-  "cost": { "cash": 50, "lust_mana": 10 },
-  "base": { "lust_mana": 5, "value": 5 },
+  "cost": { "cash": 50, "lust": 10 },
+  "base": { "lust": 5, "value": 5 },
   "bonuses": [ ... ],
   "aura": { ... },
   "minion_effects": { ... }
@@ -136,8 +136,8 @@ Each entry in an `upgrades/*.json` array:
   "id": "whip_set",
   "display_name": "Whip & Chain Set",
   "compatible_types": ["boudoir", "sex_dungeon"],
-  "cost": { "cash": 25, "humiliation_mana": 8 },
-  "effects": { "humiliation_mana": 3 },
+  "cost": { "cash": 25, "humiliation": 8 },
+  "effects": { "humiliation": 3 },
   "tags_added": ["dungeon"]
 }
 ```
@@ -320,7 +320,7 @@ Set at creation (via `instance_create_layer` argument map or post-creation):
 Resource names used in all JSON maps and the global resource tracker:
 
 - Primary: `"value"`, `"power"`, `"stock"`
-- Secondary: `"cash"`, `"lust_mana"`, `"humiliation_mana"`, `"fear_mana"`, `"influence"`
+- Secondary: `"cash"`, `"lust"`, `"humiliation"`, `"fear"`, `"influence"`
 
 These are string keys in JSON and map keys in GML. A `scr_resource_display_name(key)` helper maps them to player-facing labels ("Lust Mana", "Cash", etc.) for UI rendering. Collectors convert harvested tags into **primary** resources; producers emit **secondary** resources (and carry the tags collectors read).
 

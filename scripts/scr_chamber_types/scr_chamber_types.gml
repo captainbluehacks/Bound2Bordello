@@ -65,7 +65,7 @@ function __obj_mansion_chamber_type_methods(){
 
 
 	/// @description Returns the UI‑friendly name for a resource key
-	/// @param _resourceKey   e.g. "lust_mana", "cash"
+	/// @param _resourceKey   e.g. "lust", "cash"
 	/// @return string
 
 	function scr_resource_display_name(_resourceKey){
