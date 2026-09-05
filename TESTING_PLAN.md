@@ -166,7 +166,7 @@ The highest-value suite. Target functions: `scr_calculate_chamber`, `scr_chamber
 - Both satisfied → `{ active: true }`.
 
 **A2. Base output (`scr_chamber_apply_base`)**
-- A type with `base = { lust_mana: 5, value: 5 }` produces exactly those totals and one breakdown line labelled `"Base"`.
+- A type with `base = { lust: 5, value: 5 }` produces exactly those totals and one breakdown line labelled `"Base"`.
 - Type with no `base` key → contributes nothing (guard path), no crash.
 
 **A3. Bonus rules (`scr_chamber_apply_bonuses`)**
@@ -214,7 +214,7 @@ The spec describes an aura pass in the nightly sum, but the current `scr_calcula
 
 ### Suite B: Grid / Adjacency / Floor Geometry (`test_mansion_grid.gml`)
 
-Target functions in `scr_mansion_rooms.gml`: `scr_get_adjacent_chambers`, `scr_check_adjacent`, `scr_is_in_direction`, `scr_count_tag_on_floor`, `scr_get_effective_tags`, `scr_get_floor_row_range`.
+Target functions in `scr_mansion_rooms.gml`: `scr_get_adjacent_chambers`, `scr_check_adjacent`, `scr_is_in_direction`, `scr_count_tag_on_floor`, `scr_get_effective_tags`, `scr_grid_y_to_floor`.
 
 **B1. Adjacency (`scr_get_adjacent_chambers`)** — use `each()` over size combinations:
 - 1×1 next to 1×1 → exactly one neighbour.
@@ -231,7 +231,7 @@ For each direction (`up`, `down`, `left`, `right`) and size pair (1×1/1×1, 2×
 
 This is pure geometry and very testable — make it thorough; directional bugs are subtle.
 
-**B3. Floor mapping (`scr_get_floor_row_range`) — `each()` table:**
+**B3. Floor mapping (`scr_grid_y_to_floor`) — `each()` table:**
 
 | input y | expected [min,max] | floor |
 |---|---|---|
@@ -240,7 +240,7 @@ This is pure geometry and very testable — make it thorough; directional bugs a
 | 4, 5 | [4,5] | Ground |
 | 6, 7 | [6,7] | Basement |
 
-Also assert the out-of-range fallback returns `noone` (current behaviour) — and note this is a **spec drift**: the spec references `scr_grid_y_to_floor(y)` / `scr_floor_to_grid_rows(floor)`, but the code has `scr_get_floor_row_range`. Reconcile naming so tests match the real API.
+Also assert the out-of-range fallback returns `noone` (current behaviour). The function name matches the spec (`scr_grid_y_to_floor(y)`), so there's no naming drift to reconcile here.
 
 **B4. Effective tags (`scr_get_effective_tags`)**
 - No upgrade → returns base type tags only.
@@ -321,7 +321,7 @@ For every loaded type, assert:
 - If `minion_effects` present → it's *either* the recovery model *or* the progression/flat-tag model, not both; if progression present, `terminal_action` is set. *(Note: per-night `minion_effects` are deferred to future features — validate only the schema shape for now.)*
 
 **D3. Resource key whitelist**
-Centralise the valid resource keys (`value`, `power`, `stock`, `cash`, `lust_mana`, `humiliation_mana`, `fear_mana`, `influence`) and assert every cost/effect/base map — including minion conversion-template costs and minion-upgrade costs — only uses whitelisted keys. This catches typos like `"lusty"` that would silently produce nothing.
+Centralise the valid resource keys (`value`, `power`, `stock`, `cash`, `lust`, `humiliation`, `fear`, `influence`) and assert every cost/effect/base map — including minion conversion-template costs and minion-upgrade costs — only uses whitelisted keys. This catches typos like `"lusty"` that would silently produce nothing.
 
 > ⚠️ **Current-code caveat:** the loader currently only loads `chamber_types/succubus.json`. The other ally files (necromancer, mad_scientist, cult_leader, aliens) and `upgrades/*.json` aren't loaded yet. D2/D3 will only cover succubus until you extend `_files`. That's fine — the test scales automatically as you add files.
 
@@ -427,11 +427,9 @@ These are places where the spec and current code disagree — resolve them so te
 
 1. **`scr_get_upgrade()` returns `[]`.** Upgrade contribution (A4) and effective tags (B4) can't be meaningfully tested until the upgrade loader exists.
 2. **Aura pass not implemented.** Spec describes it in the nightly sum; code doesn't do it yet (A8 is forward-looking).
-3. **Floor-mapping API naming.** Spec: `scr_grid_y_to_floor` / `scr_floor_to_grid_rows`. Code: `scr_get_floor_row_range(y)`. Pick one and align tests + spec.
-4. **Minion system not implemented — and the old state machine is retired.** The entire minion system (Suite C) is acceptance criteria for future work, *and* it now targets a different design than before: [`MINION_SYSTEM_SPEC.md`](MINION_SYSTEM_SPEC.md) supersedes `MINION_STATE_SPEC.md`, so the nightly tag-status pipeline (progression tracks, cull/flee/restore terminals, nerd-protection halting accumulation) is **deferred** to [`FUTURE_FEATURES.md`](FUTURE_FEATURES.md). Don't write tests for that retired pipeline here; when it lands, give it its own suite.
-5. **Client system not implemented.** The guest pool, visit rolls, funnel beyond the three prototype states, and the conversion-cost discount model (Suite F) are all forward-looking — only `obj_client/Step_0.gml`'s `searching/moving/paying` states exist today.
-6. **Loader only reads succubus data.** Contract tests (D) will under-cover until the other ally files, minion data files (`minion_conversion_templates.json`, `minion_upgrades.json`, `minion_appearances.json`), and client data files (`guest_pools.json`, `client_names.json`, `backstories.json`) are added to `_files`.
-7. **`scr_count_tag_on_floor(_chamber.y, ...)`** passes the instance's pixel `y`, not `grid_y`. Confirm this is intentional — floor mapping should key off grid row, and a pixel coordinate could give wrong results depending on cell size/offset. Worth a focused test (B5) to lock down the intended behaviour.
+3. **Minion system not implemented — and the old state machine is retired.** The entire minion system (Suite C) is acceptance criteria for future work, *and* it now targets a different design than before: [`MINION_SYSTEM_SPEC.md`](MINION_SYSTEM_SPEC.md) supersedes `MINION_STATE_SPEC.md`, so the nightly tag-status pipeline (progression tracks, cull/flee/restore terminals, nerd-protection halting accumulation) is **deferred** to [`FUTURE_FEATURES.md`](FUTURE_FEATURES.md). Don't write tests for that retired pipeline here; when it lands, give it its own suite.
+4. **Client system not implemented.** The guest pool, visit rolls, funnel beyond the three prototype states, and the conversion-cost discount model (Suite F) are all forward-looking — only `obj_client/Step_0.gml`'s `searching/moving/paying` states exist today.
+5. **Loader only reads succubus data.** Contract tests (D) will under-cover until the other ally files, minion data files (`minion_conversion_templates.json`, `minion_upgrades.json`, `minion_appearances.json`), and client data files (`guest_pools.json`, `client_names.json`, `backstories.json`) are added to `_files`.
 
 ---
 
