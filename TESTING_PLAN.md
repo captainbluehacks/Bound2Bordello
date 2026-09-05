@@ -452,3 +452,5 @@ These are places where the spec and current code disagree — resolve them so te
 | Fake async (HTTP/save) | use `async_load_map` in handlers + `simulateAsyncEvent(async_web, {...}, inst)` |
 | Spy on a function | `var s = spy(fn); s.call([args]); expect(s).toHaveBeenCalledTimes(n) / toHaveBeenCalledWith([...])` |
 | Coverage | set `gmtl_show_coverage true`; pass fn+args array to `expect()` to track it |
+
+Full documentation for GMTL can be found here:  https://github.com/DAndrewBox/GM-Testing-Library/wiki/Documentation
