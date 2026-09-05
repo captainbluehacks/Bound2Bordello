@@ -1,0 +1,282 @@
+[
+  {
+    "id": "punish_01",
+    "text": "The shift foreman at the steel mill with a voice like grinding gravel. He spends his days screaming at apprentices and taking credit for their hard work. He believes men are born to be stepped on, provided he is the one doing the stepping.",
+    "tags": ["dominant", "arrogant", "abusive"]
+  },
+  {
+    "id": "punish_02",
+    "text": "A precinct sergeant who views the town's poor as a nuisance to be managed with a nightstick. He enjoys the feeling of a terrified man pleading for mercy in the back of a squad car. His badge is less a symbol of service and more a license for cruelty.",
+    "tags": ["dominant", "violent", "cruel"]
+  },
+  {
+    "id": "punish_03",
+    "text": "The son of the mill owner, draped in expensive silks that smell of imported cologne and unearned privilege. He treats the locals like livestock, amused by their desperation. He has never been told 'no' in his entire pampered life.",
+    "tags": ["arrogant", "spoiled", "dominant"]
+  },
+  {
+    "id": "punish_04",
+    "text": "A high school football coach who treats teenage boys like soldiers in a war they didn't sign up for. He believes discipline is achieved through public humiliation and physical exhaustion. He views empathy as a genetic defect.",
+    "tags": ["dominant", "abusive", "rigid"]
+  },
+  {
+    "id": "punish_05",
+    "text": "A debt collector for the local loan shark, known for his cold eyes and heavier hand. He doesn't just want the money; he enjoys the psychological torture of watching a family collapse. He finds pleasure in the precise moment hope vanishes.",
+    "tags": ["cruel", "dominant", "cold"]
+  },
+  {
+    "id": "punish_06",
+    "text": "The town's presiding judge, a man of immense public piety and private depravity. He spends his days sentencing the desperate to hard labor while laughing at them in chambers. He believes the law is a tool for the strong to bind the weak.",
+    "tags": ["hypocrite", "arrogant", "dominant"]
+  },
+  {
+    "id": "punish_07",
+    "text": "A corrupt union steward who sells out his fellow workers for a handful of silver and a nod from management. He uses his position to bully those who dare question his leadership. He is a small man who loves the feeling of power.",
+    "tags": ["arrogant", "greedy", "abusive"]
+  },
+  {
+    "id": "punish_08",
+    "text": "The local landlord, whose properties are crumbling ruins but whose rents are astronomical. He takes a perverse joy in threatening families with eviction during the winter months. He views tenants as parasites to be bled dry.",
+    "tags": ["cruel", "greedy", "dominant"]
+  },
+  {
+    "id": "free_01",
+    "text": "The night shift janitor at the municipal building, a ghost in his own life. He spends his hours cleaning up after people who don't even know his name. He longs for a touch that isn't accidental or dismissive.",
+    "tags": ["lonely", "submissive", "invisible"]
+  },
+  {
+    "id": "free_02",
+    "text": "A timid postal clerk who spends his lunch breaks reading forbidden romance novels. He has a vivid internal world where he is loved and desired, but in reality, he barely speaks above a whisper. He is starving for an intimacy he doesn't know how to ask for.",
+    "tags": ["repressed", "yearning", "submissive"]
+  },
+  {
+    "id": "free_03",
+    "text": "An aging clockmaker whose hands shake just enough to ruin his finest work. He lives alone in a house filled with ticking sounds that only emphasize the silence of his bed. He dreams of someone who will look at him with genuine passion.",
+    "tags": ["lonely", "fragile", "yearning"]
+  },
+  {
+    "id": "free_04",
+    "text": "A tailor who spends his days crafting suits for men he envies. He is a master of fit and form, yet feels completely uncomfortable in his own skin. He hides a desperate need to be dominated by someone with a strong will.",
+    "tags": ["repressed", "submissive", "yearning"]
+  },
+  {
+    "id": "free_05",
+    "text": "A bank teller who counts other people's fortunes while his own heart remains empty. He is the picture of mid-century stability, but he feels like a hollow shell. He craves an experience that will finally make him feel alive.",
+    "tags": ["bored", "repressed", "lonely"]
+  },
+  {
+    "id": "free_06",
+    "text": "The quiet neighbor who always waves but never speaks more than two words. He spends his evenings watching the lights of the town from his porch, wondering if anyone is thinking of him. His kindness is a mask for a profound, aching solitude.",
+    "tags": ["lonely", "submissive", "gentle"]
+  },
+  {
+    "id": "free_07",
+    "text": "The church organist who plays hymns with a passion that borders on the scandalous. He feels the weight of his vows like a lead shroud, suffocating his true desires. He longs to be stripped of his dignity and his inhibitions.",
+    "tags": ["repressed", "holy", "yearning"]
+  },
+  {
+    "id": "free_08",
+    "text": "A town archivist who lives among dusty papers and dead memories. He knows everything about the town's history but nothing about how to be loved in the present. He is a man of ink and parchment, desperate for the warmth of flesh.",
+    "tags": ["lonely", "repressed", "submissive"]
+  },
+  {
+    "id": "break_01",
+    "text": "A young private recently returned from Vietnam with eyes that have seen too much. He jumps at the sound of a car backfiring and wakes up screaming in a cold sweat. The war didn't end for him when he stepped off the plane.",
+    "tags": ["fragile", "anxious", "broken"]
+  },
+  {
+    "id": "break_02",
+    "text": "A failed jazz musician who spent his youth chasing a dream that vanished in a cloud of smoke. He now plays for tips in the rain, his spirit as frayed as his instrument case. He is one bad day away from complete collapse.",
+    "tags": ["fragile", "desperate", "broken"]
+  },
+  {
+    "id": "break_03",
+    "text": "A nervous accountant who spends his life terrified of a single misplaced decimal point. He views the world as a series of potential catastrophes waiting to happen. His anxiety is a physical weight that keeps him perpetually hunched.",
+    "tags": ["anxious", "paranoid", "fragile"]
+  },
+  {
+    "id": "break_04",
+    "text": "A chronic insomniac who believes the shadows in his room move when he isn't looking. He has spent years trying to find a cure for the whispers that haunt his waking hours. He is desperate for any form of peace, even if it comes at a price.",
+    "tags": ["paranoid", "fragile", "broken"]
+  },
+  {
+    "id": "break_05",
+    "text": "A stuttering apprentice who has been the target of every cruel joke in the factory. He has learned to shrink himself, hoping that if he becomes small enough, the world will stop hitting him. His confidence is a shattered mirror.",
+    "tags": ["fragile", "submissive", "broken"]
+  },
+  {
+    "id": "break_06",
+    "text": "A man who believes the government is installing listening devices in the town's telephone lines. He speaks in riddles and avoids eye contact, convinced that he is being tracked. His fear has become his only constant companion.",
+    "tags": ["paranoid", "anxious", "fragile"]
+  },
+  {
+    "id": "break_07",
+    "text": "A grief-stricken widower who still sets a place at the table for a wife who died five years ago. He exists in a state of permanent mourning, his heart a raw wound that refuses to heal. He is fragile enough to break with a single touch.",
+    "tags": ["fragile", "broken", "lonely"]
+  },
+  {
+    "id": "break_08",
+    "text": "A former convict who has spent ten years trying to 'go straight' in a town that never forgets. He lives in constant fear that one mistake will send him back to the cage. He is a man walking on a tightrope made of glass.",
+    "tags": ["anxious", "broken", "paranoid"]
+  },
+  {
+    "id": "hist_01",
+    "text": "An aerospace engineer who moved from Houston to help with the local industrial expansion. He is obsessed with the moon landing, viewing it as the ultimate triumph of man over nature. He feels out of place in a town that only cares about steel.",
+    "tags": ["intellectual", "obsessive", "modern"]
+  },
+  {
+    "id": "hist_02",
+    "text": "A draft dodger who has spent the last three years pretending to be a cousin from out of state. He lives in a state of perpetual low-level panic, terrified that a federal agent will knock on his door. He is a man without a country or a name.",
+    "tags": ["anxious", "repressed", "fragile"]
+  },
+  {
+    "id": "hist_03",
+    "text": "A 'modern' man who has read all the new books on sexual liberation and psychology. He tries to apply these theories to his life, but finds that the industrial town views him as a freak. He is caught between two worlds and belongs to neither.",
+    "tags": ["intellectual", "yearning", "misfit"]
+  },
+  {
+    "id": "hist_04",
+    "text": "A steel mill veteran who remembers when the town was a booming paradise. He views the current decay as a personal insult and spends his days complaining about 'the youth of today.' He is a relic of an era that died with the war.",
+    "tags": ["rigid", "bitter", "arrogant"]
+  },
+  {
+    "id": "hist_05",
+    "text": "A flower child who drifted into town by accident and decided to stay. He wears beads and speaks of peace in a place that only understands production quotas. The locals treat him with a mixture of curiosity and open hostility.",
+    "tags": ["misfit", "gentle", "submissive"]
+  },
+  {
+    "id": "hist_06",
+    "text": "A political campaign staffer who has seen the ugly underbelly of American democracy. He is cynical, exhausted, and convinced that everything is a lie. He seeks distraction in the Bordello to forget the chaos of the capital.",
+    "tags": ["cynical", "bored", "intellectual"]
+  },
+  {
+    "id": "echo_nec_01",
+    "text": "The assistant to the local gravedigger, a man who spends more time with the dead than the living. He has developed a strange habit of talking to the corpses as he lowers them into the earth. He claims some of them whisper back.",
+    "tags": ["morbid", "strange", "submissive"]
+  },
+  {
+    "id": "echo_ali_01",
+    "text": "A radio operator who spends his nights scanning frequencies that shouldn't exist. He has recorded sounds that defy explanation—rhythmic pulses coming from the void of space. He is convinced we are not alone, and that they are watching.",
+    "tags": ["paranoid", "obsessive", "intellectual"]
+  },
+  {
+    "id": "echo_cul_01",
+    "text": "A man who recently joined a 'self-improvement' group that meets in the woods at midnight. He speaks of an 'Ascension' and a 'Great Awakening' with a glazed look in his eyes. He seems to be waiting for a signal only he can hear.",
+    "tags": ["devoted", "strange", "repressed"]
+  },
+  {
+    "id": "echo_sci_01",
+    "text": "A survivor of a chemical leak at the local plant, whose skin has a faint, unnatural iridescent sheen. He claims the accident 'opened his mind' to the true nature of biology. He spends his time sketching anatomy that doesn't exist in textbooks.",
+    "tags": ["strange", "fragile", "obsessive"]
+  },
+  {
+    "id": "echo_nec_02",
+    "text": "A collector of rare, leather-bound occult books who spends his fortune on forbidden knowledge. He is obsessed with the concept of 'the bridge' between life and death. He looks at people as if they are already ghosts.",
+    "tags": ["morbid", "intellectual", "arrogant"]
+  },
+  {
+    "id": "echo_ali_02",
+    "text": "A telescope hobbyist who has spent years mapping the stars over the industrial valley. He noticed a pattern of lights that doesn't match any known constellation, moving in perfect geometric shapes. He is terrified and fascinated in equal measure.",
+    "tags": ["obsessive", "anxious", "intellectual"]
+  },
+  {
+    "id": "echo_cul_02",
+    "text": "A man with a strange, geometric symbol tattooed on the inside of his wrist. He doesn't talk about where he got it, but he often stares at it during moments of stress. He speaks of a 'Master' who provides all answers.",
+    "tags": ["devoted", "repressed", "submissive"]
+  },
+  {
+    "id": "echo_sci_02",
+    "text": "An amateur surgeon who performs 'enhancements' on livestock in his backyard shed. He believes the human body is a flawed machine that can be optimized with the right tools. His curiosity is matched only by his lack of ethics.",
+    "tags": ["obsessive", "cruel", "intellectual"]
+  },
+  {
+    "id": "echo_nec_03",
+    "text": "A man who has spent years meticulously mapping the town's oldest cemetery. He claims that certain plots are 'leaking' energy and that the soil there is unnaturally warm. He seeks a way to tap into that warmth.",
+    "tags": ["morbid", "obsessive", "strange"]
+  },
+  {
+    "id": "echo_ali_03",
+    "text": "A former pilot who claims he saw a silver disc descend over the mill during a midnight shift. No one believed him, and he was mocked until he stopped speaking entirely. He still looks at the sky with a mixture of dread and longing.",
+    "tags": ["broken", "paranoid", "fragile"]
+  },
+  {
+    "id": "echo_cul_03",
+    "text": "A man who has suddenly given away all his possessions to a 'charitable cause' he won't name. He speaks in a monotone voice and seems to have lost all sense of individual identity. He is a vessel waiting to be filled.",
+    "tags": ["devoted", "submissive", "broken"]
+  },
+  {
+    "id": "norm_01",
+    "text": "A veteran mechanic whose fingernails are permanently stained with oil and grease. He is a man of few words who finds peace in the rhythmic humming of an engine. He visits the Bordello simply to forget the noise of the garage for a few hours.",
+    "tags": ["hardworking", "quiet", "yearning"]
+  },
+  {
+    "id": "norm_02",
+    "text": "The local barber who knows every secret and scandal in town. He spends his day listening to others talk about themselves, leaving him with a strange void of his own. He enjoys the company of someone who is paid to listen to him for a change.",
+    "tags": ["social", "bored", "yearning"]
+  },
+  {
+    "id": "norm_03",
+    "text": "A long-haul truck driver who spends more time on the interstate than in his own living room. He has seen a dozen different versions of America, but none of them feel like home. The Bordello is a familiar stop in a life of transient motels.",
+    "tags": ["lonely", "weary", "submissive"]
+  },
+  {
+    "id": "norm_04",
+    "text": "A hardware store clerk who takes immense pride in knowing exactly which screw fits which bolt. He is a steady, reliable man who has lived the same routine for fifteen years. He seeks out the Bordello as a small, controlled rebellion against his own predictability.",
+    "tags": ["rigid", "bored", "repressed"]
+  },
+  {
+    "id": "norm_05",
+    "text": "A young apprentice welder who is still learning how to handle the torch without burning himself. He is eager, clumsy, and perpetually exhausted by the demands of his trade. He visits out of a mixture of curiosity and a desire to feel like a grown man.",
+    "tags": ["curious", "fragile", "submissive"]
+  },
+  {
+    "id": "norm_06",
+    "text": "A retired steelworker who spent forty years in the heat of the blast furnace. He has a pension, a small house, and a silence that has become deafening since his wife passed away. He doesn't seek passion so much as he seeks the presence of another human being.",
+    "tags": ["lonely", "gentle", "yearning"]
+  },
+  {
+    "id": "norm_07",
+    "text": "The town's mail carrier, a man who knows every dog and every driveway in the district. He is well-liked and unremarkable, moving through the town like a piece of the furniture. He enjoys the anonymity of the Bordello, where he can be someone other than 'the postman'.",
+    "tags": ["invisible", "bored", "submissive"]
+  },
+  {
+    "id": "norm_08",
+    "text": "A short-order cook from the diner across from the mill. He lives his life in a blur of sizzling grease and shouting orders, perpetually stressed by the lunch rush. For him, the Bordello is the only place where he can finally stop moving.",
+    "tags": ["stressed", "weary", "yearning"]
+  },
+  {
+    "id": "norm_09",
+    "text": "A mid-level warehouse supervisor who spends his day managing inventories and schedules. He isn't cruel, but he is exhausted by the constant friction between management and labor. He seeks a place where he doesn't have to be in charge of anything.",
+    "tags": ["stressed", "submissive", "bored"]
+  },
+  {
+    "id": "norm_10",
+    "text": "A local musician who plays the saxophone at the pub on Friday nights. He has a romanticized view of life and believes he is destined for a bigger stage than this town provides. He visits the Bordello to find a muse, or at least a distraction from his stalled career.",
+    "tags": ["dreamer", "yearning", "misfit"]
+  },
+  {
+    "id": "norm_11",
+    "text": "An electrician who is highly respected for his ability to fix the town's aging power grid. He is a practical man with a logical mind, viewing the world as a series of circuits to be completed. He treats his visits to the Bordello as a necessary maintenance for his own mental health.",
+    "tags": ["practical", "bored", "repressed"]
+  },
+  {
+    "id": "norm_12",
+    "text": "The town butcher, a man of immense physical strength and surprising gentleness. He spends his days in a cold room dealing with carcasses, which makes him crave warmth above all else. He is a simple man who appreciates the sensory pleasures of life.",
+    "tags": ["gentle", "yearning", "submissive"]
+  },
+  {
+    "id": "norm_13",
+    "text": "A municipal clerk who spends eight hours a day stamping forms in a windowless office. He is the embodiment of bureaucracy, precise and unremarkable in every way. In his private life, he harbors a secret longing for something chaotic and unplanned.",
+    "tags": ["repressed", "bored", "yearning"]
+  },
+  {
+    "id": "norm_14",
+    "text": "A volunteer firefighter who is known for his bravery during the great mill fire of '65. He carries a quiet pride in his service, but he struggles with the adrenaline crashes that follow the excitement. He visits the Bordello to find a different kind of intensity.",
+    "tags": ["brave", "stressed", "yearning"]
+  },
+  {
+    "id": "norm_15",
+    "text": "A traveling salesman selling vacuum cleaners and home appliances. He is a master of the pitch, always smiling and always moving from town to town. Behind the polished exterior, he is profoundly lonely and tired of the road.",
+    "tags": ["lonely", "bored", "submissive"]
+  }
+]
