@@ -113,7 +113,7 @@ Templates are named, player-selectable options shown on the conversion screen (s
     "id": "devotion_ritual",
     "display_name": "Rite of Devotion",
     "description": "Bind them with lust and longing. The resulting minion serves out of love.",
-    "cost": { "lust_mana": 40 },
+    "cost": { "lust": 40 },
     "gate": { "requires_rooms": ["boudoir"], "requires_allies": [] },
     "quirk": "devoted",
     "tags_added": ["devoted", "loyal"],
@@ -124,7 +124,7 @@ Templates are named, player-selectable options shown on the conversion screen (s
     "id": "break_ritual",
     "display_name": "The Breaking",
     "description": "Grind them down until only obedience is left.",
-    "cost": { "humiliation_mana": 40 },
+    "cost": { "humiliation": 40 },
     "gate": { "requires_rooms": ["sex_dungeon"], "requires_allies": [] },
     "quirk": "broken",
     "tags_added": ["broken", "compliant"],
@@ -135,7 +135,7 @@ Templates are named, player-selectable options shown on the conversion screen (s
     "id": "terror_ritual",
     "display_name": "Whisper in the Walls",
     "description": "Show them what lives beneath the floorboards.",
-    "cost": { "fear_mana": 40 },
+    "cost": { "fear": 40 },
     "gate": { "requires_rooms": [], "requires_allies": [] },
     "quirk": "terrified",
     "tags_added": ["terrified", "obedient"],
@@ -152,7 +152,7 @@ Templates are named, player-selectable options shown on the conversion screen (s
 | `id` | string | Unique template identifier. |
 | `display_name` | string | Player-facing name in the conversion UI list. |
 | `description` | string | One-paragraph blurb shown on hover/selection. |
-| `cost` | map | Resources paid at conversion (e.g., `{ "lust_mana": 40 }`). Mana flavour drives the quirk per GDD §7. **Separate from** the preference-matching discount and background-knowledge discount in GDD §7 Conversion Cost, which apply on top of this base cost. |
+| `cost` | map | Resources paid at conversion (e.g., `{ "lust": 40 }`). Mana flavour drives the quirk per GDD §7. **Separate from** the preference-matching discount and background-knowledge discount in GDD §7 Conversion Cost, which apply on top of this base cost. |
 | `gate.requires_rooms` | string[] (optional) | Template is only *shown/selectable* if these chamber types exist built in the mansion. |
 | `gate.requires_allies` | string[] (optional) | Template requires these allies secured (e.g., advanced rites unlocked by ally gateways). |
 | `quirk` | string | Quirk written to the minion and added as a tag. Drives mana-flavour behaviour and friend-archetype matching. |
@@ -252,7 +252,7 @@ While a minion is assigned to an obstacle, the obstacle produces nothing that ni
     "display_name": "Hardened Hide",
     "description": "Season in the work of the house until it stops mattering.",
     "compatible_types": ["minion"],
-    "cost": { "cash": 40, "fear_mana": 10 },
+    "cost": { "cash": 40, "fear": 10 },
     "gate": { "requires_tags": [], "requires_rooms": [] },
     "tags_added": ["hardened"]
   }

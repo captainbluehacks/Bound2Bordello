@@ -244,9 +244,9 @@ No system both writes and reads the same tag in the same pass. This keeps the si
 // datafiles/tag_effects.json
 [
   { "tag": "bionic_hand",   "effects": { "production_speed_lab": 1.10 } },
-  { "tag": "experimented",  "effects": { "fear_mana_resistance": -5, "value_to_scientist_client": 2 } },
+  { "tag": "experimented",  "effects": { "fear_resistance": -5, "value_to_scientist_client": 2 } },
   { "tag": "scarred",       "effects": { "assignment_penalty_luxury": true } },
-  { "tag": "devoted",       "effects": { "lust_mana_bonus_any_room": 1 } }
+  { "tag": "devoted",       "effects": { "lust_bonus_any_room": 1 } }
 ]
 ```
 

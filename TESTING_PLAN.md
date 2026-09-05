@@ -139,7 +139,7 @@ The highest-value suite. Target functions: `scr_calculate_chamber`, `scr_chamber
 - Both satisfied → `{ active: true }`.
 
 **A2. Base output (`scr_chamber_apply_base`)**
-- A type with `base = { lust_mana: 5, value: 5 }` produces exactly those totals and one breakdown line labelled `"Base"`.
+- A type with `base = { lust: 5, value: 5 }` produces exactly those totals and one breakdown line labelled `"Base"`.
 - Type with no `base` key → contributes nothing (guard path), no crash.
 
 **A3. Bonus rules (`scr_chamber_apply_bonuses`)**
@@ -288,7 +288,7 @@ For every loaded type, assert:
 - If `minion_effects` present → it's *either* the recovery model *or* the progression/flat-tag model, not both; if progression present, `terminal_action` is set.
 
 **D3. Resource key whitelist**
-Centralise the valid resource keys (`value`, `power`, `stock`, `cash`, `lust_mana`, `humiliation_mana`, `fear_mana`, `influence`) and assert every cost/effect/base map only uses whitelisted keys. This catches typos like `"lusty"` that would silently produce nothing.
+Centralise the valid resource keys (`value`, `power`, `stock`, `cash`, `lust`, `humiliation`, `fear`, `influence`) and assert every cost/effect/base map only uses whitelisted keys. This catches typos like `"lusty"` that would silently produce nothing.
 
 > ⚠️ **Current-code caveat:** the loader currently only loads `chamber_types/succubus.json`. The other ally files (necromancer, mad_scientist, cult_leader, aliens) and `upgrades/*.json` aren't loaded yet. D2/D3 will only cover succubus until you extend `_files`. That's fine — the test scales automatically as you add files.
 
