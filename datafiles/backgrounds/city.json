@@ -37,7 +37,7 @@
   {
     "id": "city_punish_08",
     "text": "A ruthless union leader who climbed to the top by betraying every ally he ever had. He views loyalty as a weakness and submission as the only stable state of existence. He wants to be served with a devotion born of absolute fear.",
-    "tags": ["dominant", "manipulative", "power-hungry", "working-class"]
+    "tags": ["dominant", "manipulative", "power-hungry"]
   },
   {
     "id": "city_punish_09",
@@ -61,7 +61,7 @@
   },
   {
     "id": "city_free_01",
-    "text": "A lonely billionaire who lives in a penthouse of gold and silence. He has bought everything the world has to offer, yet he feels like a ghost in his own home. He seeks a warmth that cannot be purchased with a checkbook.",
+    "text": "A lonely millionaire who lives in a penthouse of gold and silence. He has bought everything the world has to offer, yet he feels like a ghost in his own home. He seeks a warmth that cannot be purchased with a checkbook.",
     "tags": ["submissive", "lonely", "wealthy", "melancholy"]
   },
   {
@@ -87,7 +87,7 @@
   {
     "id": "city_free_06",
     "text": "A gentle giant of a man who works as a night porter at a luxury hotel. He spends his life opening doors for people who never look him in the eye. He dreams of a place where he is the center of someone's world, even if only for an hour.",
-    "tags": ["submissive", "kind", "invisible", "working-class"]
+    "tags": ["submissive", "kind", "invisible"]
   },
   {
     "id": "city_free_07",
@@ -242,61 +242,61 @@
   {
     "id": "city_echo_01",
     "text": "A collector of 'curiosities' who spends his fortune on jars of preserved organs and ancient burial shrouds. He speaks often of the 'thinness of the veil' in certain parts of the city. He is looking for a way to make the dead speak again.",
-    "tags": ["obsessive", "eccentric", "wealthy", "necromancer_echo"]
+    "tags": ["obsessive", "eccentric", "wealthy"]
   },
   {
     "id": "city_echo_02",
     "text": "A disgraced astronomer who claims he saw something 'descend' into the city during a lunar eclipse. He has been laughed out of every university, but he continues to build antennas on his roof. He is waiting for the signal to return.",
-    "tags": ["obsessive", "intellectual", "paranoid", "alien_echo"]
+    "tags": ["obsessive", "intellectual", "paranoid"]
   },
   {
     "id": "city_echo_03",
     "text": "A man who belongs to a 'study group' that meets in the basements of laundromats to discuss the geometry of the soul. He carries a strange, heavy coin and speaks of an 'Ascension' that requires a blood price. He is looking for a temple.",
-    "tags": ["obsessive", "eccentric", "mysterious", "cultist_echo"]
+    "tags": ["obsessive", "eccentric", "mysterious"]
   },
   {
     "id": "city_echo_04",
     "text": "A former lab assistant who claims his previous employer was trying to 'evolve' the human mind using electricity and chemicals. He has a nervous tic in his left eye and a deep fear of white tiled rooms. He knows how to build things that shouldn't exist.",
-    "tags": ["fragile", "intellectual", "traumatized", "scientist_echo"]
+    "tags": ["fragile", "intellectual", "traumatized"]
   },
   {
     "id": "city_echo_05",
     "text": "A mortician who has developed a strange friendship with the corpses he prepares. He claims they whisper secrets about the 'Other Side' if you listen long enough. He is obsessed with the aesthetics of decay.",
-    "tags": ["obsessive", "clinical", "eccentric", "necromancer_echo"]
+    "tags": ["obsessive", "clinical", "eccentric"]
   },
   {
     "id": "city_echo_06",
     "text": "A man who believes that certain patterns in the city's street grid are actually a giant summoning circle. He spends his nights walking specific routes to 'activate' the ley lines. He is looking for a gateway.",
-    "tags": ["obsessive", "paranoid", "eccentric", "cultist_echo"]
+    "tags": ["obsessive", "paranoid", "eccentric"]
   },
   {
     "id": "city_echo_07",
     "text": "A fringe physicist who believes that gravity is a lie told by the government to hide 'visitors' from above. He has blueprints for a machine that can fold space, but he lacks the power source. He is searching for an energy that isn't electrical.",
-    "tags": ["obsessive", "intellectual", "eccentric", "alien_echo"]
+    "tags": ["obsessive", "intellectual", "eccentric"]
   },
   {
     "id": "city_echo_08",
     "text": "A man who claims he can 'hear the colors' of people's souls and that most are a rotting shade of brown. He is fascinated by the idea of 're-tuning' a human being through trauma. He seeks a laboratory for the spirit.",
-    "tags": ["obsessive", "eccentric", "clinical", "scientist_echo"]
+    "tags": ["obsessive", "eccentric", "clinical"]
   },
   {
     "id": "city_echo_09",
     "text": "A medium who has grown tired of faking séances for grieving widows. He accidentally contacted something real during a session and it hasn't stopped talking to him since. He is terrified of the thing he invited in.",
-    "tags": ["fragile", "eccentric", "haunted", "necromancer_echo"]
+    "tags": ["fragile", "eccentric", "haunted"]
   },
   {
     "id": "city_echo_10",
     "text": "A man who believes that the city's elite are actually reptilian mimics from another star system. He keeps a detailed ledger of everyone who 'doesn't blink.' He is looking for proof of the infiltration.",
-    "tags": ["paranoid", "obsessive", "urbanite", "alien_echo"]
+    "tags": ["paranoid", "obsessive", "urbanite"]
   },
   {
     "id": "city_echo_11",
     "text": "A former monk who was expelled for practicing 'forbidden' rites to achieve immortality. He believes the flesh is a prison and that only through specific rituals can one be freed. He seeks a master of the occult.",
-    "tags": ["obsessive", "refined", "mysterious", "cultist_echo"]
+    "tags": ["obsessive", "refined", "mysterious"]
   },
   {
     "id": "city_echo_12",
     "text": "A man who claims he can 'see' the biological blueprints of everything he touches. He is obsessed with the idea of a 'perfect human' and wants to know how to build one from scratch. He views the body as a puzzle.",
-    "tags": ["obsessive", "intellectual", "clinical", "scientist_echo"]
+    "tags": ["obsessive", "intellectual", "clinical"]
   }
 ]

@@ -23,8 +23,13 @@ Design invariant (same as minions): **tags are the only mechanical surface.** A 
 ```
 datafiles/
     client_names.json     ← guest name pool (random pick at creation)
-    backstories.json      ← background paragraph pool (shared with minions on copy)
-    guest_pools.json      ← seasonal/town pool definitions (size, tag distributions, visit frequencies)
+    guest_pools.json      ← seasonal/town pool definitions (size, tag distributions, visit frequencies, background file)
+
+datafiles/backgrounds/
+    village.json      		← background paragraph pool (shared with minions on copy)
+	industrial-town.json    ← background paragraph pool (shared with minions on copy)
+	wealthy-suburbs.json    ← background paragraph pool (shared with minions on copy)
+	city.json      			← background paragraph pool (shared with minions on copy)
 
 objects/
     obj_client/           ← guest instance: identity + per-night state vars (below)
@@ -67,6 +72,6 @@ Cost/discount model (GDD §7 Conversion Cost) applies here at the UI/prompt boun
 
 ## Extensibility Notes
 
-- **New town/season pool** → one JSON entry in `guest_pools.json` (size, weighted tags, frequency range). No code change.
+- **New town/season pool** → one JSON entry in `guest_pools.json` (size, weighted tags, frequency range). A json file containing the backgrounds for that town. No code change.
 - **Named/villain guests with authored identity** (e.g., a recurring story client) → an optional `authored: true` flag on a pool entry that supplies fixed name/backstory/tags instead of rolls; the rest of the pipeline is unchanged.
 - **Guests returning after conversion** (a converted minion's "life before" reappearing, or a redeemed guest) → out of scope; would need a `returning_guest` mechanic and its own section in [`FUTURE_FEATURES.md`](FUTURE_FEATURES.md).
