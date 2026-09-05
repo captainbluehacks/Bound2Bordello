@@ -7,7 +7,7 @@ function test_setup_grid(_w = 10, _h = 8) {
 
 /// Create an obj_chamber at a grid cell and register it in the map (honouring size).
 function test_place_chamber(_type, _gx, _gy, _size = ROOM_SIZE.SMALL) {
-    var _inst = instance_create_layer(0, 0, mansion_layer.chamber, obj_chamber,
+    var _inst = instance_create_array(0, 0, mansion_layer.chamber, obj_chamber,
         { chamber_type: _type, chamber_size: _size, grid_x: _gx, grid_y: _gy });
     var _d = global.size_dims[_size];
     for (var x = 0; x < _d.w; x++)
@@ -28,7 +28,7 @@ function test_make_client(_name = "Guest", _tags = [], _backstory = "", _freq = 
 }
 
 /// Build a minion instance with explicit fields (no RNG) so tests are deterministic.
-function test_make_minion(_tags = [], _quirk = "", _chamber = no, _is_friend = false) {
+function test_make_minion(_tags = [], _quirk = "", _chamber = noone, _is_friend = false) {
     var _m = create(0, 0, obj_minion);
     _m.tags           = array_copy(_tags);
     _m.quirk          = _quirk;
@@ -39,7 +39,11 @@ function test_make_minion(_tags = [], _quirk = "", _chamber = no, _is_friend = f
 
 /// Tear down all chamber/minion/client instances created during a test.
 function test_cleanup_instances() {
-    with (obj_chamber) instance_dummy(); // Note: using dummy or destroy based on GM preference
+    with (obj_chamber) instance_destroy();
     with (obj_minion)  instance_destroy();
     with (obj_client)  instance_destroy();
+    if (global.mansion_map != noone && is_ds_grid(global.mansion_map)) {
+        ds_grid_destroy(global.mansion_map);
+        global.mansion_map = noone;
+    }
 }
