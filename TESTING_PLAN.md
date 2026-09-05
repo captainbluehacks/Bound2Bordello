@@ -288,7 +288,7 @@ For every loaded type, assert:
 - If `minion_effects` present → it's *either* the recovery model *or* the progression/flat-tag model, not both; if progression present, `terminal_action` is set.
 
 **D3. Resource key whitelist**
-Centralise the valid resource keys (`value`, `power`, `stock`, `cash`, `lust`, `humiliation`, `fear`, `influence`) and assert every cost/effect/base map only uses whitelisted keys. This catches typos like `"lusty"` that would silently produce nothing.
+Centralise the valid resource keys (`value`, `power`, `stock`, `cash`, `lust`, `humiliation`, `fear`, `influence`) and assert every cost/effect/base map — including minion conversion-template costs and minion-upgrade costs — only uses whitelisted keys. This catches typos like `"lusty"` that would silently produce nothing.
 
 > ⚠️ **Current-code caveat:** the loader currently only loads `chamber_types/succubus.json`. The other ally files (necromancer, mad_scientist, cult_leader, aliens) and `upgrades/*.json` aren't loaded yet. D2/D3 will only cover succubus until you extend `_files`. That's fine — the test scales automatically as you add files.
 
