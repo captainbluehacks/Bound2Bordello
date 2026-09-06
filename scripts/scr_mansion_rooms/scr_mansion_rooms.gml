@@ -125,21 +125,17 @@ function __obj_mansion_room_methods(){
 }
 
 /// @description Get all unique neighbouring chamber instances (excluding self).
-/// Checks the 4-directional neighbours of every cell this room occupies.
 /// @param {instance} _chamber
-/// @return {ds_list} Unique adjacent obj_chamber instances.
+/// @return {array} Unique adjacent obj_chamber instances.
 function scr_get_adjacent_chambers(_chamber) {
-    var _result = ds_list_create();
-    var _seen = ds_set_create();
+    var _result = []; 
     
-    // Get this chamber's bounding box on the grid
     var _size = global.size_dims[_chamber.chamber_size];
     var _gx = _chamber.grid_x;
     var _gy = _chamber.grid_y;
     var _gw = _size.w;
     var _gh = _size.h;
     
-    // Check all cells in a 1-cell ring around the bounding box
     for (var _x = _gx - 1; _x <= _gx + _gw; _x++) {
         for (var _y = _gy - 1; _y <= _gy + _gh; _y++) {
             // Skip cells that are part of this chamber itself
@@ -150,27 +146,25 @@ function scr_get_adjacent_chambers(_chamber) {
             if (_y < 0 || _y >= ds_grid_height(global.mansion_map)) continue;
             
             var _inst = ds_grid_get(global.mansion_map, _x, _y);
-            if (_inst == -1 || !is_instance(_inst)) continue;
-            if (_inst == _chamber) continue;
             
-            // Deduplicate (multi-cell neighbours will appear in multiple ring cells)
-            if (ds_set_find(_seen, _inst) != -1) continue;
-            ds_set_add(_seen, _inst);
-            ds_list_add(_result, _inst);
+            // Valid instance check (and not self)
+            if (_inst != -1 && instance_exists(_inst) && _inst != _chamber) {
+                array_push(_result, _inst);
+            }
         }
     }
     
-    ds_set_destroy(_seen);
-    return _result;
+    // Remove duplicates in one go
+    return array_unique(_result);
 }
 
 
 /// @description Check if any adjacent chamber matches a room type (optionally in a direction).
 function scr_check_adjacent(_chamber, _cond) {
-    var _adj = scr_get_adjacent_chambers(_chamber);
+    var _adj = scr_get_adjacent_chambers(_chamber); // This now returns an array []
     
-    for (var _i = 0; _i < ds_list_size(_adj); _i++) {
-        var _neighbour = ds_list_find_value(_adj, _i);
+    for (var _i = 0; _i < array_length(_adj); _i++) {
+        var _neighbour = _adj[_i]; // Simple array indexing
         
         // If a specific direction is required, verify it
         if (map_exists(_cond, "direction")) {
@@ -179,14 +173,13 @@ function scr_check_adjacent(_chamber, _cond) {
         
         // Wildcard or type match
         if (_cond.room_type == "*" || _neighbour.chamber_type == _cond.room_type) {
-            ds_list_destroy(_adj);
-            return true;
+            return true; // No need to destroy anything!
         }
     }
     
-    ds_list_destroy(_adj);
-    return false;
+    return false; // No need to destroy anything!
 }
+
 
 /// @description Check whether a neighbour touches the subject on a given side.
 /// Strict adjacency only: the neighbour must share an edge with the subject's
