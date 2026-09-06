@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"test_mansion_grid",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"test_mansion_grid",
+  "parent":{
+    "name":"tests",
+    "path":"folders/tests.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

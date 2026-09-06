@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"test_smoke",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"test_smoke",
+  "parent":{
+    "name":"tests",
+    "path":"folders/tests.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
