@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_people_manager_helpers",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_people_manager_helpers",
+  "parent":{
+    "name":"People",
+    "path":"folders/People.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

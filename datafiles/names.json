@@ -1,0 +1,50 @@
+{
+  "client": [
+    "Alex", "Brad", "Charlie", "David", "Liam", "Noah", "Oliver", "Elijah", "James", "William",
+    "Ben", "Lucas", "Henry", "Theo", "Jack", "Levi", "Gus", "Jackson", "Dale", "Daniel",
+    "Michael", "Clayton", "Seb", "Ethan", "Logan", "Owen", "Sam", "Jacob", "Nathan", "Cody",
+    "John", "Joseph", "Wyatt", "Leo", "Luke", "Julian", "Brett", "Travis", "Matthew", "Curtis",
+    "Gabriel", "Carter", "Isaac", "Garry", "Harry", "Pete", "Randy", "Tim", "George", "Freddie",
+    "Arthur", "Archie", "Perry", "Oscar", "Teddy", "Derek", "Glen", "Rex", "Tommy", "Theodore",
+    "Max", "Walt", "Adam", "Albert", "Alexander", "Benjamin", "Billy", "Blake", "Bobby", "Buck",
+    "Duke", "Caleb", "Chester", "Dylan", "Eddie", "Edward", "Eli", "Elliot", "Ellis", "Bo",
+    "Frankie", "Harrison", "Hugo", "Hunter", "Jasper", "Jax", "Troy", "Jenson", "Joey", "Joshua",
+    "Jude", "Clint", "Louie", "Louis", "Miles", "Lyle", "Vernon", "Percy", "Parker", "Ralph",
+    "Reggie", "Shane", "Roman", "Ronnie", "Rory", "Hank", "Rueben", "Rupert", "Ryan", "Samuel",
+    "Sebastian", "Sonny", "Stanley", "Thomas", "Toby", "Zachary"
+  ],
+  "minion": {
+    "soft_sensual": [
+      "Honey", "Pearl", "Velvet", "Rose", "Opal", "Saffron", "Willow", "Amber", "Coral", "Jade",
+      "Lila", "Daphne", "Tansy", "Poppy", "Fern", "Petal", "Marigold", "Lotus", "Iris", "Orchid"
+    ],
+    "dark_gothic": [
+      "Vesper", "Wren", "Sable", "Raven", "Thorne", "Onyx", "Ash", "Brigid", "Selene", "Rook",
+      "Lark", "Morn", "Rowena", "Dusk", "Morgana", "Elvira", "Carmilla", "Wych", "Rhea", "Shade"
+    ],
+    "classic_69": [
+      "Diane", "Cheryl", "Simone", "Margot", "Celeste", "Vivian", "Lorene", "Delia", "Phoebe", "Gilda",
+      "Colette", "Bettina", "Verna", "Lucille", "Rosalind", "Beatrice", "Arlene", "Jeanette", "Dolores", "Norma"
+    ],
+    "exotic_mysterious": [
+      "Zora", "Seren", "Nyx", "Ione", "Maeve", "Talia", "Esme", "Odette", "Freya", "Anouk",
+      "Yara", "Celia", "Isolde", "Amara", "Kezia", "Nadia", "Liora", "Zulema", "Oona", "Mira"
+    ],
+    "punchy_short": [
+      "Kit", "Lux", "Faye", "Rue", "Skye", "Vex", "Dot", "Pip", "Nix", "Zed",
+      "Jinx", "Kip", "Tess", "Ivy", "Hex", "Jez", "Gipsy", "Nell", "Mox", "Bex"
+    ],
+    "cruel_sexual": [
+        "Stinger", "Lash", "Brand", "Scorch", "Bite", "Crave", "Fever", "Ruin", "Spent", "Undone",
+        "Bound", "Tether", "Heat", "Smolder", "Snap", "Sin", "Vice", "Nerve", "Pulse"
+	],
+    "virtue_vice": [
+        "Mercy", "Bliss", "Envy", "Patience", "Lust", "Harmony", "Verity", "Felicity", "Temperance", "Rapture",
+        "Pride", "Wrath", "Grace", "Hope", "Charity", "Ecstasy", "Sloth", "Humility", "Greed", "Serenity"
+	],
+    "fluffy_sweet": [
+      "Starshine", "Rainbow", "Unicorn", "Moonbeam", "Sunflower", "Freebird", "Feather", "Daisy", "Clover", "Bonbon",
+      "Cupcake", "Sugar", "Peaches", "Honeybun", "Taffy", "Cinnamon", "Muffin", "Cookie", "Pookie", "Bambi"
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+	"village" : {
+		"source" : "backgrounds/village.json",
+		"clients" : 9
+	},
+	"town" : {
+		"source" : "backgrounds/industrial-town.json",
+		"clients" : 9
+	},
+	"suburb" : {
+		"source" : "backgrounds/wealthy-suburbs.json",
+		"clients" : 9
+	},
+	"city" : {
+		"source" : "backgrounds/city.json",
+		"clients" : 9
+	}
+}
