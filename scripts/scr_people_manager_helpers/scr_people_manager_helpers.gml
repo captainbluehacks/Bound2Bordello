@@ -51,7 +51,8 @@ function __obj_people_manager_helpers(){
 			// We don't have enough name types to offer 3 different ones.
 			// We'll reload the names. Duplicates might be boring,
 			// but better than running out or crashing.
-			name_pool = scr_load_json_file("name.json");
+			name_pool = scr_load_json_file("names.json");
+			_all_types = struct_get_names(name_pool, "minion");
 			_keys = struct_get_names(_all_types);
 		}
 		
@@ -91,7 +92,7 @@ function __obj_people_manager_helpers(){
 			// Limit clients to count of backgrounds, just in case someone edits client_pools.json
 			var _count = min(_definition.clients, array_length(_background));
 			
-			for (var _i = 0; _i < _definition.clients; _i++) {
+			for (var _i = 0; _i < _count; _i++) {
 				var _inst = instance_create_layer(0, 0, people_layer.entities, obj_client);
 				
 				// First let's hide the client.
