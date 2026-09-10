@@ -1,3 +1,5 @@
+client_id = gen_client_id();
+
 name = "";
 tags = [];
 backstory = "";

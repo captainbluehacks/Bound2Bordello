@@ -1,3 +1,4 @@
+/// @description Creates helper functions for the People manager. Should only be called from obj_people_manager.
 function __obj_people_manager_helpers(){
 
 	/// @description Load specified backgrounds and return an optionally shuffled list
@@ -26,6 +27,12 @@ function __obj_people_manager_helpers(){
 		
 		var _list = struct_get(name_pool, "client");
 		
+		if (array_length(_list) == 0) {
+			// Somehow we've run out of names, we'll just have to reuse them.
+			name_pool = scr_load_json_file("names.json");
+			_list = struct_get(name_pool, "client");
+		}
+		
 		var _idx = irandom(array_length(_list) - 1);
 		var _name = _list[_idx];
 		array_delete(_list, _idx, 1);
@@ -34,10 +41,20 @@ function __obj_people_manager_helpers(){
 	}
 		
 	///@description Return three potential names for a minion.
-	///@return A string with the name. 
+	///@return An array with three names. 
 	function scr_get_minion_name() {
 		
 		var _all_types = struct_get(name_pool, "minion");
+		var _keys = struct_get_names(_all_types);
+		
+		if (array_length(_keys) < 3) {
+			// We don't have enough name types to offer 3 different ones.
+			// We'll reload the names. Duplicates might be boring,
+			// but better than running out or crashing.
+			name_pool = scr_load_json_file("name.json");
+			_keys = struct_get_names(_all_types);
+		}
+		
 		var _types = array_shuffle(struct_get_names(_all_types));
 		
 		var _names = [];
@@ -48,6 +65,11 @@ function __obj_people_manager_helpers(){
 			var _idx = irandom(array_length(_current_list) - 1);
 			array_push(_names, _current_list[_idx]);
 			array_delete(_current_list, _idx, 1);
+			
+			if (array_length(_current_list) == 0) {
+				// We've run out of this key, remove the type.
+				struct_remove(_all_types, _types[_i]);
+			}
 		}
 		
 		return _names;
@@ -66,9 +88,16 @@ function __obj_people_manager_helpers(){
 			
 			var _background = scr_load_json_file(_definition.source, true);
 			
+			// Limit clients to count of backgrounds, just in case someone edits client_pools.json
+			var _count = min(_definition.clients, array_length(_background));
+			
 			for (var _i = 0; _i < _definition.clients; _i++) {
-				var _inst = instance_create_layer(0, 0, mansion_layer.entities, obj_client);
+				var _inst = instance_create_layer(0, 0, people_layer.entities, obj_client);
 				
+				// First let's hide the client.
+				_inst.visible = false;
+				
+				// Then setup name, backstory and tags
 				_inst.name = scr_get_client_name();
 				_inst.backstory = _background[_i].text;
 				_inst.tags = array_concat(_inst.tags, _background[_i].tags);
