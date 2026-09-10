@@ -9,7 +9,7 @@
 	gmtl_show_coverage				|	Show function coverage report after tests finish.	|	true
 
 */
-#macro	gmtl_run_at_start					true
+#macro	gmtl_run_at_start					false
 #macro	gmtl_wait_frames_before_start		10
 #macro	gmtl_show_coverage					true
 
