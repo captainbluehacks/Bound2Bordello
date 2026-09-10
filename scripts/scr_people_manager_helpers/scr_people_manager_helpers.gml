@@ -52,7 +52,7 @@ function __obj_people_manager_helpers(){
 			// We'll reload the names. Duplicates might be boring,
 			// but better than running out or crashing.
 			name_pool = scr_load_json_file("names.json");
-			_all_types = struct_get_names(name_pool, "minion");
+			_all_types = struct_get(name_pool, "minion");
 			_keys = struct_get_names(_all_types);
 		}
 		
