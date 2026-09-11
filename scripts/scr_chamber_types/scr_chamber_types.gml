@@ -1,7 +1,7 @@
 /// @description Load all chamber type definitions at game start.
 function scr_load_chamber_types() {
 		
-	chamber_type_defs = {data : [], lookup : {}};
+	var _chamber_type_defs = {data : [], lookup : {}};
 	
 	var _files = [
 		"chamber_types/succubus.json"
@@ -17,12 +17,14 @@ function scr_load_chamber_types() {
 		    // Tag each entry with its source ally for potential gating later
 		    _entries[j].source_ally = scr_filename_to_ally(_files[i]);
             
-		    var _idx = array_length(chamber_type_defs.data);
-		    array_push(chamber_type_defs.data, _entries[j]);
+		    var _idx = array_length(_chamber_type_defs.data);
+		    array_push(_chamber_type_defs.data, _entries[j]);
 			var _type = _entries[j].type;
-			struct_set(chamber_type_defs.lookup, _type, _idx);
+			struct_set(_chamber_type_defs.lookup, _type, _idx);
 		}
 	}
+	
+	return _chamber_type_defs ;
 }
 
 
@@ -61,6 +63,6 @@ function scr_get_chamber_tags(_type_string) {
 	
 // Upgrades
 function scr_get_upgrade(_upgrade_id) {
-	return [];
+	return {};
 };
 	

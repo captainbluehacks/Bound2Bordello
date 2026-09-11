@@ -7,9 +7,9 @@ enum FLOOR {
 }
 
 enum ROOM_SIZE {
-    SMALL,   // 1x1
-    MEDIUM,  // 2x1
-    LARGE    // 2x2
+	SMALL,   // 1x1
+	MEDIUM,  // 2x1
+	LARGE    // 2x2
 }; 
 
 function scr_mansion_constants() {
@@ -33,5 +33,4 @@ function scr_mansion_constants() {
 		
 	// Set everything to unassigned.
 		ds_grid_set_region(global.mansion_map, 0, 0, _grid_width -1, _grid_height - 1, -1);
-
 }

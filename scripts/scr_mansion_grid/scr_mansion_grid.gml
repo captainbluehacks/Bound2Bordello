@@ -132,11 +132,18 @@
 	    // Determine which row(s) of the grid correspond to this chamber's floor
 	    // (Your FLOOR enum maps to grid_y ranges — adjust to your layout)
 	    var _floor_rows = scr_grid_y_to_floor(_chamber.grid_y);
+		
+		if (_floor_rows == noone) {
+			show_debug_message("Couldn't get valid floor from: " + string(_chamber.grid_y));
+			
+			// No clean way to recover, so let's just return 0 for none.
+			return (0);	
+		}
     
 	    for (var _y = _floor_rows[0]; _y <= _floor_rows[1]; _y++) {
 	        for (var _x = 0; _x < ds_grid_width(global.mansion_map); _x++) {
 	            var _inst = ds_grid_get(global.mansion_map, _x, _y);
-	            if (_inst == -1 || !is_instance(_inst)) continue;
+	            if (_inst == -1 || !instance_exists(_inst)) continue;
 	            if (ds_set_find(_seen, _inst) != -1) continue;
 	            ds_set_add(_seen, _inst);
             
@@ -145,10 +152,9 @@
 				for (var t = 0; t < array_length(_eff_tags); t++) {
 					if (_eff_tags[t] == _tag) { _count++; break; }
 				}
-
 	        }
 	    }
-    
+
 	    ds_set_destroy(_seen);
 	    return min(_count, _max);
 	}
