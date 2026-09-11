@@ -1,12 +1,8 @@
-// Initialise our script
-__obj_mansion_chamber_type_methods() ;
-__obj_mansion_room_methods();
-
-// Load chamber types
-scr_load_chamber_types();
-
-// Setup Room Constants	    
-setup_constants();
+// All data intialisation is now done in _obj_mansion_init
+// This allows for clear separation during testing.
+if (!instance_exists(obj_mansion_init)) {
+	show_debug_message("No mansion init found");
+}
 
 // Setup layers
 mansion_layer = {
@@ -14,6 +10,9 @@ chamber : layer_create(layer_type.chambers),
 props : layer_create(layer_type.props),
 shell : layer_create(layer_type.shell)
 }
+
+// Make sure all chamber sprites are available.
+gml_pragma("MarkTagAsUsed", "chamber");
 
 var _blueprints = define_floors();
 

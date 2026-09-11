@@ -61,7 +61,5 @@ end_turn = function(){
 	}
 };
 
-
+show_debug_message("Init finished - moving to room start.");
 room_goto(rm_start);
-
-

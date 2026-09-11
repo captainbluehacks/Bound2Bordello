@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_chamber_types",
   "parent":{
-    "name":"Mansion",
-    "path":"folders/Mansion.yy",
+    "name":"Chamber",
+    "path":"folders/Chamber.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

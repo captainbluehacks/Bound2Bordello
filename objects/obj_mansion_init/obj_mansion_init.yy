@@ -1,15 +1,15 @@
 {
   "$GMObject":"",
-  "%Name":"obj_game_manager",
+  "%Name":"obj_mansion_init",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"obj_game_manager",
+  "name":"obj_mansion_init",
   "overriddenProperties":[],
   "parent":{
-    "name":"Game Manager",
-    "path":"folders/Game Manager.yy",
+    "name":"Mansion",
+    "path":"folders/Mansion.yy",
   },
   "parentObjectId":null,
   "persistent":true,
