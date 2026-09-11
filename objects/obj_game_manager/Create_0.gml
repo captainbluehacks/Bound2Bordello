@@ -61,7 +61,4 @@ end_turn = function(){
 	}
 };
 
-
-room_goto(rm_start);
-
-
+	room_goto(rm_start);
