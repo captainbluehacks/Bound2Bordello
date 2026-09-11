@@ -11,6 +11,9 @@ props : layer_create(layer_type.props),
 shell : layer_create(layer_type.shell)
 }
 
+// Make sure all chamber sprites are available.
+gml_pragma("MarkTagAsUsed", "chamber");
+
 var _blueprints = define_floors();
 
 add_room_instances(_blueprints);

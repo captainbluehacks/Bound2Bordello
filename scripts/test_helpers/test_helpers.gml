@@ -8,14 +8,15 @@
 
 /// Build an empty mansion grid and stash it into global.mansion_map.
 function test_setup_grid(_w = 10, _h = 8) {
-
-    // Guard against a never-initialized global (test room doesn't run setup_constants).
-    if (variable_global_exists("mansion_map")) {
+	
+    if (variable_global_exists("mansion_map") && global.mansion_map != noone) {
         ds_grid_destroy(global.mansion_map);
     }
     global.mansion_map = ds_grid_create(_w, _h);
+	
     ds_grid_set_region(global.mansion_map, 0, 0, _w - 1, _h - 1, -1);
 }
+
 
 /// Create an obj_chamber at a grid cell and register it in the map (honouring size).
 /// NOTE: relies on a real chamber sprite existing for <_type>/<size> and on
