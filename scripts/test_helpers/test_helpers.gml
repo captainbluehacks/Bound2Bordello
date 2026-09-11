@@ -8,6 +8,7 @@
 
 /// Build an empty mansion grid and stash it into global.mansion_map.
 function test_setup_grid(_w = 10, _h = 8) {
+
     // Guard against a never-initialized global (test room doesn't run setup_constants).
     if (variable_global_exists("mansion_map")) {
         ds_grid_destroy(global.mansion_map);
@@ -18,7 +19,7 @@ function test_setup_grid(_w = 10, _h = 8) {
 
 /// Create an obj_chamber at a grid cell and register it in the map (honouring size).
 /// NOTE: relies on a real chamber sprite existing for <_type>/<size> and on
-/// obj_mansion_manager.scr_get_chamber_tags() being available. Use valid types
+/// scr_get_chamber_tags() being available. Use valid types
 /// from datafiles/chamber_types/ (e.g. "boudoir", "bar").
 function test_place_chamber(_type, _gx, _gy, _size = ROOM_SIZE.SMALL) {
     var _inst = instance_create_layer(0, 0, "Instances", obj_chamber,

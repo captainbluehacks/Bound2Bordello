@@ -60,6 +60,11 @@
 	
 	function add_room_instances(_blueprints) {
 		
+		if (!variable_global_exists(global.mansion_map)) {
+			show_debug_message("Mansion map didn't exist when we got here.")
+			
+		}
+		
 		// Define constants
 		var _cell_size = 320;
 		
@@ -73,8 +78,6 @@
 			
 			var _px = _data.grid_x * _cell_size + _offset_x;
 			var _py = _data.grid_y * _cell_size + _offset_y;
-			
-			show_debug_message(string(_data.grid_x)+ ", " + string(_data.grid_y) + " - " + string(_px)+ ", " + string(_py))
 			
 			// Set variables before create, as then we can pick a sprite before creation.
 			var _inst = instance_create_layer(_px, _py, mansion_layer.chamber, obj_chamber, 

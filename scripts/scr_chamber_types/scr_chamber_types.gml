@@ -2,7 +2,7 @@
 	/// @description Load all chamber type definitions at game start.
 	function scr_load_chamber_types() {
 		
-		chamber_type = {data : [], lookup : {}};
+		chamber_type_defs = {data : [], lookup : {}};
 	
 		var _files = [
 		    "chamber_types/succubus.json"
@@ -18,10 +18,10 @@
 		        // Tag each entry with its source ally for potential gating later
 		        _entries[j].source_ally = scr_filename_to_ally(_files[i]);
             
-		        var _idx = array_length(chamber_type.data);
-		        array_push(chamber_type.data, _entries[j]);
+		        var _idx = array_length(chamber_type_defs.data);
+		        array_push(chamber_type_defs.data, _entries[j]);
 				var _type = _entries[j].type;
-				struct_set(chamber_type.lookup, _type, _idx);
+				struct_set(chamber_type_defs.lookup, _type, _idx);
 		    }
 		}
 	}
@@ -31,10 +31,10 @@
 	/// @return {map|undefined} The full type definition map.
 	function scr_get_chamber_type(_type_string) {
 		
-		if (!struct_exists(chamber_type.lookup, _type_string)) return undefined;
+		if (!struct_exists(obj_mansion_init.chamber_type_defs.lookup, _type_string)) return undefined;
 		
-		var _idx = struct_get(chamber_type.lookup, _type_string);
-		return chamber_type.data[_idx];
+		var _idx = struct_get(obj_mansion_init.chamber_type_defs.lookup, _type_string);
+		return obj_mansion_init.chamber_type_defs.data[_idx];
 	}
 
 

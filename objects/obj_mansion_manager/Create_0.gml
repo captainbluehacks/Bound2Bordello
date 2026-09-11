@@ -1,5 +1,8 @@
 // All data intialisation is now done in _obj_mansion_init
 // This allows for clear separation during testing.
+if (!instance_exists(obj_mansion_init)) {
+	show_debug_message("No mansion init found");
+}
 
 // Setup layers
 mansion_layer = {
