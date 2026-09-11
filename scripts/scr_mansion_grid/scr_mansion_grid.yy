@@ -1,12 +1,12 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_ui_system",
+  "%Name":"scr_mansion_grid",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_ui_system",
+  "name":"scr_mansion_grid",
   "parent":{
-    "name":"UI",
-    "path":"folders/UI.yy",
+    "name":"Mansion",
+    "path":"folders/Mansion.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

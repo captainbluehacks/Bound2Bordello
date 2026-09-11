@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"scr_mansion_rooms",
+  "%Name":"scr_mansion_constants",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"scr_mansion_rooms",
+  "name":"scr_mansion_constants",
   "parent":{
     "name":"Mansion",
     "path":"folders/Mansion.yy",
