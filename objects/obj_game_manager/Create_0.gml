@@ -4,7 +4,7 @@ global.current_floor = 1;
 
 // Resources
 global.primary_resources = { value : 0, power : 0, stock :0 };
-global.secondary_resources = { cash : 0, lust : 0, humilliation : 0, fear : 0, influence : 0 };
+global.secondary_resources = { cash : 0, lust : 0, humiliation : 0, fear : 0, influence : 0 };
 
 // Time Tracking
 enum period { day, night, reckoning };
@@ -24,7 +24,7 @@ get_season = function() {
 	return current_season ;
 };
 
-end_turn = function(){
+function end_turn() {
 	
 	if (current_period == period.day) {
 		// Carry out end of day actions
@@ -34,12 +34,12 @@ end_turn = function(){
 		
 		current_period = period.night;
 	} else if (current_period == period.night) {
-		// Carry out end of day actions
+		// Carry out end of night actions
 		show_debug_message("End of Night " + string(cycle));
 		
 		current_period = period.reckoning;
 	} else {
-		// Carry out end of day actions
+		// Carry out reckoning actions
 		show_debug_message("End of Reckoning " + string(cycle));
 		
 		if (cycle < 12) {

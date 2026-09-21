@@ -5,31 +5,31 @@
         "grid_x":4,
         "grid_y":2,
         "size":1,
-        "type":"cluttered"
+        "type":"hazards"
       },
       {
         "grid_x":6,
         "grid_y":2,
         "size":1,
-        "type":"cluttered"
+        "type":"hazards"
       },
       {
         "grid_x":4,
         "grid_y":3,
         "size":0,
-        "type":"cluttered"
+        "type":"hazards"
       },
       {
         "grid_x":5,
         "grid_y":3,
         "size":0,
-        "type":"cluttered"
+        "type":"hazards"
       },
       {
         "grid_x":6,
         "grid_y":3,
         "size":1,
-        "type":"cluttered"
+        "type":"hazards"
       }
     ]
   },
@@ -39,31 +39,31 @@
         "grid_x":4,
         "grid_y":2,
         "size":1,
-        "type":"cluttered"
+        "type":"hazards"
       },
       {
         "grid_x":6,
         "grid_y":2,
         "size":1,
-        "type":"cluttered"
+        "type":"hazards"
       },
       {
         "grid_x":4,
         "grid_y":3,
         "size":0,
-        "type":"cluttered"
+        "type":"hazards"
       },
       {
         "grid_x":5,
         "grid_y":3,
         "size":1,
-        "type":"cluttered"
+        "type":"hazards"
       },
       {
         "grid_x":7,
         "grid_y":3,
         "size":0,
-        "type":"cluttered"
+        "type":"hazards"
       }
     ]
   },
@@ -73,37 +73,37 @@
         "grid_x":4,
         "grid_y":2,
         "size":1,
-        "type":"cluttered"
+        "type":"hazards"
       },
       {
         "grid_x":6,
         "grid_y":2,
         "size":0,
-        "type":"cluttered"
+        "type":"hazards"
       },
 	  {
 		"grid_x":7,
         "grid_y":2,
         "size":0,
-        "type":"cluttered"
+        "type":"hazards"
 	  },
       {
         "grid_x":4,
         "grid_y":3,
         "size":0,
-        "type":"cluttered"
+        "type":"hazards"
       },
       {
         "grid_x":5,
         "grid_y":3,
         "size":0,
-        "type":"cluttered"
+        "type":"hazards"
       },
       {
         "grid_x":6,
         "grid_y":3,
         "size":1,
-        "type":"cluttered"
+        "type":"hazards"
       }
     ]
   }

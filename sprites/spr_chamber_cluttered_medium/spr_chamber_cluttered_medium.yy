@@ -64,8 +64,8 @@
   "nineSlice":null,
   "origin":0,
   "parent":{
-    "name":"Bound to the Bordello",
-    "path":"Bound to the Bordello.yyp",
+    "name":"Chamber Sprites",
+    "path":"folders/Chamber Sprites.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",
