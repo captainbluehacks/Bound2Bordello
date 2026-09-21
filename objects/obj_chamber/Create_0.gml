@@ -1,7 +1,17 @@
 var _sprite = "spr_chamber_" + chamber_type + "_" + global.size_dims[chamber_size].name ;
 
 sprite_index = asset_get_index(_sprite);
-image_index = irandom(sprite_get_number(sprite_index) -1);
+image_index = 0;
+
+if (sprite_index == -1) {
+	// Handle sprite not found
+	show_debug_message(_sprite + " not found.");
+	
+	sprite_index = asset_get_index("spr_chamber_not_found_" +  + global.size_dims[chamber_size].name);
+}
+else {
+	image_index = irandom(sprite_get_number(sprite_index) -1);
+}
 
 // Cache the tag list for fast access
 var _tags = scr_get_chamber_tags(chamber_type);

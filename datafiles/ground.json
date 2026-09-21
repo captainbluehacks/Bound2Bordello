@@ -17,7 +17,7 @@
         "grid_x":5,
         "grid_y":5,
         "size":0,
-        "type":"cluttered"
+        "type":"boudoir"
       },
       {
         "grid_x":5,
@@ -63,7 +63,7 @@
         "grid_x":5,
         "grid_y":4,
         "size":0,
-        "type":"cluttered"
+        "type":"boudoir"
       },
       {
         "grid_x":6,
@@ -97,7 +97,7 @@
         "grid_x":3,
         "grid_y":4,
         "size":0,
-        "type":"cluttered"
+        "type":"boudoir"
       },
       {
         "grid_x":4,
