@@ -7,7 +7,7 @@ if (sprite_index == -1) {
 	// Handle sprite not found
 	show_debug_message(_sprite + " not found.");
 	
-	sprite_index = asset_get_index("spr_chamber_not_found_" +  + global.size_dims[chamber_size].name);
+	sprite_index = asset_get_index("spr_chamber_not_found_" + global.size_dims[chamber_size].name);
 }
 else {
 	image_index = irandom(sprite_get_number(sprite_index) -1);
