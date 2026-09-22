@@ -38,7 +38,7 @@ function scr_chamber_check_prerequisites(_type_def, _chamber) {
     if (!struct_exists(_type_def, "requires")) return { active: true };
     
     var _req = _type_def.requires;
-    if (_req.minion && !_chamber.minion != noone) {
+    if (_req.minion && _chamber.minion == noone) {
         return { active: false, reason: "No minion assigned" };
     }
     if (_req.client && !(array_length(_chamber.client) > 0)) {
