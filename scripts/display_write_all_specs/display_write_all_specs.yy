@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"display_write_all_specs",
   "parent":{
-    "name":"Camera",
-    "path":"folders/Camera.yy",
+    "name":"Debug",
+    "path":"folders/Debug.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

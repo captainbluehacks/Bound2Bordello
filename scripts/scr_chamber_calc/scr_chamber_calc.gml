@@ -38,7 +38,7 @@ function scr_chamber_check_prerequisites(_type_def, _chamber) {
     if (!struct_exists(_type_def, "requires")) return { active: true };
     
     var _req = _type_def.requires;
-    if (_req.minion && !(_chamber.minion != noone && is_instance(_chamber.minion))) {
+    if (_req.minion && !_chamber.minion != noone) {
         return { active: false, reason: "No minion assigned" };
     }
     if (_req.client && !(array_length(_chamber.client) > 0)) {
@@ -146,7 +146,7 @@ function scr_calculate_night_earnings() {
     for (var _x = 0; _x < _w; _x++) {
         for (var _y = 0; _y < _h; _y++) {
             var _inst = ds_grid_get(global.mansion_map, _x, _y);
-            if (_inst == -1 || !is_instance(_inst)) continue;
+            if (_inst == -1) continue;
             if (ds_map_exists(_seen, _inst)) continue; 
             ds_map_add(_seen, _inst, true);
             
@@ -182,7 +182,7 @@ function scr_eval_condition(_chamber, _cond) {
             return scr_count_tag_on_floor(_chamber, _cond.tag, _cond.max);
             
         case "minion_assigned":
-            return (_chamber.minion != no && is_instance(_chamber.minion));
+            return (_chamber.minion != noone);
             
         case "floor_is":
             return (_chamber.floor == _cond.floor);
