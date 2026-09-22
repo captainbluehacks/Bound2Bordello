@@ -18,5 +18,3 @@ for (var i = 0; i < array_length(all_elements); i++) {
 		draw_text_transformed_colour(dx + btn.w / 2, dy + btn.h / 2, btn.name, 1, 1, 0, #101010, #101010, #101010, #101010, 1);
     }
 }
-
-display_write_all_specs();
