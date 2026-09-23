@@ -11,8 +11,8 @@
   "name":"obj_button_parent",
   "overriddenProperties":[],
   "parent":{
-    "name":"Bound to the Bordello",
-    "path":"Bound to the Bordello.yyp",
+    "name":"UI",
+    "path":"folders/UI.yy",
   },
   "parentObjectId":null,
   "persistent":false,

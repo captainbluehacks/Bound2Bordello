@@ -49,8 +49,8 @@
   },
   "origin":0,
   "parent":{
-    "name":"Bound to the Bordello",
-    "path":"Bound to the Bordello.yyp",
+    "name":"Chamber",
+    "path":"folders/Chamber.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

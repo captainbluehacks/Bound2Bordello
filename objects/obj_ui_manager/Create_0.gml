@@ -1,6 +1,6 @@
-// Layout constants (Calculated once)
-sidebar_width = 250;
-bottom_bar_height = 140;
+// Layout constants
+var _button_offset = 255;	// Button width 240 + 15 px pad.
+var _bottom_bar_height = 140;
 
 global.ui_blocked = false;
 shiver_intensity = 1.5;
@@ -17,17 +17,17 @@ function create_btn(_name, _x, _y, _sprite, _frame, _action, _w=240, _h=120) {
 };
 
 buttons = [
-    create_btn("Self", GUI_W / 4, GUI_H - bottom_bar_height + 10, s_default_button, 0, UI_ACTION.CENTER_YOU),
-    create_btn("Peon", 300 + GUI_W / 4, GUI_H - bottom_bar_height + 10, s_default_button, 0, UI_ACTION.NEXT_MINION),
-    create_btn("Done", GUI_W - sidebar_width + 5 , GUI_H - bottom_bar_height + 10, s_default_button, 0, UI_ACTION.DONE)
+    create_btn("Self", GUI_W / 4, GUI_H - _bottom_bar_height + 10, s_default_button, 0, UI_ACTION.CENTER_YOU),
+    create_btn("Peon", 300 + GUI_W / 4, GUI_H - _bottom_bar_height + 10, s_default_button, 0, UI_ACTION.NEXT_MINION),
+    create_btn("Done", GUI_W - _button_offset , GUI_H - _bottom_bar_height + 10, s_default_button, 0, UI_ACTION.DONE)
 ];
 
 // Arrows use the same structure for consistency in the loop
 arrows = [
-    create_btn("", GUI_W / 2 - sidebar_width, 20, s_scroll_arrow, UI_DIRECTION_ARROW.UP ,UI_ACTION.UP, 50, 50),
-    create_btn("", GUI_W / 2 - sidebar_width, GUI_H - bottom_bar_height - 70, s_scroll_arrow, UI_DIRECTION_ARROW.DOWN, UI_ACTION.DOWN, 50, 50),
-    create_btn("", 20, GUI_H / 2 - bottom_bar_height, s_scroll_arrow, UI_DIRECTION_ARROW.LEFT, UI_ACTION.LEFT, 50, 50),
-    create_btn("", GUI_W - sidebar_width - 70, GUI_H / 2 - bottom_bar_height, s_scroll_arrow, UI_DIRECTION_ARROW.RIGHT, UI_ACTION.RIGHT, 50, 50)
+    create_btn("", GUI_W / 2, 20, s_scroll_arrow, UI_DIRECTION_ARROW.UP ,UI_ACTION.UP, 50, 50),
+    create_btn("", GUI_W / 2, GUI_H - _bottom_bar_height - 70, s_scroll_arrow, UI_DIRECTION_ARROW.DOWN, UI_ACTION.DOWN, 50, 50),
+    create_btn("", 20, (GUI_H - _bottom_bar_height) / 2, s_scroll_arrow, UI_DIRECTION_ARROW.LEFT, UI_ACTION.LEFT, 50, 50),
+    create_btn("", GUI_W - 70, (GUI_H - _bottom_bar_height) / 2, s_scroll_arrow, UI_DIRECTION_ARROW.RIGHT, UI_ACTION.RIGHT, 50, 50)
 ];
 
 function process_button_action(_actionId) {

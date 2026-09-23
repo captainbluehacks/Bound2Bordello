@@ -214,8 +214,8 @@
   "maintainGms1Font":false,
   "name":"fnt_score_gothic",
   "parent":{
-    "name":"UI",
-    "path":"folders/UI.yy",
+    "name":"Resources",
+    "path":"folders/UI/Resources.yy",
   },
   "pointRounding":0,
   "ranges":[
