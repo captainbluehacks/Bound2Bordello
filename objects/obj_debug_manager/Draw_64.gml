@@ -19,8 +19,16 @@ if (show_display_specs) {
 	draw_rectangle(_cx - 10, _cy - 10, _cx + _tw + 10, _cy + _th + 10, false);
 	draw_set_alpha(1.0);
 
+	// Get old align
+	var _old_v = draw_get_valign();
+	var _old_h = draw_get_halign();
+
 	// Text (pass window-space coords that land at _cx, _cy after scaling)
 	draw_set_halign(fa_center);
 	draw_set_valign(fa_middle);
 	display_write_all_specs(gui_w / 2, gui_h / 2, _scale);
+	
+	// Restore Align
+	draw_set_valign(_old_v);
+	draw_set_halign(_old_h);
 }

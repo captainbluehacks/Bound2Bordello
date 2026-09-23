@@ -1,6 +1,5 @@
 // Layout constants
 var _button_offset = 255;	// Button width 240 + 15 px pad.
-sidebar_width = 250;
 var _bottom_bar_height = 140;
 
 global.ui_blocked = false;
@@ -27,8 +26,8 @@ buttons = [
 arrows = [
     create_btn("", GUI_W / 2, 20, s_scroll_arrow, UI_DIRECTION_ARROW.UP ,UI_ACTION.UP, 50, 50),
     create_btn("", GUI_W / 2, GUI_H - _bottom_bar_height - 70, s_scroll_arrow, UI_DIRECTION_ARROW.DOWN, UI_ACTION.DOWN, 50, 50),
-    create_btn("", 20, GUI_H / 2 - _bottom_bar_height, s_scroll_arrow, UI_DIRECTION_ARROW.LEFT, UI_ACTION.LEFT, 50, 50),
-    create_btn("", GUI_W - 70, GUI_H / 2 - _bottom_bar_height, s_scroll_arrow, UI_DIRECTION_ARROW.RIGHT, UI_ACTION.RIGHT, 50, 50)
+    create_btn("", 20, (GUI_H - _bottom_bar_height) / 2, s_scroll_arrow, UI_DIRECTION_ARROW.LEFT, UI_ACTION.LEFT, 50, 50),
+    create_btn("", GUI_W - 70, (GUI_H - _bottom_bar_height) / 2, s_scroll_arrow, UI_DIRECTION_ARROW.RIGHT, UI_ACTION.RIGHT, 50, 50)
 ];
 
 function process_button_action(_actionId) {
