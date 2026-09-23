@@ -1,6 +1,6 @@
 {
   "$GMFont":"",
-  "%Name":"fnt_button_gothic",
+  "%Name":"fnt_score_gothic",
   "AntiAlias":1,
   "applyKerning":0,
   "ascender":44,
@@ -212,7 +212,7 @@
   "last":0,
   "lineHeight":61,
   "maintainGms1Font":false,
-  "name":"fnt_button_gothic",
+  "name":"fnt_score_gothic",
   "parent":{
     "name":"UI",
     "path":"folders/UI.yy",
