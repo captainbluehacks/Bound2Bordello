@@ -22,92 +22,64 @@ for (var i = 0; i < array_length(all_elements); i++) {
 // Resource Panels
 
 // Constants
-var _cell = 133;
-var _size = 80;
-var _offset = 10 ;
+var _cell = 133;	// Parchment is 400px. We have 3 icons for this section. 400 /3 == 133.
+var _size = 80;		// chosen width of icon. 80 looks right after experimentation 
+var _offset = 10 ;  // How much padding to give the parchment.
+var _sprite_y = 15; // 10 pad from top of screen + 5px padding for the icon.
+var _value_y = 110;	// 10 pad from top of screen + 10px top and bottom of icon + 80 icon + 10 pad.
+
 
 // Left Hand side
 draw_sprite(spr_top_left_resources, 0, _offset, 10);
 
-// Font setup
-draw_set_font(fnt_score_gothic);
-draw_set_colour($2A1A10);
-draw_set_alpha(0.9);
+// Position setup
 draw_set_halign(fa_center);
 draw_set_valign(fa_center);
 
-// Value
-draw_sprite_stretched(spr_value, 0, (_cell - _size) / 2 + _offset, 15, _size, _size);
-draw_set_colour(c_white);
-draw_text(1 + _offset + _cell / 2, 111, string(global.primary_resources.value));
-draw_set_colour($2A1A10);
-draw_text(_offset + _cell / 2, 110, string(global.primary_resources.value));
+// Draw 3 icons - Value, Power, Stock.
 
+draw_icon(spr_value, (_cell - _size) / 2 + _offset, _sprite_y, _size, 
+	fnt_score_gothic,  _offset + _cell / 2, _value_y, global.primary_resources.value);
 
-// Power
-draw_sprite_stretched(spr_power, 0, _cell + (_cell - _size) / 2 + _offset, 15, _size, _size);
-draw_set_colour(c_white);
-draw_text(1 + _offset + _cell + _cell / 2, 111, string(global.primary_resources.power));
-draw_set_colour($2A1A10);
-draw_text(_offset + _cell + _cell / 2, 110, string(global.primary_resources.power));
+draw_icon(spr_power, _cell + (_cell - _size) / 2 + _offset, _sprite_y, _size, 
+	fnt_score_gothic,  _offset + 1.5 *_cell, _value_y, global.primary_resources.power);
+	
+draw_icon(spr_stock,  _cell * 2 + (_cell - _size) / 2 + _offset, _sprite_y, _size, 
+	fnt_score_gothic,  _offset + 2.5 * _cell, _value_y, global.primary_resources.stock);
 
-// Stock
-draw_sprite_stretched(spr_stock, 0, _cell * 2 + (_cell - _size) / 2 + _offset, 15, _size, _size);
-draw_set_colour(c_white);
-draw_text(1 + _offset + _cell * 2 + _cell  / 2, 111, string(global.primary_resources.stock));
-draw_set_colour($2A1A10);
-draw_text(_offset + _cell * 2 + _cell  / 2, 110, string(global.primary_resources.stock));
 
 // End of Left Panel
 
 // Constants
-_cell = 860 / 10;
-_size = 70;
-_offset = GUI_W - 890;
+_cell = 860 / 10;		// Parchment is 880. Subtract 10px for padding. We have 10 icons for this section.
+_size = 70;				// Chosen width of icon. 70 looks good after experimentation.
+_offset = GUI_W - 890;	// Align parchment 10 pixels from right hand side.
+_sprite_y = 15; // 10 pad from top of screen + 5px padding for the icon.
+_value_y = 59;	// Calculated so midpoint of text aligns with midpoint of icon.
 
 // Right Hand Side
 draw_sprite(spr_top_right_resources, 0, _offset, 10);
 
-_offset = _offset + 20;
+_offset = _offset + 20;	// Tweak offset by double padding to place icons.
 
-// Font setup
-draw_set_font(fnt_resource_gothic);
+// Position setup
 draw_set_halign(fa_left);
 draw_set_valign(fa_middle);
 
-// Lust
-draw_sprite_stretched(spr_lust, 0, _offset, 15, _size, _size);
-draw_set_colour(c_white);
-draw_text(1 + _offset + _cell, 59, string(global.secondary_resources.lust));
-draw_set_colour($2A1A10);
-draw_text(_offset + _cell, 58, string(global.secondary_resources.lust));
+// Create icons for our 5 resources. Lust, Humiliation, Fear, Cash and Influence.
+// Text follows icons here, so x value each object just add a cell to the previous total.
 
+draw_icon(spr_lust, _offset, _sprite_y, _size, 
+	fnt_resource_gothic, _offset + _cell, _value_y, global.secondary_resources.lust);
 
-// Humiliation
-draw_sprite_stretched(spr_humiliation, 0, _offset + _cell * 2, 15, _size, _size);
-draw_set_colour(c_white);
-draw_text(1 + _offset + _cell * 3, 59, string(global.secondary_resources.humiliation));
-draw_set_colour($2A1A10);
-draw_text(_offset + _cell * 3, 58, string(global.secondary_resources.humiliation));
+draw_icon(spr_humiliation, _offset + _cell * 2, _sprite_y, _size, 
+	fnt_resource_gothic, _offset + _cell * 3, _value_y, global.secondary_resources.humiliation);
 
+draw_icon(spr_fear, _offset + _cell * 4, _sprite_y, _size, 
+	fnt_resource_gothic, _offset + _cell * 5, _value_y, global.secondary_resources.fear);
 
-// Fear
-draw_sprite_stretched(spr_fear, 0, _offset + _cell * 4, 15, _size, _size);
-draw_set_colour(c_white);
-draw_text(1 + _offset + _cell * 5, 59, string(global.secondary_resources.fear));
-draw_set_colour($2A1A10);
-draw_text(_offset + _cell * 5, 58, string(global.secondary_resources.fear));
+draw_icon(spr_cash, _offset + _cell * 6, 15, _size, 
+	fnt_resource_gothic, _offset + _cell * 7, 59, global.secondary_resources.cash);
 
-// Cash
-draw_sprite_stretched(spr_cash, 0, _offset + _cell * 6, 15, _size, _size);
-draw_set_colour(c_white);
-draw_text(1 + _offset + _cell * 7, 59, string(global.secondary_resources.cash));
-draw_set_colour($2A1A10);
-draw_text(_offset + _cell * 7, 58, string(global.secondary_resources.cash));
-
-// Influence
-draw_sprite_stretched(spr_influence, 0, _offset + _cell * 8, 15, _size, _size);
-draw_set_colour(c_white);
-draw_text(1 + _offset + _cell * 9, 59, string(global.secondary_resources.influence));
-draw_set_colour($2A1A10);
-draw_text(_offset + _cell * 9, 58, string(global.secondary_resources.influence));
+draw_icon(spr_influence, _offset + _cell * 8, 15, _size, 
+	fnt_resource_gothic, _offset + _cell * 9, 59, global.secondary_resources.influence);
