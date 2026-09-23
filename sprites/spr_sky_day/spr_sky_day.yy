@@ -84,8 +84,8 @@
   "nineSlice":null,
   "origin":0,
   "parent":{
-    "name":"Bound to the Bordello",
-    "path":"Bound to the Bordello.yyp",
+    "name":"Background",
+    "path":"folders/UI/Background.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

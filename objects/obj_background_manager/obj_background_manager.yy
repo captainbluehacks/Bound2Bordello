@@ -9,8 +9,8 @@
   "name":"obj_background_manager",
   "overriddenProperties":[],
   "parent":{
-    "name":"Bound to the Bordello",
-    "path":"Bound to the Bordello.yyp",
+    "name":"Background",
+    "path":"folders/UI/Background.yy",
   },
   "parentObjectId":null,
   "persistent":false,

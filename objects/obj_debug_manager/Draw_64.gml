@@ -20,5 +20,7 @@ if (show_display_specs) {
 	draw_set_alpha(1.0);
 
 	// Text (pass window-space coords that land at _cx, _cy after scaling)
+	draw_set_halign(fa_center);
+	draw_set_valign(fa_middle);
 	display_write_all_specs(gui_w / 2, gui_h / 2, _scale);
 }

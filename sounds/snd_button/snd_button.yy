@@ -14,8 +14,8 @@
   "exportDir":"",
   "name":"snd_button",
   "parent":{
-    "name":"Bound to the Bordello",
-    "path":"Bound to the Bordello.yyp",
+    "name":"UI",
+    "path":"folders/UI.yy",
   },
   "preload":false,
   "resourceType":"GMSound",

@@ -25,8 +25,8 @@
   "nineSlice":null,
   "origin":0,
   "parent":{
-    "name":"Bound to the Bordello",
-    "path":"Bound to the Bordello.yyp",
+    "name":"UI",
+    "path":"folders/UI.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",
