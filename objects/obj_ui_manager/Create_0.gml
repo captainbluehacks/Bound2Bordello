@@ -2,8 +2,6 @@
 sidebar_width = 250;
 bottom_bar_height = 140;
 
-show_debug_message("width/height: " + string(GUI_W) + "/" + string(GUI_H));
-
 global.ui_blocked = false;
 shiver_intensity = 1.5;
 
@@ -64,3 +62,28 @@ function process_button_action(_actionId) {
 	}
 	
 };
+
+function draw_icon(_sprite, _sx, _sy, _size, _font, _tx, _ty, _value) {
+	var _old_colour = draw_get_colour();
+	var _old_alpha = draw_get_alpha();
+	var _old_font = draw_get_font();
+	
+	draw_set_font(_font);
+	draw_set_alpha(0.9);
+	
+	draw_sprite_stretched(_sprite, 0, _sx, _sy, _size, _size);
+    
+	draw_set_alpha(0.95);
+	
+    // Shadow text
+    draw_set_colour(c_white);
+    draw_text(_tx + 1, _ty  + 1, string(_value));
+    
+    // Main text  
+    draw_set_colour($2A1A10);
+    draw_text(_tx, _ty, string(_value));
+    
+    draw_set_colour(_old_colour);
+    draw_set_alpha(_old_alpha);
+	draw_set_font(_old_font);
+}

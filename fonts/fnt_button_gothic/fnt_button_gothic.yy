@@ -214,8 +214,8 @@
   "maintainGms1Font":false,
   "name":"fnt_button_gothic",
   "parent":{
-    "name":"Bound to the Bordello",
-    "path":"Bound to the Bordello.yyp",
+    "name":"UI",
+    "path":"folders/UI.yy",
   },
   "pointRounding":0,
   "ranges":[
