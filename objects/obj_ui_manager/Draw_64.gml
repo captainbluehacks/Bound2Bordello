@@ -78,8 +78,8 @@ draw_icon(spr_humiliation, _offset + _cell * 2, _sprite_y, _size,
 draw_icon(spr_fear, _offset + _cell * 4, _sprite_y, _size, 
 	fnt_resource_gothic, _offset + _cell * 5, _value_y, global.secondary_resources.fear);
 
-draw_icon(spr_cash, _offset + _cell * 6, 15, _size, 
-	fnt_resource_gothic, _offset + _cell * 7, 59, global.secondary_resources.cash);
+draw_icon(spr_cash, _offset + _cell * 6, _sprite_y, _size, 
+	fnt_resource_gothic, _offset + _cell * 7, _value_y, global.secondary_resources.cash);
 
-draw_icon(spr_influence, _offset + _cell * 8, 15, _size, 
-	fnt_resource_gothic, _offset + _cell * 9, 59, global.secondary_resources.influence);
+draw_icon(spr_influence, _offset + _cell * 8, _sprite_y, _size, 
+	fnt_resource_gothic, _offset + _cell * 9, _value_y, global.secondary_resources.influence);

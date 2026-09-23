@@ -68,6 +68,7 @@ function draw_icon(_sprite, _sx, _sy, _size, _font, _tx, _ty, _value) {
 	var _old_alpha = draw_get_alpha();
 	var _old_font = draw_get_font();
 	
+	draw_set_font(_font);
 	draw_set_alpha(0.9);
 	
 	draw_sprite_stretched(_sprite, 0, _sx, _sy, _size, _size);
@@ -84,5 +85,5 @@ function draw_icon(_sprite, _sx, _sy, _size, _font, _tx, _ty, _value) {
     
     draw_set_colour(_old_colour);
     draw_set_alpha(_old_alpha);
-	draw_set_font(_old_font)
+	draw_set_font(_old_font);
 }
