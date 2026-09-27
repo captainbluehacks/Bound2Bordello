@@ -23,6 +23,9 @@ props : layer_create(layer_type.props),
 shell : layer_create(layer_type.shell)
 }
 
+first_room = noone;
+
+
 // Make sure all chamber sprites are available.
 gml_pragma("MarkTagAsUsed", "chamber");
 

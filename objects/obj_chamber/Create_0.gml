@@ -23,6 +23,7 @@ for (var i = 0; i < ds_list_size(_tags); i++) {
 ds_list_destroy(_tags);
 
 // Runtime state
+chamber_id = gen_unique_id(COUNTER.CHAMBER);
 max_minions = 1;
 minions = [];			// List of Minions
 max_clients = 1;
@@ -36,9 +37,10 @@ is_reclaiming = false;
 /// @param_pool _person The person to get the coordinate of.
 /// @param_pool _coord  The x or y coordinate requested.
 /// @return The required coordinate within the room.
-function get_minion_position(_person, _coord) {
+function get_person_position(_person, _coord) {
 	// Person or coord out of boounds
 	if (_person == noone || _coord == noone || 
+		_person.object_index != obj_person ||
 		!array_contains(["y", "Y", "x", "X"], _coord)) {
 			show_debug_message("Person or coordinate out of bounds when trying to get_minion_position");
 			show_debug_message("Person: " + string(_person) + " coordinate requested: " + string(_coord));

@@ -1,6 +1,12 @@
-/// @description Generates a unique client id.
-function gen_client_id() {
-    static counter = 0;
-    counter++;
-    return counter;
+enum COUNTER { 
+	CHAMBER, CLIENT, MINION };
+
+
+/// @description Generates unique ids.
+function gen_unique_id(_type) {
+    static counters = [0,0,0];
+    counters[_type]++;
+    return counters[_type];
 }
+
+

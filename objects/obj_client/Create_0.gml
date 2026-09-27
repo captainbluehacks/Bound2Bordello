@@ -1,4 +1,4 @@
-client_id = gen_client_id();
+client_id = gen_unique_id(COUNTER.CLIENT);
 
 name = "";
 tags = [];

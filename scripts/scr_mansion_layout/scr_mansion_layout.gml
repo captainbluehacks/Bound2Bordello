@@ -73,9 +73,15 @@ function add_room_instances(_blueprints) {
 				grid_y       : _data.grid_y
 				} );
 			
+		// Keep track of boudoir when found.
+		// All ground floorplans currently contain one boudoir.
+		// Later in development the player will get to make a choice.
+		if (_data.type == "boudoir") { obj_mansion_manager.first_room = _inst } ;	
+			
 		// Adjust client or minion max
-		if (variable_struct_exists(_data, "client_capacity")) { _inst.max_clients = _data.client_capacity };
-		if (variable_struct_exists(_data, "minion_capacity")) { _inst.max_minions = _data.client_capacity };
+		// If scr_get_chamber_type fails, then the struct exists call will fail, so we'll stay with default.
+		if (struct_exists(scr_get_chamber_type(_data.type), "client_capacity")) { _inst.max_clients = _data.client_capacity };
+		if (struct_exists(scr_get_chamber_type(_data.type), "minion_capacity")) { _inst.max_minions = _data.client_capacity };
 			
 		// Now populate our DS Grid
 		for (var xx = 0; xx < global.size_dims[_data.size].w; xx++) {

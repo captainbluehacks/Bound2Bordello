@@ -40,6 +40,7 @@ function __obj_people_manager_helpers(){
 		return _name;
 	}
 		
+		
 	///@description Return three potential names for a minion.
 	///@return An array with three names. 
 	function scr_get_minion_name() {
@@ -116,7 +117,7 @@ function __obj_people_manager_helpers(){
 	/// @return boolean True if the minion was moved.
 	function scr_move_minion(_minion, _chamber) {
 		// Check if types are valid
-		if (asset_get_type(_minion) != obj_minion || asset_get_type(_chamber) != obj_chamber) {
+		if (_minion.object_index != obj_minion || _chamber.object_index != obj_chamber) {
 			show_debug_message("Minion or Chamber not found in scr_move_minion");
 			show_debug_message("Minion was: " + string(_minion) + " of type " + asset_get_type(_minion));
 			show_debug_message("Chamber was: " + string(_chamber) + " of type " + asset_get_type(_chamber));
@@ -131,7 +132,7 @@ function __obj_people_manager_helpers(){
 		
 		// Add the minion to the chamber and vice-versa
 		_minion.current_chamber = _chamber;
-		array_push(_chamber, _minion);
+		array_push(_chamber.minions, _minion);
 		
 		// Set Minion's new target coordinates
 		_minion.target_x = _chamber.get_person_position(_minion, "x");
@@ -139,4 +140,43 @@ function __obj_people_manager_helpers(){
 		
 		return true;
 	}
+	
+	/// @description Creates a minion to represent the player and their best friend.
+	/// @return array containing the two new obj_minion objects.
+	function scr_create_first_minions() {
+		
+		// Create the player
+		var _pc = instance_create_layer(0, 0, people_layer.entities, obj_minion);
+		_pc.name = "You";
+		_pc.is_pc = true;
+		_pc.tags = ["succubus"];
+		_pc.backstory = "A foolish young man that made a deal with a demon.";
+		_pc.history = ["Turned into a Succubus.", "Converted his friend into a minion."]
+		_pc.sprite_id = spr_succubus_large;
+		_pc.image_xscale = 0.14;
+		_pc.image_yscale = 0.14;
+		
+		// Create the friend
+		var _friend = instance_create_layer(0, 0, people_layer.entities, obj_minion);
+		_friend.name = "You";
+		_friend.is_friend = true;
+		_friend.tags = ["devoted"];
+		_friend.backstory = "Your best friend.";
+		_friend.history = ["Returned to see what had happened.", "Slept with a succubus and was converted into a minion."]
+		_friend.sprite_id = spr_devoted_large;
+		_friend.image_xscale = 0.14;
+		_friend.image_yscale = 0.14;
+		
+		// Put the player in the boudoir. There is only one.
+		var _first = obj_mansion_manager.first_room;
+		scr_move_minion(_pc, _first);
+		
+		// Put the friend in the adjacent room. Currently guaranteed by layout.
+		// Later in development the player will get to make the choice of locations.
+		_second = ds_grid_get(global.mansion_map, _first.grid_x + 1, _first.grid_y);
+		scr_move_minion(_friend, _second);
+		
+		return [_pc, _friend];
+	}
+
 }

@@ -16,5 +16,5 @@ gml_pragma("MarkTagAsUsed", "minion");
 name_pool = scr_load_json_file("names.json");
 
 active_clients = scr_get_new_clients("village");
-active_minions = [];
+active_minions = scr_create_first_minions();
 player_ref = noone;
