@@ -135,8 +135,12 @@ function __obj_people_manager_helpers(){
 		array_push(_chamber.minions, _minion);
 		
 		// Set Minion's new target coordinates
-		_minion.target_x = _chamber.get_person_position(_minion, "x");
-		_minion.target_y = _chamber.get_person_position(_minion, "y");
+		
+		// The x coord we're given is the middle of the position. We need to move left by half our width.
+		_minion.target_x = _chamber.get_person_position(_minion, "x") - _minion.sprite_width / 2;
+		
+		// The y coord we're given is to the floor. We need to move up by the sprites height.
+		_minion.target_y = _chamber.get_person_position(_minion, "y") - _minion.sprite_height;
 		
 		return true;
 	}
@@ -152,9 +156,9 @@ function __obj_people_manager_helpers(){
 		_pc.tags = ["succubus"];
 		_pc.backstory = "A foolish young man that made a deal with a demon.";
 		_pc.history = ["Turned into a Succubus.", "Converted his friend into a minion."]
-		_pc.sprite_id = spr_succubus_large;
-		_pc.image_xscale = 0.14;
-		_pc.image_yscale = 0.14;
+		_pc.sprite_index = spr_succubus_large;
+		_pc.image_xscale = 0.4;
+		_pc.image_yscale = 0.4;
 		
 		// Create the friend
 		var _friend = instance_create_layer(0, 0, people_layer.entities, obj_minion);
@@ -163,9 +167,9 @@ function __obj_people_manager_helpers(){
 		_friend.tags = ["devoted"];
 		_friend.backstory = "Your best friend.";
 		_friend.history = ["Returned to see what had happened.", "Slept with a succubus and was converted into a minion."]
-		_friend.sprite_id = spr_devoted_large;
-		_friend.image_xscale = 0.14;
-		_friend.image_yscale = 0.14;
+		_friend.sprite_index = spr_devoted_large;
+		_friend.image_xscale = 0.4;
+		_friend.image_yscale = 0.4;
 		
 		// Put the player in the boudoir. There is only one.
 		var _first = obj_mansion_manager.first_room;

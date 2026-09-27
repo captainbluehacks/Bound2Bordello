@@ -9,7 +9,7 @@ backstory = "";
 history = [];
 upgrade_id = "";
 current_chamber = noone;
-sprite_id = spr_devoted_large;
+sprite_index = spr_devoted_large;
 is_pc = false;
 is_friend = false;
 

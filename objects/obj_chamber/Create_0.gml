@@ -40,7 +40,6 @@ is_reclaiming = false;
 function get_person_position(_person, _coord) {
 	// Person or coord out of boounds
 	if (_person == noone || _coord == noone || 
-		_person.object_index != obj_person ||
 		!array_contains(["y", "Y", "x", "X"], _coord)) {
 			show_debug_message("Person or coordinate out of bounds when trying to get_minion_position");
 			show_debug_message("Person: " + string(_person) + " coordinate requested: " + string(_coord));
@@ -59,20 +58,19 @@ function get_person_position(_person, _coord) {
 	};
 	
 	if (_coord == "y" || _coord == "Y") {
-		// Room y + pad value.
-		return (y+15) ;
+		// The room's y is the ceiling. 
+		// So we need to add the height and then subtract a pad value.
+		return (y + sprite_height - 30) ;
 	}
 	
 	// For now we're just going to distribute people evenly through the rooms.
 	var _chamber_pixels = sprite_get_width(sprite_index);
 	var _total_people = array_length(_people);
-	var _pad = floor(_chamber_pixels / _total_people);
+	var _pad = floor(_chamber_pixels / (_total_people + 1));
 	
-
-	
-	var _idx = array_get_index(minions, _person);
+	var _idx = array_get_index(_people, _person);
 		
-	if (_idx = -1) {
+	if (_idx == -1) {
 		// Something went wrong. Log it and stick baby in the corner.
 		show_debug_message("Minion wasn't in room despite earlier check.");
 		show_debug_message("Minion: " + string(_person));
@@ -80,7 +78,7 @@ function get_person_position(_person, _coord) {
 	}
 	else {
 		// Add one for the first padding.
-		return (_idx + 1) * _pad ;
+		return (_idx + 1) * _pad + x;
 	}
 
 }
