@@ -109,4 +109,34 @@ function __obj_people_manager_helpers(){
 		
 		return _clients;
 	}
+	
+	/// @description Move the given minion to the given chamber if allowed.
+	/// @param_pool _minion  The minion object we want to move.
+	/// @param_pool _chamber The chamber object we want to add the minion to.
+	/// @return boolean True if the minion was moved.
+	function scr_move_minion(_minion, _chamber) {
+		// Check if types are valid
+		if (asset_get_type(_minion) != obj_minion || asset_get_type(_chamber) != obj_chamber) {
+			show_debug_message("Minion or Chamber not found in scr_move_minion");
+			show_debug_message("Minion was: " + string(_minion) + " of type " + asset_get_type(_minion));
+			show_debug_message("Chamber was: " + string(_chamber) + " of type " + asset_get_type(_chamber));
+			return false;
+		}
+		
+		// First check if there's space.
+		if (array_length(_chamber.minions) + 1 > _chamber.max_minions) {
+			show_debug_message("No room in " + _chamber + " for " + string(_minion.name));
+			return false;
+		}
+		
+		// Add the minion to the chamber and vice-versa
+		_minion.current_chamber = _chamber;
+		array_push(_chamber, _minion);
+		
+		// Set Minion's new target coordinates
+		_minion.target_x = _chamber.get_person_position(_minion, "x");
+		_minion.target_y = _chamber.get_person_position(_minion, "y");
+		
+		return true;
+	}
 }

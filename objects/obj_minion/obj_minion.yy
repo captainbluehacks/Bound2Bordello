@@ -1,12 +1,12 @@
 {
   "$GMObject":"",
-  "%Name":"obj_client",
+  "%Name":"obj_minion",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":8,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"obj_client",
+  "name":"obj_minion",
   "overriddenProperties":[],
   "parent":{
     "name":"People",
@@ -33,10 +33,7 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":{
-    "name":"s_client",
-    "path":"sprites/s_client/s_client.yy",
-  },
+  "spriteId":null,
   "spriteMaskId":null,
   "visible":true,
 }

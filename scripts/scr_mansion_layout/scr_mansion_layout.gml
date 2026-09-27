@@ -73,6 +73,10 @@ function add_room_instances(_blueprints) {
 				grid_y       : _data.grid_y
 				} );
 			
+		// Adjust client or minion max
+		if (variable_struct_exists(_data, "client_capacity")) { _inst.max_clients = _data.client_capacity };
+		if (variable_struct_exists(_data, "minion_capacity")) { _inst.max_minions = _data.client_capacity };
+			
 		// Now populate our DS Grid
 		for (var xx = 0; xx < global.size_dims[_data.size].w; xx++) {
 			for (var yy = 0; yy < global.size_dims[_data.size].h; yy++) {

@@ -1,20 +1,17 @@
 {
   "$GMObject":"",
-  "%Name":"obj_client",
-  "eventList":[
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-  ],
+  "%Name":"obj_person",
+  "eventList":[],
   "managed":true,
-  "name":"obj_client",
+  "name":"obj_person",
   "overriddenProperties":[],
   "parent":{
     "name":"People",
     "path":"folders/People.yy",
   },
   "parentObjectId":{
-    "name":"obj_person",
-    "path":"objects/obj_person/obj_person.yy",
+    "name":"obj_selectable",
+    "path":"objects/obj_selectable/obj_selectable.yy",
   },
   "persistent":false,
   "physicsAngularDamping":0.1,
@@ -33,10 +30,7 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":{
-    "name":"s_client",
-    "path":"sprites/s_client/s_client.yy",
-  },
+  "spriteId":null,
   "spriteMaskId":null,
   "visible":true,
 }
