@@ -1,7 +1,7 @@
 // First check if the UI is doing something.
 if (!global.ui_blocked) {
 
-	// Find the first selectable chamber at the mouse position
+	// Find the first selectable object at the mouse position
 	hovered = instance_position(mouse_x, mouse_y, obj_selectable);
 
 	if (mouse_check_button_pressed(mb_left)) {

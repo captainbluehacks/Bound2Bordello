@@ -13,8 +13,8 @@ scroll_offset = {x: 0, y: 0};
 
 // Zoom
 zoom = {
-	width: BASE_W,
-	height: BASE_H,
+	width: BASE_W * 3,
+	height: BASE_H * 3,
 	spd: .1,
 	inc: 100,
 	min_width: BASE_W / 4,

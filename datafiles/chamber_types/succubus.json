@@ -39,6 +39,7 @@
     "tags": ["tips", "flirt"],
     "placement": { "floors": ["GROUND"] },
     "requires": { "minion": true, "client": true },
+    "client_capacity": 5,
     "cost": { "cash": 70, "influence": 8 },
     "base": { "influence": 2 },
     "bonuses": [
@@ -51,12 +52,33 @@
     ]
   },
   {
+    "type": "lobby",
+    "display_name": "The Lobby",
+    "size": "large",
+    "tags": ["tips", "flirt"],
+    "placement": { "floors": ["GROUND"] },
+    "requires": { "minion": true, "client": true },
+    "client_capacity": 10,
+	"minion_capacity": 999,
+    "cost": { "cash": 80, "influence": 5 },
+    "base": { "cash": 2, "influence": 2, "lust": 2 },
+    "bonuses": [
+      {
+        "id": "lobby_client_scale",
+        "description": "+1 Cash per client present",
+        "effects_per_match": { "cash": 1, "influence": 1, "lust": 1 },
+        "condition": { "type": "clients_present_count" }
+      }
+    ]
+  },
+  {
     "type": "glass_room",
     "display_name": "The Glass Room",
     "size": "medium",
     "tags": ["sex"],
     "placement": { "floors": ["GROUND"] },
     "requires": { "minion": true, "client": true },
+    "client_capacity": 5,
     "cost": { "cash": 65, "lust": 10 },
     "base": { "cash": 1 },
     "bonuses": [
@@ -75,6 +97,7 @@
     "tags": ["flirt"],
     "placement": { "floors": ["GROUND"] },
     "requires": { "minion": true, "client": true },
+    "client_capacity": 5,
     "cost": { "cash": 70, "influence": 8 },
     "base": { "stock": 1 },
     "bonuses": [

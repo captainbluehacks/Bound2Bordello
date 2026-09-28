@@ -31,7 +31,7 @@
   "origin":0,
   "parent":{
     "name":"Chamber Sprites",
-    "path":"folders/Chamber Sprites.yy",
+    "path":"folders/Chamber/Chamber Sprites.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

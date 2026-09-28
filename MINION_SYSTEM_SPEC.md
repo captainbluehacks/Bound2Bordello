@@ -21,6 +21,8 @@ Minions are named servant instances in `obj_minion`. They:
 
 Design invariant: **tags are the only mechanical surface.** Anything that needs to be meaningful (production bonuses, reclamation capability, future status effects) is read from or written to the tag array. History and backstory are flavour only.
 
+**Player Character.** The PC is an `obj_minion` instance (`is_pc = true`, tag `"succubus"`), not a separate object type. This keeps all mechanical effects on the single tag surface — chamber bonuses, upgrade gates, and future abilities read `minion_has_tags()` without special-casing — and means every system that iterates minions (production, reclamation, appearance) handles the PC for free with no branching. The only code paths that check `is_pc` are presentation-layer concerns: camera follow target, which UI panel is "yours," and any unique draw treatment.
+
 ## File Layout
 
 ```
@@ -54,6 +56,7 @@ objects/
 | `current_chamber` | instance or `no` | Back-reference to the chamber this minion is assigned to (set during day-phase assignment). `no` only transiently (e.g., between conversion and default placement — which happens immediately). |
 | `sprite_id` | sprite ref | Appearance, resolved from `tags` via [Appearance](#appearance). Re-resolved whenever `tags` changes. |
 | `is_friend` | bool | `true` for the drafted friend cast (best-friend arc, GDD §5/§8); these skip the 3-pick naming and use authored identity data instead of pool picks. |
+| `is_pc` | bool | `true` for the player character. The PC is an `obj_minion`, not a separate object type — see note in Overview. Mechanical effects flow through tags (e.g., `"succubus"`); this flag exists only for O(1) identity checks (camera follow, UI panel routing). |
 
 ### Capacity Note
 

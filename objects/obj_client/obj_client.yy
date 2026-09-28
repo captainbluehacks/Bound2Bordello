@@ -12,7 +12,10 @@
     "name":"People",
     "path":"folders/People.yy",
   },
-  "parentObjectId":null,
+  "parentObjectId":{
+    "name":"obj_person",
+    "path":"objects/obj_person/obj_person.yy",
+  },
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,

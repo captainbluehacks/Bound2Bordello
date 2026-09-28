@@ -23,7 +23,62 @@ for (var i = 0; i < ds_list_size(_tags); i++) {
 ds_list_destroy(_tags);
 
 // Runtime state
-minion = noone;          // assigned minion instance (or no)
-client = [];	
-upgrade_id = noone;        // list of upgrade IDs installed this cycle
+chamber_id = gen_unique_id(COUNTER.CHAMBER);
+max_minions = 1;
+minions = [];			// List of Minions
+max_clients = 1;
+clients = [];			// List of Clients
+
+upgrade_id = noone;		// list of upgrade IDs installed this cycle
 is_reclaiming = false;
+
+
+/// @description Get coordinate of where to place the person in the room.
+/// @param_pool _person The person to get the coordinate of.
+/// @param_pool _coord  The x or y coordinate requested.
+/// @return The required coordinate within the room.
+function get_person_position(_person, _coord) {
+	// Person or coord out of boounds
+	if (_person == noone || _coord == noone || 
+		!array_contains(["y", "Y", "x", "X"], _coord)) {
+			show_debug_message("Person or coordinate out of bounds when trying to get_person_position");
+			show_debug_message("Person: " + string(_person) + " coordinate requested: " + string(_coord));
+			return -1;
+	};
+	
+	// Get all the people
+	var _people = array_concat(minions, clients);
+	
+	
+	// Person not in room
+	if (!array_contains(_people, _person)) {
+			show_debug_message("Person not in room when trying to get_person_position.");
+			show_debug_message("Person: " + string(_person));
+			return -1;
+	};
+	
+	if (_coord == "y" || _coord == "Y") {
+		// The room's y is the ceiling. 
+		// So we need to add the height and then subtract a pad value.
+		return (y + sprite_height - 35);
+	}
+	
+	// For now we're just going to distribute people evenly through the rooms.
+	var _chamber_pixels = sprite_get_width(sprite_index);
+	var _total_people = array_length(_people);
+	var _pad = floor(_chamber_pixels / (_total_people + 1));
+	
+	var _idx = array_get_index(_people, _person);
+		
+	if (_idx == -1) {
+		// Something went wrong. Log it and stick baby in the corner.
+		show_debug_message("Person wasn't in room despite earlier check.");
+		show_debug_message("Person: " + string(_person));
+		return 0;
+	}
+	else {
+		// Add one for the first padding.
+		return (_idx + 1) * _pad + x;
+	}
+
+}
