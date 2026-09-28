@@ -81,7 +81,7 @@ function add_room_instances(_blueprints) {
 		// Adjust client or minion max
 		// If scr_get_chamber_type fails, then the struct exists call will fail, so we'll stay with default.
 		if (struct_exists(scr_get_chamber_type(_data.type), "client_capacity")) { _inst.max_clients = _data.client_capacity };
-		if (struct_exists(scr_get_chamber_type(_data.type), "minion_capacity")) { _inst.max_minions = _data.client_capacity };
+		if (struct_exists(scr_get_chamber_type(_data.type), "minion_capacity")) { _inst.max_minions = _data.minion_capacity };
 			
 		// Now populate our DS Grid
 		for (var xx = 0; xx < global.size_dims[_data.size].w; xx++) {

@@ -149,9 +149,12 @@ function __obj_people_manager_helpers(){
 	/// @return array containing the two new obj_minion objects.
 	function scr_create_first_minions() {
 		
+		var _new_names = scr_get_minion_name();
+		
 		// Create the player
 		var _pc = instance_create_layer(0, 0, people_layer.entities, obj_minion);
-		_pc.name = "You";
+		_pc.name = _new_names[0] ;
+		_pc.guest_name = scr_get_client_name();
 		_pc.is_pc = true;
 		_pc.tags = ["succubus"];
 		_pc.backstory = "A foolish young man that made a deal with a demon.";
@@ -162,7 +165,8 @@ function __obj_people_manager_helpers(){
 		
 		// Create the friend
 		var _friend = instance_create_layer(0, 0, people_layer.entities, obj_minion);
-		_friend.name = "You";
+		_friend.name = _new_names[0] ;
+		_friend.guest_name = scr_get_client_name();
 		_friend.is_friend = true;
 		_friend.tags = ["devoted"];
 		_friend.backstory = "Your best friend.";
@@ -177,8 +181,15 @@ function __obj_people_manager_helpers(){
 		
 		// Put the friend in the adjacent room. Currently guaranteed by layout.
 		// Later in development the player will get to make the choice of locations.
-		_second = ds_grid_get(global.mansion_map, _first.grid_x + 1, _first.grid_y);
-		scr_move_minion(_friend, _second);
+		var _second = ds_grid_get(global.mansion_map, _first.grid_x + 1, _first.grid_y);
+		if (_second != -1) {
+			scr_move_minion(_friend, _second);
+		}
+		else {
+			show_debug_message("Couldn't find room for second minion.");
+			show_debug_message("Check templates for Ground for to fix.");
+			return [_pc];
+		}
 		
 		return [_pc, _friend];
 	}
