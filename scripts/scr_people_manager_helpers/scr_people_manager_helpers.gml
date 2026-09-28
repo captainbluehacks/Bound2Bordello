@@ -165,7 +165,7 @@ function __obj_people_manager_helpers(){
 		
 		// Create the friend
 		var _friend = instance_create_layer(0, 0, people_layer.entities, obj_minion);
-		_friend.name = _new_names[0] ;
+		_friend.name = _new_names[1] ;
 		_friend.guest_name = scr_get_client_name();
 		_friend.is_friend = true;
 		_friend.tags = ["devoted"];
@@ -187,7 +187,7 @@ function __obj_people_manager_helpers(){
 		}
 		else {
 			show_debug_message("Couldn't find room for second minion.");
-			show_debug_message("Check templates for Ground for to fix.");
+			show_debug_message("Check Ground templates to fix.");
 			return [_pc];
 		}
 		
