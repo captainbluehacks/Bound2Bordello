@@ -5,7 +5,7 @@ gml_pragma("MarkTagAsUsed", "panel");
 
 // obj_ui_chamber_panel - Create Event
 panel_x = display_get_gui_width() - 420;  // right side of screen
-panel_y = 80;                              // below top resource bar
+panel_y = 120;                              // below top resource bar
 panel_w = 400;
 panel_h = display_get_gui_height() - panel_y - 60;
 
