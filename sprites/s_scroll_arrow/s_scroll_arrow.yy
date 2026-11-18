@@ -28,8 +28,8 @@
   "nineSlice":null,
   "origin":0,
   "parent":{
-    "name":"UI",
-    "path":"folders/UI.yy",
+    "name":"Bound to the Bordello",
+    "path":"Bound to the Bordello.yyp",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",
