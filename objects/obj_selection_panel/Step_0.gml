@@ -1,13 +1,22 @@
-var _selected_obj = obj_selection_manager.get_selection();
+if (!instance_exists(obj_selection_manager)) {
+	show_message("Selection manager does not exist.");
+	exit;
+}
 
-if (_selected_obj == noone && !instance_exists(_selected_obj)) {
+selected_object = obj_selection_manager.get_selection();
+
+if (selected_object == noone && !instance_exists(selected_object)) {
 	// Deselected - hide the panel.
-	selected_chamber_id = noone;
-	selected_minion_id  = noone;
+	active_tab = SELECT_TAB.NONE;
 }
-else if (_selected_obj.object_index == obj_chamber) {
-	selected_chamber_id = _selected_obj;
+else if (selected_object.object_index == obj_chamber) {
+	if (array_contains(["cluttered", "hazards", "rubble", "seals"], selected_object.chamber_type)) {
+		active_tab = SELECT_TAB.OBSTACLE;
+	}
+	else {	
+		active_tab = SELECT_TAB.ROOM;
+	}
 }
-else if (_selected_obj.object_index == obj_minion) {
-	selected_minion_id = _selected_obj;
+else if (selected_object.object_index == obj_minion) {
+	active_tab = SELECT_TAB.MINIONS;
 }

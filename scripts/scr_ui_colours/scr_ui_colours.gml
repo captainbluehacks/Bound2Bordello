@@ -17,7 +17,6 @@
 
 // ─── RULES / SEPARATORS ──────────────────────────────────────
 #macro COL_LINE           $B6A079   // faded rule lines (section borders, tab underline)
-#macro COL_LINE_DOTTED    $B6A079   // dotted separators between breakdown rows
 
 // ─── GOLD ACCENTS ────────────────────────────────────────────
 #macro COL_GOLD           $8A6A25   // section labels (.lbl), active tab underline, total border

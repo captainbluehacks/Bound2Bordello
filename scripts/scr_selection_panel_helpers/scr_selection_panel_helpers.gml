@@ -33,6 +33,8 @@ function scr_draw_section_header(_x, _y, _w, _text) {
     draw_line(_x, _y, _x + _w, _y);
     _y += 10;
     
+	set_ui_defaults();
+	
     return _y;
 }
 
@@ -55,7 +57,7 @@ function scr_draw_breakdown_row(_x, _y, _w, _label, _val_str, _val_col, _locked 
     
     // Tinted background (resource colour at low alpha)
     draw_set_colour(_get_resource_bg(_val_col));
-    scr_draw_button(vx, vy, vx + vw, vy + vh, _val_col, true);
+    scr_draw_box(vx, vy, vx + vw, vy + vh, _val_col, true);
     
     // Value text
     draw_set_colour(_val_col);
@@ -65,12 +67,14 @@ function scr_draw_breakdown_row(_x, _y, _w, _label, _val_str, _val_col, _locked 
     
     // Dotted separator below this row
     _y += string_height("M") + 5;
-    draw_set_colour(COL_LINE_DOTTED);
+    draw_set_colour(COL_LINE);
     for (var dx = _x; dx < _x + _w - 4; dx += 6) {
         draw_point(dx, _y);
     }
     _y += 8;
     
+	set_ui_defaults();
+	
     return _y;
 }
 
@@ -95,6 +99,8 @@ function scr_draw_tag_pill(_x, _y, _text, _variant = 0) {
     draw_set_colour(text_col);
     draw_text(_x + 8, _y + 2, _text);
     
+	set_ui_defaults();
+	
     return _x + tw + 6;
 }
 
@@ -117,6 +123,8 @@ function scr_draw_total_line(_x, _y, _w, _label, _val_str, _val_col) {
     draw_text(_x + _w, _y, _val_str);
     draw_set_halign(fa_left);
     
+	set_ui_defaults();
+	
     return _y + string_height("M") + 12;
 }
 
@@ -157,6 +165,8 @@ function scr_draw_button(_x, _y, _w, _h = 34, _text, _primary = false) {
     draw_set_halign(fa_center);
     draw_text(_x + _w / 2, _y + (_h - string_height("M")) / 2, _text);
     draw_set_halign(fa_left);
+	
+	set_ui_defaults();
 }
 
 

@@ -1,15 +1,18 @@
-enum SELECT_TAB { ROOM, MINIONS, OBSTACLE }
+enum SELECT_TAB { NONE, ROOM, MINIONS, OBSTACLE }
 
 // Make sure all chamber sprites are available.
 gml_pragma("MarkTagAsUsed", "panel");
 
-// obj_ui_chamber_panel - Create Event
-panel_x = display_get_gui_width() - 420;  // right side of screen
+// Define panel position
+panel_w = sprite_get_width(spr_parchment_panel);
+panel_h = sprite_get_height(spr_parchment_panel);
+
+var _pad = 20; // Padding so we're not flush with right hand side of screen.
+
+panel_x = display_get_gui_width() - panel_w - _pad;  // right side of screen
 panel_y = 120;                              // below top resource bar
-panel_w = 400;
-panel_h = display_get_gui_height() - panel_y - 60;
+
 
 // State variables (set externally when a chamber is selected)
-selected_chamber_id = noone;
-selected_minion_id  = noone;
-active_tab          = SELECT_TAB.ROOM;            // ROOM, MINIONS, OBSTACLE
+selected_object = noone;
+active_tab          = SELECT_TAB.NONE;            // NONE, ROOM, MINIONS, OBSTACLE
