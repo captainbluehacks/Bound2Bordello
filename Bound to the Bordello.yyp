@@ -107,6 +107,7 @@
     {"id":{"name":"scr_mansion_layout","path":"scripts/scr_mansion_layout/scr_mansion_layout.yy",},},
     {"id":{"name":"scr_people_manager_helpers","path":"scripts/scr_people_manager_helpers/scr_people_manager_helpers.yy",},},
     {"id":{"name":"scr_resource_display","path":"scripts/scr_resource_display/scr_resource_display.yy",},},
+    {"id":{"name":"scr_selection_panel_draw","path":"scripts/scr_selection_panel_draw/scr_selection_panel_draw.yy",},},
     {"id":{"name":"scr_selection_panel_helpers","path":"scripts/scr_selection_panel_helpers/scr_selection_panel_helpers.yy",},},
     {"id":{"name":"scr_ui_colours","path":"scripts/scr_ui_colours/scr_ui_colours.yy",},},
     {"id":{"name":"scr_ui_system","path":"scripts/scr_ui_system/scr_ui_system.yy",},},
