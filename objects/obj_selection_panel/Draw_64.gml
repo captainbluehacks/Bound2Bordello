@@ -19,6 +19,7 @@ var content_w = pw - 40;
 var y_cursor  = content_y;
 
 // 4. Draw the active tab's content
+// Currently just print the tab type - remove the draw text when you impliment draw_x_content.
 switch (active_tab) {
     case SELECT_TAB.ROOM:
 		draw_text(content_x, content_y, "Room");

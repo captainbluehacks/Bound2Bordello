@@ -12,6 +12,9 @@ var _pad = 20; // Padding so we're not flush with right hand side of screen.
 panel_x = display_get_gui_width() - panel_w - _pad;  // right side of screen
 panel_y = 120;                              // below top resource bar
 
+// Constant
+obstacles = ["cluttered", "hazards", "rubble", "seals"];
+
 
 // State variables (set externally when a chamber is selected)
 selected_object = noone;

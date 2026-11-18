@@ -1,5 +1,5 @@
 if (!instance_exists(obj_selection_manager)) {
-	show_message("Selection manager does not exist.");
+	show_debug_message("Selection manager does not exist.");
 	exit;
 }
 
@@ -10,7 +10,7 @@ if (selected_object == noone && !instance_exists(selected_object)) {
 	active_tab = SELECT_TAB.NONE;
 }
 else if (selected_object.object_index == obj_chamber) {
-	if (array_contains(["cluttered", "hazards", "rubble", "seals"], selected_object.chamber_type)) {
+	if (array_contains(obstacles, selected_object.chamber_type)) {
 		active_tab = SELECT_TAB.OBSTACLE;
 	}
 	else {	
