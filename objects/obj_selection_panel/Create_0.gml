@@ -1,6 +1,6 @@
 enum SELECT_TAB { NONE, ROOM, MINIONS, OBSTACLE }
 
-// Make sure all chamber sprites are available.
+// Make sure the panel sprite is available.
 gml_pragma("MarkTagAsUsed", "panel");
 
 // Define panel position

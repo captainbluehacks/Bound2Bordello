@@ -1,6 +1,6 @@
-// obj_ui_chamber_panel - Draw GUI Event
 if (selected_object == noone || !instance_exists(selected_object)) exit;
 
+// Copy as vars so we can update them.
 var px = panel_x;
 var py = panel_y;
 var pw = panel_w;
