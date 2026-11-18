@@ -15,4 +15,10 @@ function gen_unique_id(_type) {
     return counters[_type];
 }
 
-
+/// @description Sets colour, alpha and font back to defaults.
+function set_ui_defaults() {
+    draw_set_font(fnt_body_400);
+    draw_set_colour(COL_INK);
+    draw_set_alpha(1);
+    draw_set_halign(fa_left);
+}

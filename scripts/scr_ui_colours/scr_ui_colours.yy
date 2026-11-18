@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_ui_colours",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_ui_colours",
+  "parent":{
+    "name":"Selection_panel",
+    "path":"folders/UI/Selection_panel.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

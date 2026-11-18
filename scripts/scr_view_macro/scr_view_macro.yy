@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_view_macro",
   "parent":{
-    "name":"Bound to the Bordello",
-    "path":"Bound to the Bordello.yyp",
+    "name":"Camera",
+    "path":"folders/Camera.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
