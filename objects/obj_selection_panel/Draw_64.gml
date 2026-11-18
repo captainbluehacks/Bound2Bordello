@@ -1,5 +1,5 @@
 // obj_ui_chamber_panel - Draw GUI Event
-if (!instance_exists(selected_chamber_id)) exit;
+if (selected_chamber_id == noone || !instance_exists(selected_chamber_id)) exit;
 
 var px = panel_x;
 var py = panel_y;

@@ -1,5 +1,8 @@
 enum SELECT_TAB { ROOM, MINIONS, OBSTACLE }
 
+// Make sure all chamber sprites are available.
+gml_pragma("MarkTagAsUsed", "panel");
+
 // obj_ui_chamber_panel - Create Event
 panel_x = display_get_gui_width() - 420;  // right side of screen
 panel_y = 80;                              // below top resource bar
