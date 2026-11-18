@@ -214,8 +214,8 @@
   "maintainGms1Font":false,
   "name":"fnt_button_gothic",
   "parent":{
-    "name":"UI",
-    "path":"folders/UI.yy",
+    "name":"Buttons",
+    "path":"folders/UI/Buttons.yy",
   },
   "pointRounding":0,
   "ranges":[

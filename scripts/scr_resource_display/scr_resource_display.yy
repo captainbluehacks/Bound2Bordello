@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_resource_display",
   "parent":{
-    "name":"UI",
-    "path":"folders/UI.yy",
+    "name":"Resources",
+    "path":"folders/UI/Resources.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",
