@@ -56,8 +56,7 @@ function scr_draw_breakdown_row(_x, _y, _w, _label, _val_str, _val_col, _locked 
     var vh = string_height("M") + 5;
     
     // Tinted background (resource colour at low alpha)
-    draw_set_colour(_get_resource_bg(_val_col));
-    scr_draw_box(vx, vy, vx + vw, vy + vh, _val_col, true);
+	scr_draw_box(vx, vy, vx + vw, vy + vh, _get_resource_bg(_val_col), _val_col);
     
     // Value text
     draw_set_colour(_val_col);
