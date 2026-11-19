@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_selection_panel_draw",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_selection_panel_draw",
+  "parent":{
+    "name":"Selection_panel",
+    "path":"folders/UI/Selection_panel.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
