@@ -2,13 +2,24 @@
 // Draws the two-tab selector at the top of the panel.
 // Uses active_tab (SELECT_TAB enum) to determine which tab is highlighted.
 function _draw_tab_bar(_px, _py, _pw, _minion_count = 0, _minion_index = -1) {
-    var TAB_H = 42;
+	
+	// Start with bounds checking.
+	if (_minion_count > 0 && _minion_index < 0) {
+		// The caller hasn't provided a valid index. Set it to 1 and report.
+		_minion_index = 1	
+		show_debug_message("No minion index passed to selection panel.")
+	} else if (_minion_index > _minion_count) {
+		// The caller has passed in an index out of range, set to max and report.
+		_minion_index = _minion_count;
+	}
+
+	var TAB_H = 42;
 
     // ── Background strip ──────────────────────────────────────
 	var _padding = 20;
-    draw_set_colour(COL_TAB_BG);
+	draw_set_colour(COL_TAB_BG);
 	draw_set_alpha(COL_TAB_BG_ALPHA);
-    draw_rectangle(_px + _padding, _py, _px + _pw - _padding, _py + TAB_H, false);
+	draw_rectangle(_px + _padding, _py, _px + _pw - _padding, _py + TAB_H, false);
 	draw_set_alpha(1);
 	
     // ── Determine tab labels & which is active ────────────────
@@ -99,10 +110,6 @@ function _draw_tab_bar(_px, _py, _pw, _minion_count = 0, _minion_index = -1) {
             draw_line(tx + tab_w, _py, tx + tab_w, _py + TAB_H);
         }
     }
-
-    // ── Bottom border of the entire tab bar ───────────────────
-    draw_set_colour(COL_LINE);
-    draw_line(_inner_x, _py + TAB_H, _inner_x + _inner_w, _py + TAB_H);
 
 	// After drawing everything else, frame the whole tab bar
 	draw_set_colour(COL_LINE);
