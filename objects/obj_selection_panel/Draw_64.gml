@@ -10,6 +10,10 @@ var ph = panel_h;
 draw_sprite(spr_parchment_panel, 1, px, py);
 
 // 2. Tab bar at top
+// Shift origin below the torn edge — everything after uses this as "top"
+py += 20;
+
+// Now draw our tab bar
 _draw_tab_bar(px, py, pw);
 
 // 3. Content area (inset from parchment edges)
