@@ -6,11 +6,12 @@ function _draw_tab_bar(_px, _py, _pw, _minion_count = 0, _minion_index = -1) {
 	// Start with bounds checking.
 	if (_minion_count > 0 && _minion_index < 0) {
 		// The caller hasn't provided a valid index. Set it to 1 and report.
-		_minion_index = 1	
+		_minion_index = 1;
 		show_debug_message("No minion index passed to selection panel.")
 	} else if (_minion_index > _minion_count) {
 		// The caller has passed in an index out of range, set to max and report.
 		_minion_index = _minion_count;
+		show_debug_message("Minion index " + string(_minion_index) + " exceeds count " + string(_minion_count) + ". Clamping.");
 	}
 
 	var TAB_H = 42;
