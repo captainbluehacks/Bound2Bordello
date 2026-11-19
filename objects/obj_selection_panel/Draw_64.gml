@@ -26,12 +26,11 @@ var y_cursor  = content_y;
 // Currently just print the tab type - remove the draw text when you impliment draw_x_content.
 switch (active_tab) {
     case SELECT_TAB.ROOM:
-		draw_text(content_x, content_y, "Room");
-        // y_cursor = _draw_room_content(content_x, y_cursor, content_w);
+        // y_cursor = _draw_room_content(content_x, y_cursor, content_w, panel_data);
         break;
     case SELECT_TAB.MINIONS:
 		draw_text(content_x, content_y, "Minion");
-        // y_cursor = _draw_minion_content(content_x, y_cursor, content_w);
+        // y_cursor = _draw_minion_content(content_x, y_cursor, content_w, room_data);
         break;
     case SELECT_TAB.OBSTACLE:
 		draw_text(content_x, content_y, "Obstacle");

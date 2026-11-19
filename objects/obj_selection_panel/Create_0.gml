@@ -15,7 +15,12 @@ panel_y = 120;                              // below top resource bar
 // Constant
 obstacles = ["cluttered", "hazards", "rubble", "seals"];
 
-
 // State variables (set externally when a chamber is selected)
 selected_object = noone;
-active_tab          = SELECT_TAB.NONE;            // NONE, ROOM, MINIONS, OBSTACLE
+last_chamber = noone;
+active_tab = SELECT_TAB.NONE;   // NONE, ROOM, MINIONS, OBSTACLE
+
+// Place to store panel data.
+// Function to refresh them is in scr_selection_panel_data
+panel_data = {};
+panel_dirty = false;
