@@ -30,11 +30,11 @@ switch (active_tab) {
         break;
     case SELECT_TAB.MINIONS:
 		draw_text(content_x, content_y, "Minion");
-        // y_cursor = _draw_minion_content(content_x, y_cursor, content_w, room_data);
+        // y_cursor = _draw_minion_content(content_x, y_cursor, content_w, panel_data);
         break;
     case SELECT_TAB.OBSTACLE:
 		draw_text(content_x, content_y, "Obstacle");
-        // y_cursor = _draw_obstacle_content(content_x, y_cursor, content_w);
+        // y_cursor = _draw_obstacle_content(content_x, y_cursor, content_w, panel_data);
         break;
 }
 
