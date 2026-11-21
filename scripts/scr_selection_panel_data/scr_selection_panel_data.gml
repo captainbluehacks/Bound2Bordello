@@ -48,7 +48,7 @@ function _get_chamber_data(_chamber) {
 	struct_set(panel_data, "minions", _minions);
 }
 
-/// @descripion Marks the selection panel dirty.
+/// @description Marks the selection panel dirty.
 /// Use whenever a mutation is applied to either the room data, or a minion within the room. 
 /// This would include adding a new minion to the room.
 function mark_dirty() {
