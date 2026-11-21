@@ -41,7 +41,7 @@
 	        var _neighbour = _adj[_i]; // Simple array indexing
         
 	        // If a specific direction is required, verify it
-	        if (map_exists(_cond, "direction")) {
+	        if (struct_exists(_cond, "direction")) {
 	            if (!scr_is_in_direction(_chamber, _neighbour, _cond.direction)) continue;
 	        }
         
@@ -108,7 +108,7 @@
 	    // Upgrade tags
 	    if (_chamber.upgrade_id != noone && _chamber.upgrade_id != "") {
 	        var _upg = scr_get_upgrade(_chamber.upgrade_id);
-	        if (_upg != undefined && map_exists(_upg, "tags_added")) {
+	        if (_upg != undefined && struct_exists(_upg, "tags_added")) {
 	            for (var i = 0; i < array_length(_upg.tags_added); i++) {
 	                // Avoid duplicates
 	                var _found = false;
