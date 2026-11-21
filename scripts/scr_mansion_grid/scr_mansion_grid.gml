@@ -81,7 +81,7 @@
 
 	    switch (_direction) {
 	        case "up":     // neighbour's bottom edge touches subject's top edge, with horizontal overlap
-	            return (_ny2 == _sy1) && (_nx1 <= _sx2) && (_nx2 >= _sx1);
+	            return (_ny2 + 1 == _sy1) && (_nx1 <= _sx2) && (_nx2 >= _sx1);
 	        case "down":   // neighbour's top edge touches subject's bottom edge, with horizontal overlap
 	            return (_ny1 == _sy2 + 1) && (_nx1 <= _sx2) && (_nx2 >= _sx1);
 	        case "left":   // neighbour's right edge touches subject's left edge, with vertical overlap
@@ -127,7 +127,7 @@
 	/// @description Count unique chambers on the same floor as _chamber that carry a given tag.
 	function scr_count_tag_on_floor(_chamber, _tag, _max) {
 	    var _count = 0;
-	    var _seen = ds_set_create();
+	    var _seen = ds_map_create();
     
 	    // Determine which row(s) of the grid correspond to this chamber's floor
 	    // (Your FLOOR enum maps to grid_y ranges — adjust to your layout)
@@ -144,8 +144,8 @@
 	        for (var _x = 0; _x < ds_grid_width(global.mansion_map); _x++) {
 	            var _inst = ds_grid_get(global.mansion_map, _x, _y);
 	            if (_inst == -1 || !instance_exists(_inst)) continue;
-	            if (ds_set_find(_seen, _inst) != -1) continue;
-	            ds_set_add(_seen, _inst);
+	            if (ds_map_exists(_seen, _inst)) continue;
+	            ds_map_add(_seen, _inst, true);
             
 	            // Check if this chamber or any of it's upgrades has the tag
 	            var _eff_tags = scr_get_effective_tags(_inst);
@@ -155,7 +155,7 @@
 	        }
 	    }
 
-	    ds_set_destroy(_seen);
+	    ds_map_destroy(_seen);
 	    return min(_count, _max);
 	}
 
