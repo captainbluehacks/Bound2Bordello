@@ -1,0 +1,22 @@
+name: GML Code Scanner
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+
+permissions:
+  contents: read
+  security-events: write # upload SARIF results to the Security tab
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # Pinned to an exact version on purpose (single-maintainer action).
+      # Bump this deliberately to pick up new rules.
+      - uses: Mackery6969/GML-Code-Scanner@v2.1.0
+        with:
+          auto-update: false

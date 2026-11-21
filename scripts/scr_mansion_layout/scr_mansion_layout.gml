@@ -28,7 +28,7 @@ function define_floors() {
 			if (validate_template(_template)) {
 				break;
 			} else {
-				show_debug_message("Invalid Blueprint Found in " + _schema_file[i] + " Index: " + _chosen);
+				show_debug_message("Invalid Blueprint Found in " + _schema_file[i] + " Index: " + string(_chosen));
 			}
 		}
 			

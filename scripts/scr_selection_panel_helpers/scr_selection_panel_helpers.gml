@@ -1,5 +1,7 @@
-// scr_draw_box(x1, y1, x2, y2, fill_col, border_col, [radius])
-function scr_draw_box(_x1, _y1, _x2, _y2, _fill, _border, _rad = -1) {
+// scr_draw_box(x1, y1, x2, y2, fill_col, border_col, [radius], [fill_alpha])
+function scr_draw_box(_x1, _y1, _x2, _y2, _fill, _border, _rad = -1, _fill_alpha = -1) {
+    var _prev_alpha = draw_get_alpha();
+    if (_fill_alpha >= 0) draw_set_alpha(_fill_alpha);
     if (_rad < 0) {
         // Default radius (draw_roundrect uses a fixed small radius internally)
         draw_set_colour(_fill);
@@ -13,6 +15,7 @@ function scr_draw_box(_x1, _y1, _x2, _y2, _fill, _border, _rad = -1) {
         draw_set_colour(_border);
         draw_roundrect_ext(_x1, _y1, _x2, _y2, _rad, _rad, true);
     }
+    draw_set_alpha(_prev_alpha);
     
     set_ui_defaults();
 }
@@ -56,7 +59,7 @@ function scr_draw_breakdown_row(_x, _y, _w, _label, _val_str, _val_col, _locked 
     var vh = string_height("M") + 5;
     
     // Tinted background (resource colour at low alpha)
-	scr_draw_box(vx, vy, vx + vw, vy + vh, _get_resource_bg(_val_col), _val_col);
+	scr_draw_box(vx, vy, vx + vw, vy + vh, _get_resource_bg(_val_col), _val_col, -1, 0.13); // fill at COL_*_BG_ALPHA
     
     // Value text
     draw_set_colour(_val_col);
@@ -180,6 +183,6 @@ function _get_resource_bg(_col) {
     if (_col == COL_VALUE)       return COL_VALUE_BG;
     if (_col == COL_POWER)       return COL_POWER_BG;
     if (_col == COL_STOCK)       return COL_STOCK_BG;
-    // Fallback: 13% alpha of the given colour
-    return make_colour_alpha(_col, 0.13);
+    // Fallback: use the colour itself (the low alpha is applied by scr_draw_box)
+    return _col;
 }
