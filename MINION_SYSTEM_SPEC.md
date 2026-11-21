@@ -29,9 +29,8 @@ Design invariant: **tags are the only mechanical surface.** Anything that needs 
 datafiles/
     minion_conversion_templates.json  ← named conversion templates (gate + cost + tags +/-)
     minion_upgrades.json              ← minion upgrade definitions
-    backstories.json                  ← guest/minion backstory pool
-    client_names.json                 ← guest name pool
-    minion_names.json                 ← minion name pool
+    names.json                        ← shared name pools: `client` list (guests) + categorised `minion` lists
+    backgrounds/<town>.json           ← backstory entries {id, text, tags} per town pool (see CLIENT_SYSTEM_SPEC.md)
 
 scripts/
     scr_minions.gml                   ← minion instance creation, conversion, assignment validation
@@ -46,7 +45,7 @@ objects/
 | Variable | Type | Purpose |
 |---|---|---|
 | `minion_id` | int/string | Unique ID (save-system-ready). |
-| `name` | string | Display name. Chosen at conversion from 3 random picks drawn from `minion_names.json`; if the player doesn't choose, keeps the guest's name. Friends use their archetype-based names instead. |
+| `name` | string | Display name. Chosen at conversion from 3 random picks drawn from the categorised `minion` lists in `names.json`; if the player doesn't choose, keeps the guest's name. Friends use their archetype-based names instead. |
 | `guest_name` | string | Original guest name before conversion (retained for reference/flavour — e.g., shown in tooltips: "Formerly known as Margaret"). Friends carry their authored identity name here instead. |
 | `tags` | string[] | Single flat tag list — identity tags, quirk tag, acquired tags, upgrade-granted tags all live here unclassified (see [Tags](#tags)). |
 | `quirk` | string or `""` | Convenience mirror of the conversion template's quirk (`"devoted"`, `"broken"`, `"terrified"`, …). Also present as a tag in `tags`; kept separate for cheap UI/lookup. Friend minions carry their archetype quirk (GDD §5). |
@@ -172,8 +171,8 @@ function scr_convert_guest(_guest, _template) -> obj_minion:
     1. Validate gate (rooms/alleys built) and afford `cost`; pay on success.
        The guest has already produced income this night (The Hunt is after Production);
        conversion removes them from all future earnings (GDD §7).
-    2. Draw 3 random names from minion_names.json (no duplicates, excluding
-       already-used minion names); present in UI. On selection use that name;
+    2. Draw 3 random names from the `minion` lists in names.json (no duplicates,
+       excluding already-used minion names); present in UI. On selection use that name;
        if the player skips/defaults, keep _guest.name.
     3. Create new obj_minion instance:
          tags        = copy(_guest.tags)
@@ -299,7 +298,7 @@ Order in the file is priority order (topmost wins on multiple matches), so appea
 
 ## Backstory & History
 
-- **Backstory**: authored pool in `backstories.json` — short paragraphs with no base mechanical effect ("the bishop who shouldn't be here", "the virgin"…). A random entry is assigned when each guest/client is created (see [`CLIENT_SYSTEM_SPEC.md`](CLIENT_SYSTEM_SPEC.md)) and copied verbatim to the minion at conversion.
+- **Backstory**: authored pools in `datafiles/backgrounds/<town>.json` — entries of {id, text, tags}; the text has no base mechanical effect ("the bishop who shouldn't be here", "the virgin"…). A random entry is assigned when each guest/client is created (see [`CLIENT_SYSTEM_SPEC.md`](CLIENT_SYSTEM_SPEC.md)) and copied verbatim to the minion at conversion.
 - **v1 visibility:** In v1, a guest's backstory text *and* its contributed tags are **freely visible** in the client panel without spending Influence. Gated information ascent (spending Influence to progressively reveal backstory → preferences → conversion discount) is deferred — see [FUTURE_FEATURES.md](FUTURE_FEATURES.md) §Information Ascent.
 - **History**: `history[]` of `{ cycle: int, text: string }`, flavour only. Written by:
   | Source | Example |
