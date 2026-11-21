@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"scr_test_harness",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"scr_test_harness",
+  "parent":{
+    "name":"tests",
+    "path":"folders/tests.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
