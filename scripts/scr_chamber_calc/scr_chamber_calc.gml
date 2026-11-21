@@ -38,10 +38,10 @@ function scr_chamber_check_prerequisites(_type_def, _chamber) {
     if (!struct_exists(_type_def, "requires")) return { active: true };
     
     var _req = _type_def.requires;
-    if (_req.minion && _chamber.minion == noone) {
+    if (_req.minion && array_length(_chamber.minions) == 0) {
         return { active: false, reason: "No minion assigned" };
     }
-    if (_req.client && !(array_length(_chamber.client) > 0)) {
+    if (_req.client && !(array_length(_chamber.clients) > 0)) {
         return { active: false, reason: "No client present" };
     }
     
@@ -182,7 +182,12 @@ function scr_eval_condition(_chamber, _cond) {
             return scr_count_tag_on_floor(_chamber, _cond.tag, _cond.max);
             
         case "minion_assigned":
-            return (_chamber.minion != noone);
+            return (array_length(_chamber.minions) > 0);
+            
+        case "clients_present_count":
+            // Count condition: number of clients in this chamber tonight.
+            // Used with effects_per_match by scalable rooms (Bar, Lobby, …).
+            return array_length(_chamber.clients);
             
         case "floor_is":
             return (_chamber.floor == _cond.floor);
