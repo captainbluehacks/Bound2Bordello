@@ -40,7 +40,6 @@ suite(function () {
             var _s = test_place_chamber("boudoir", 0, 0); // top-left corner
             var _adj = scr_get_adjacent_chambers(_s);     // should be empty, no crash
             expect(array_length(_adj)).toBe(0);
-            ds_list_destroy(_adj);
         });
 
         // -------------------------------------------------------------------
