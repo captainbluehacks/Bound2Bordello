@@ -1,5 +1,8 @@
 # Windows
  
+# Local CI build artifacts (tools/run_tests.sh)
+.ci/
+
 # Windows thumbnail cache files
 Thumbs.db
 Thumbs.db:encryptable

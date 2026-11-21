@@ -148,7 +148,15 @@ Several sources of randomness must be tamed:
 - GMTL runs suites automatically at game start (after `gmtl_wait_frames_before_start`, default 10 frames) via `GMTL_init`. Results print to the debug console.
 - **Recommended:** add a dedicated *test room* / test build so you can run the full suite without booting into normal gameplay. Set `gmtl_run_at_start = true` for that build and keep it `false` in your play builds (see `GMTL_definitions.gml`).
 - **Coverage:** flip `gmtl_show_coverage = true` in `scripts/GMTL_definitions/GMTL_definitions.gml` to get the function-level report after each run.
-- **CI note:** GMTL is an in-engine runner, so there's no headless CLI out of the box. If you want CI gating later, build a small "test harness" room that writes pass/fail + coverage to a file (or `show_debug_message` → captured log) and exits with a non-zero code on failure. Treat this as a Phase 5 nicety, not a blocker.
+- **Local CI (implemented):** run `tools/run_tests.sh` from Git Bash. It:
+  1. Compiles the project headlessly with **Igor** (`Windows Compile`, latest installed runtime under `C:\ProgramData\GameMakerStudio2-LTS2026`) into `.ci/build/` (gitignored).
+  2. Launches the build via the runtime's `Runner.exe -game <file>.win` with `B2B_TEST_MODE=1` and `-output test_output.log`. In test mode, `obj_test_status` calls `game_end()` when GMTL finishes instead of entering gameplay (see `scripts/scr_test_harness`).
+  3. Gates on: process exit code (0 = clean end, non-zero = crash, timeout = hang) + the `Tests:` / `Test Suites:` summary lines parsed from the log. Exits 0 only when everything passes.
+
+  Gotchas discovered while building this:
+  - Igor's argument parser requires **backslash** Windows paths (`cygpath -w`), and the `.win` output is an IFF archive — it must be launched through `Runner.exe`, not executed directly.
+  - Do **not** read `gmtl_coverage_*` counters after tests finish: GMTL deletes its internal state right after finishing, and reading it hangs the VM. Parse the summary from the log instead.
+  - File writes from the game are sandboxed to the user-data folder (`%LOCALAPPDATA%\Bound_to_the_Bordello`) in this runner build — don't rely on writing result files elsewhere; use the `-output` log (written by the runner itself).
 
 ---
 

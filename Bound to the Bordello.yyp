@@ -110,6 +110,7 @@
     {"id":{"name":"scr_selection_panel_data","path":"scripts/scr_selection_panel_data/scr_selection_panel_data.yy",},},
     {"id":{"name":"scr_selection_panel_draw","path":"scripts/scr_selection_panel_draw/scr_selection_panel_draw.yy",},},
     {"id":{"name":"scr_selection_panel_helpers","path":"scripts/scr_selection_panel_helpers/scr_selection_panel_helpers.yy",},},
+    {"id":{"name":"scr_test_harness","path":"scripts/scr_test_harness/scr_test_harness.yy",},},
     {"id":{"name":"scr_ui_colours","path":"scripts/scr_ui_colours/scr_ui_colours.yy",},},
     {"id":{"name":"scr_ui_system","path":"scripts/scr_ui_system/scr_ui_system.yy",},},
     {"id":{"name":"scr_utils","path":"scripts/scr_utils/scr_utils.yy",},},
