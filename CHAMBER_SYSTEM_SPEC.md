@@ -24,12 +24,12 @@ datafiles/
         mad_scientist.json
         cult_leader.json
         aliens.json
-    progression_tracks.json     ← named degradation/recovery tracks (see MINION_STATE_SPEC.md)
+    progression_tracks.json     ← named degradation/recovery tracks (deferred; see FUTURE_FEATURES.md §1)
 
 scripts/
     scr_chamber_types.gml       ← JSON loaders, lookup tables, floor mapping helpers
     scr_chamber_calc.gml        ← evaluation engine (gating, base, bonuses, upgrades, adjacency)
-    scr_minion_state.gml        ← minion tag/progression processing (see MINION_STATE_SPEC.md)
+    scr_minion_state.gml        ← minion tag/progression processing (deferred; see FUTURE_FEATURES.md §1)
 
 objects/
     obj_chamber/                ← instance: holds type, grid pos, minion/client refs, upgrade
@@ -72,7 +72,7 @@ Each entry in a `chamber_types/*.json` array:
 | `bonuses` | array of rule objects | Conditional additional outputs (see below). |
 | `aura` | map (optional) | Resource map applied to each **unique adjacent chamber** each night (see [Aura Effects](#aura-effects-adders)). Used by adder/support rooms; independent of the room's own production. |
 | `occupancy` | int (optional, default 1) | Max minion instances the room can hold simultaneously (e.g., Dormitory = 3). Rooms with a single slot simply omit it. See [Minion Effects](#minion-effects-room-side). |
-| `minion_effects` | map (optional) | Rules for how this room modifies the minions assigned to it each night. See [Minion Effects](#minion-effects-room-side) below and [`MINION_STATE_SPEC.md`](MINION_STATE_SPEC.md) for full details. |
+| `minion_effects` | map (optional) | Rules for how this room modifies the minions assigned to it each night. See [Minion Effects](#minion-effects-room-side) below; the nightly pipeline is designed but deferred — see [`FUTURE_FEATURES.md`](FUTURE_FEATURES.md) §1 for full details. |
 | `reclaim` | map (optional) | Present on reclamation obstacle types only — `{ tier, nights_to_clear, requires_tags }`. See [Reclamation Obstacles](#reclamation-obstacles). |
 | `history_flavour` | string[] (optional) | Pool of random flavour text lines for the minion history system. Each night, a low-chance roll per assigned minion may append one line drawn from this array to their `history` (see [`MINION_SYSTEM_SPEC.md`](MINION_SYSTEM_SPEC.md) §History). Presentation only — never mechanical. If the pool grows too large for comfort, extract to a separate JSON file keyed by type ID. |
 
@@ -157,16 +157,22 @@ A chamber's **effective tags** = its type's intrinsic `tags` + any `tags_added` 
 
 ## Minion Effects (Room-Side)
 
-The optional `minion_effects` block defines how a room modifies **each** minion assigned to it each night. This is **not** part of the resource contribution calculation — it is processed separately by the minion state system after production resolves.
+The optional `minion_effects` block defines how a room modifies **each** minion assigned to it each night. This is **not** part of the resource contribution calculation — it is processed separately by the minion status pipeline after production resolves.
 
-Two sub-models exist:
+> ⚠️ *Designed but deferred post-MVP, and subject to change as the ally rooms that use it are designed.* The canonical design lives in [`FUTURE_FEATURES.md`](FUTURE_FEATURES.md) §1; this section mirrors its room-side schema so chamber types can be authored against it from day one.
 
-| Sub-model | Field | Purpose |
-|---|---|---|
-| Degradation / Progression | `progression_track`, `tags_per_night`, `terminal_action` | Advances a named progression track and/or applies flat tags each night. Used by ally gateway rooms (Lab, Morgue, Ritual Room, Cow Shed). |
-| Recovery | `recovery.remove_per_night` | Removes tags from the minion's tag list each night (oldest first). Used by Dormitory and similar rest rooms. |
+```json
+"minion_effects": {
+  "apply_chance": 0.5,
+  "actions": [
+    { "type": "add_tag",      "tag": "experimented" },
+    { "type": "progress_tag", "from": "experimented", "to": "degraded" },
+    { "type": "remove_tag",   "tag": "rested" }
+  ]
+}
+```
 
-A room uses **one** sub-model or the other, not both. The full schema, progression track definitions, processing pipeline, and terminal actions are specified in [`MINION_STATE_SPEC.md`](MINION_STATE_SPEC.md).
+Each assigned minion rolls `apply_chance` once per night; on success the `actions` apply **in order**, so a single room can both add and progress tags. This one composable model covers both former sub-models: ally gateway rooms (Lab, Morgue, Ritual Room, Cow Shed) use `add_tag`/`progress_tag` chains for degradation/progression, while Dormitory-style rest rooms use `remove_tag` (oldest tag first, per GDD §6). Minions assigned to reclamation obstacles or left unassigned get no effects. The Nerd protection carve-out (GDD §5) exempts her and any minion sharing her room from application that night.
 
 ### Occupancy (Multi-Slot Rooms)
 

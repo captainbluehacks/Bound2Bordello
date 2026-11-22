@@ -284,7 +284,7 @@ Build a guest with known tags/backstory/name and a conversion template, then ass
 - **History:** `history[0] = { cycle: current_cycle, text: template.text }` — the template's paragraph is always line item #1.
 - **Default placement (step 6):** new minion placed in the guest's current chamber if it has free occupancy; otherwise falls back to any room with a free slot. Assert `current_chamber` is set and the chamber's `minions[]` contains the minion — conversion never strands a minion.
 - **Guest destroyed & pool shrunk (step 7):** the guest instance is destroyed, removed from the fixed pool permanently, and marked so it never rolls again. The converted guest's *current-night* income was already banked (The Hunt runs after Production) but all future earnings are gone — assert the visitor-roll exclusion.
-- **Name draw:** with a seeded RNG, 3 distinct names drawn from `minion_names.json`, excluding already-used minion names; on player skip/default the minion keeps `_guest.name`.
+- **Name draw:** with a seeded RNG, 3 distinct names drawn from the `minion` lists in `names.json`, excluding already-used minion names; on player skip/default the minion keeps `_guest.name`.
 
 **C3. Friends (shared `scr_create_minion` path)**
 - A friend minion (`is_friend = true`) uses **authored identity data**, not pool picks: skips the 3-pick naming, carries its archetype quirk and authored backstory/history. Assert no RNG name draw occurs for friends.
@@ -339,8 +339,8 @@ Centralise the valid resource keys (`value`, `power`, `stock`, `cash`, `lust`, `
 - **Appearances (`minion_appearances.json`):** each entry has a non-empty `matches` array and a resolvable `sprite` reference; no two entries are identical (priority order must be meaningful).
 
 **D5. Client data contract (spec-only)**
-- **Guest pools (`guest_pools.json`):** each pool defines a size, a weighted tag distribution whose weights sum to 1 (or normalise cleanly), and a visit-frequency range within [0,1]. An optional `authored: true` entry supplies fixed name/backstory/tags instead of rolls — validate those fields are present when the flag is set.
-- **Name & backstory pools (`client_names.json`, `backstories.json`):** non-empty; no duplicate names (names must be unique within a generated pool).
+- **Guest pools (`client_pools.json`):** each pool entry defines a size (`clients`) and a background source file that resolves under `datafiles/backgrounds/`. When weighted tag distributions / visit-frequency ranges are added to the schema, validate weights sum to 1 (or normalise cleanly) and frequencies stay within [0,1]. An optional `authored: true` entry supplies fixed name/backstory/tags instead of rolls — validate those fields are present when the flag is set.
+- **Name & backstory pools (`names.json`, `datafiles/backgrounds/*.json`):** non-empty; no duplicate names in the `client` list (names must be unique within a generated pool); each background entry carries an `id` and `text`.
 
 **D6. Progression tracks (`progression_tracks.json`) — deferred / future feature**
 The nightly tag-status pipeline that consumes these is retired to [`FUTURE_FEATURES.md`](FUTURE_FEATURES.md). Only add these checks when that pipeline lands: each track's `steps[].nights` strictly ascending; exactly one terminal step, and it's last; every `minion_effects.progression_track` referenced by a chamber type resolves to an existing track id (cross-file referential integrity — a great thing to catch early).
@@ -363,10 +363,10 @@ Don't over-invest here; these are guards against wiring regressions, not behavio
 
 Target functions (per [`CLIENT_SYSTEM_SPEC.md`](CLIENT_SYSTEM_SPEC.md); implement as they land): guest-pool generation, the nightly visitor roll, the funnel state machine (`searching → moving → paying`), and the preference-matching / conversion-cost discount computation.
 
-> This system is **spec-only** in the current repo — there's no `guest_pools.json`, pool-generation script, or discount function yet (the prototype only implements the three funnel states in `obj_client/Step_0.gml`). Treat this suite as acceptance criteria; write tests first against the spec.
+> Pool generation and its data files now exist in the repo (`scr_get_new_clients()` over `client_pools.json`, `names.json`, and `datafiles/backgrounds/`). The nightly visitor roll, the funnel state machine (the `obj_client/Step_0.gml` event is currently empty), and the conversion-cost discount function are still to implement. Treat this suite as acceptance criteria; write tests first against the spec.
 
 **F1. Pool generation & seasonal growth**
-- At playthrough start, build the initial pool from a given `guest_pools.json` entry: exactly N guests for the village, each with a name (unique within the pool), tags drawn from the town's weighted distribution, a backstory, and a `visit_frequency` within the profile's range. Use a seeded RNG so the draw is reproducible; assert *distributional* properties over many draws rather than exact picks.
+- At playthrough start, build the initial pool from a given `client_pools.json` entry: exactly N guests for the village, each with a name (unique within the pool), tags drawn from the town's weighted distribution, a backstory, and a `visit_frequency` within the profile's range. Use a seeded RNG so the draw is reproducible; assert *distributional* properties over many draws rather than exact picks.
 - **Seasonal growth:** at the start of each new season, that season's new-town guests are added to the existing pool; existing guests remain and converted guests stay removed. Assert the pool only grows (by season) or shrinks (by conversion), never both for a single guest.
 - **Authored entries:** an `authored: true` pool entry yields a fixed name/backstory/tags instead of rolls — assert no RNG is applied to those fields.
 
@@ -436,8 +436,8 @@ These are places where the spec and current code disagree — resolve them so te
 1. **`scr_get_upgrade()` returns `[]`.** Upgrade contribution (A4) and effective tags (B4) can't be meaningfully tested until the upgrade loader exists.
 2. **Aura pass not implemented.** Spec describes it in the nightly sum; code doesn't do it yet (A8 is forward-looking).
 3. **Minion system not implemented — and the old state machine is retired.** The entire minion system (Suite C) is acceptance criteria for future work, *and* it now targets a different design than before: [`MINION_SYSTEM_SPEC.md`](MINION_SYSTEM_SPEC.md) supersedes `MINION_STATE_SPEC.md`, so the nightly tag-status pipeline (progression tracks, cull/flee/restore terminals, nerd-protection halting accumulation) is **deferred** to [`FUTURE_FEATURES.md`](FUTURE_FEATURES.md). Don't write tests for that retired pipeline here; when it lands, give it its own suite.
-4. **Client system not implemented.** The guest pool, visit rolls, funnel beyond the three prototype states, and the conversion-cost discount model (Suite F) are all forward-looking — only `obj_client/Step_0.gml`'s `searching/moving/paying` states exist today.
-5. **Loader only reads succubus data.** Contract tests (D) will under-cover until the other ally files, minion data files (`minion_conversion_templates.json`, `minion_upgrades.json`, `minion_appearances.json`), and client data files (`guest_pools.json`, `client_names.json`, `backstories.json`) are added to `_files`.
+4. **Client system partially implemented.** Guest-pool generation (`scr_get_new_clients()`), name pools, and background data are in place; the nightly visitor roll, the funnel state machine (the `obj_client/Step_0.gml` event is currently empty), and the conversion-cost discount model (Suite F) remain forward-looking.
+5. **Loader only reads succubus data.** Contract tests (D) will under-cover until the other ally files and minion data files (`minion_conversion_templates.json`, `minion_upgrades.json`, `minion_appearances.json`) exist, and D5 contract checks cover the client data files already in the repo (`names.json`, `client_pools.json`, `datafiles/backgrounds/*.json`).
 
 ---
 

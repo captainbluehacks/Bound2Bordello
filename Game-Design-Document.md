@@ -64,7 +64,7 @@ Each archetype maps 1:1 to one Ally gateway. Their bonus makes the associated sc
 | Archetype | Persona | Bonus (as Friend) | Mapped Ally | Minion Quirk / Upkeep |
 |---|---|---|---|---|
 | **The Morbid** | Obsessed with death | **Fear Mana boost** | **Necromancer** | Terrified; *upkeep flavor TBD* |
-| ***The Nerd*** | Science nerd | Immunity to degradation tags — the Nerd never accumulates negative tags from room assignment, and any other minion she shares a room with is likewise protected for that night. While present in a facility's rooms, those facilities' subjects do not degrade | **Mad Scientist** | Broken; *candidate quirk: requires converted humans available as experiments* |
+| ***The Nerd*** | Science nerd | Immunity to degradation tags — the Nerd never accumulates negative tags from room assignment, and any other minion she shares a room with is likewise protected for that night. While present in a facility's rooms, those facilities' subjects do not degrade *(deferred pipeline — see FUTURE_FEATURES.md §1)* | **Mad Scientist** | Broken; *candidate quirk: requires converted humans available as experiments* |
 | **The Cultist** | Low-level member of a cult | Influence bonus | Cult Leader | Devoted/Broken; *upkeep flavor TBD* |
 | **The Farmer** | Interested in aliens | Money + livestock — enables buying the Cow Shed to lure out the Aliens | Aliens | *Candidate quirk: demands fresh cows be delivered monthly (flavored upkeep)* |
 
@@ -115,14 +115,14 @@ See [`MINION_SYSTEM_SPEC.md`](MINION_SYSTEM_SPEC.md) § Conversion for full sche
     *   **Autumn:** The second town's visitors arrive.
     *   **Winter:** Visitors from the city.
 *   **Town bias:** Each town has a pool of tags randomly allocated across its guests, so towns lean in particular directions (making the Summer choice a mechanical bet as well as an identity one).
-*   **Pool sizes:** The village starts at ~6 guests against the usable first-floor rooms. Local population size is a candidate difficulty-scaling mechanic (parked for now; flat pools preferred until playtest).
+*   **Pool sizes:** The village starts at 9 guests (per `client_pools.json`) against the usable first-floor rooms. Local population size is a candidate difficulty-scaling mechanic (parked for now; flat pools preferred until playtest).
 
 ### Visit Frequency
-*   Guests do not arrive every night. Each has a **base number of visits per season**, plus an **affinity bonus** (+1–2 visits) when their preference tags match available rooms. Mismatched guests visit rarely — creating scarcity windows, so conversion timing matters per-guest (convert during the right window for a discounted cost, or bank their income nights first).
+*   Guests do not arrive every night. Each has a **visit frequency** — a 0–1 probability rolled at pool generation from the town/season profile; each night's visitor list is built by rolling `random() < visit_frequency` per guest (§2 End of Cycle). An affinity bonus that raises a guest's frequency when their preference tags match available rooms is a candidate tuning addition. Mismatched guests visit rarely — creating scarcity windows, so conversion timing matters per-guest (convert during the right window for a discounted cost, or bank their income nights first).
 
 ### Preferences & Backgrounds
 *   **Preference tags:** Clients carry preference tags (e.g., a dominant client won't want to be tied up). Room tags therefore serve two roles: minion assignment compatibility *and* guest preference satisfaction.
-*   **Backgrounds:** Each guest has a random background giving the player story material (the bishop who shouldn't be here, the virgin, the wife-beater…). Backgrounds are stored in JSON (`datafiles/backstories.json`) and randomly assigned when the guest pool is generated. Each backstory may carry optional tags that are applied to the guest on creation — e.g., a "parish vicar" background adds `"holy"`, `"repressed"`; an abusive husband might add `"dominant"`, `"violent"`. The narrative text itself has no mechanical effect; all impact flows through these tags, which influence preference matching and conversion cost. At conversion, the backstory is copied to the minion and forms part of their first history entry.
+*   **Backgrounds:** Each guest has a random background giving the player story material (the bishop who shouldn't be here, the virgin, the wife-beater…). Backgrounds are stored in per-pool JSON files under `datafiles/backgrounds/` (one file per town, referenced from `client_pools.json`) and randomly assigned when the guest pool is generated. Each backstory may carry optional tags that are applied to the guest on creation — e.g., a "parish vicar" background adds `"holy"`, `"repressed"`; an abusive husband might add `"dominant"`, `"violent"`. The narrative text itself has no mechanical effect; all impact flows through these tags, which influence preference matching and conversion cost. At conversion, the backstory is copied to the minion and forms part of their first history entry.
 *   **Influence buys knowledge:** Spending Influence reveals a guest's background and preferences — which also carries a mechanical effect: it reduces that specific client's conversion cost.
 
 ### Conversion Cost
@@ -131,11 +131,13 @@ See [`MINION_SYSTEM_SPEC.md`](MINION_SYSTEM_SPEC.md) § Conversion for full sche
 *   Background knowledge (above) applies as a further personal discount on that specific client.
 
 ### Naming
-*   **Guest names:** Drawn randomly from a JSON name pool (`datafiles/names/guest_names.json`) when the guest pool is generated. No duplicates within a pool.
-*   **Minion names:** At conversion, the player picks 1 of 3 randomly selected names from `datafiles/names/minion_names.json`. The original guest name is retained for reference.
+*   **Guest names:** Drawn without replacement from the `client` list in a single JSON name pool (`datafiles/names.json`) when the guest pool is generated. No duplicates within a pool (the list reloads if exhausted).
+*   **Minion names:** At conversion, the player picks 1 of 3 randomly selected names from the categorised `minion` lists in `datafiles/names.json`. The original guest name is retained for reference.
 
-### Subjects & the Tag State Machine: 
-Minions and rooms carry tags, applied at night resolution based on room assignment. All minion tags live in a **single flat array** — there is no positive/negative categorisation. Effects are triggered by tag presence; context (the room, the client, the effects table) determines whether a tag helps or hinders.
+### Subjects & the Tag State Machine *(nightly pipeline deferred — see [`FUTURE_FEATURES.md`](FUTURE_FEATURES.md) §1)*
+All minion tags live in a **single flat array** — there is no positive/negative categorisation. Effects are triggered by tag presence; context (the room, the client, the effects table) determines whether a tag helps or hinders.
+
+*The nightly accumulation pipeline below is designed but deferred post-MVP:*
 
 Assigned to a compatible facility (e.g., a Science Lab), a subject accumulates degradation tags over successive nights (experimented → degraded → scarred). At terminal severity the subject is lost (culls, flees, or requires major restoration). All four allies operate this way with distinct flavor:
 

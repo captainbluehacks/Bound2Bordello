@@ -22,11 +22,11 @@ Design invariant (same as minions): **tags are the only mechanical surface.** A 
 
 ```
 datafiles/
-    client_names.json     ← guest name pool (random pick at creation)
-    guest_pools.json      ← seasonal/town pool definitions (size, tag distributions, visit frequencies, background file)
+    names.json            ← name pools: `client` list (guests) + categorised `minion` lists
+    client_pools.json     ← seasonal/town pool definitions (pool size + background source per town)
 
 datafiles/backgrounds/
-    village.json      		← background paragraph pool (shared with minions on copy)
+    village.json      		← background entries {id, text, tags} for the village pool (shared with minions on copy)
 	industrial-town.json    ← background paragraph pool (shared with minions on copy)
 	wealthy-suburbs.json    ← background paragraph pool (shared with minions on copy)
 	city.json      			← background paragraph pool (shared with minions on copy)
@@ -40,7 +40,7 @@ objects/
 | Variable | Type | Purpose |
 |---|---|---|
 | `client_id` | int/string | Unique ID (save-system-ready). |
-| `name` | string | Display name; random pick from `client_names.json`, no duplicates within the active pool. |
+| `name` | string | Display name; drawn without replacement from the `client` list in `names.json`, no duplicates within the active pool (list reloads if exhausted). |
 | `tags` | string[] | Flat tag list — preferences/identity (`dominant`, `submissive`, `violent`, …) drawn from the season/town's distribution. Drives preference matching and conversion discounts; copied verbatim to a minion on conversion. |
 | `backstory` | string | Random pick from associated json file. Flavour only — but *revealing* it (spending Influence, GDD §7) applies that client's personal conversion-cost discount. Known-vs-unknown is UI state, not generated data: the backstory always exists; spending Influence just unlocks viewing it and the discount. |
 | `visit_frequency` | float (0–1) | Chance to visit on any given night; rolled at pool generation per the town/season profile. |
@@ -50,7 +50,7 @@ objects/
 
 ## Pool Generation & Visit Frequency
 
-- **Generation**: at playthrough start, build the initial guest pool from `guest_pools.json`: pick N guests for the village, roll name/tags/backstory/visit_frequency from the town's distributions. Town tag bias is just a weighted tag distribution in data — no special code.
+- **Generation**: at playthrough start, build the initial guest pool from `client_pools.json` (pool size + background source per town): pick N guests for the village, roll name/tags/backstory/visit_frequency from the town's distributions. Town tag bias is just a weighted tag distribution in data — no special code.
 - **Seasonal pool growth**: at the start of each new season, generate and add that season's new-town guests to the existing pool (GDD §7). Existing guests remain; converted guests stay removed. The pool only grows (by season) or shrinks (by conversion).
 - **Nightly visitor list** (GDD §2 End of Cycle): for each non-converted guest, roll `random() < visit_frequency` to build tomorrow's visitors. Converted guests never roll again.
 - **Night funnel**: present guests spawn at the door and enter rooms per their existing state machine (`searching → moving → paying`, prototype in `obj_client/Step_0.gml`). Room-side: a chamber holds up to `client_capacity` guests in its `clients[]` array (see [`CHAMBER_SYSTEM_SPEC.md`](CHAMBER_SYSTEM_SPEC.md)); most rooms have capacity 1, multi-client rooms (e.g., The Bar) have higher capacity. A room only produces for its guests if `requires.client` is satisfied **and** preference conditions are met.
@@ -72,6 +72,6 @@ Cost/discount model (GDD §7 Conversion Cost) applies here at the UI/prompt boun
 
 ## Extensibility Notes
 
-- **New town/season pool** → one JSON entry in `guest_pools.json` (size, weighted tags, frequency range). A json file containing the backgrounds for that town. No code change.
+- **New town/season pool** → one JSON entry in `client_pools.json` (size + background source) plus a backgrounds file under `datafiles/backgrounds/`. No code change.
 - **Named/villain guests with authored identity** (e.g., a recurring story client) → an optional `authored: true` flag on a pool entry that supplies fixed name/backstory/tags instead of rolls; the rest of the pipeline is unchanged.
 - **Guests returning after conversion** (a converted minion's "life before" reappearing, or a redeemed guest) → out of scope; would need a `returning_guest` mechanic and its own section in [`FUTURE_FEATURES.md`](FUTURE_FEATURES.md).

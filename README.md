@@ -61,10 +61,10 @@ The game uses a **Diegetic Paper-Doll** aesthetic. The entire presentation is a 
 | Component | Detail |
 |-----------|--------|
 | **Engine** | GameMaker Studio (GML) |
-| **Data Format** | JSON (`datafiles/`) for room types, upgrades, progression tracks |
+| **Data Format** | JSON (`datafiles/`) for room types, upgrades, per-floor layouts, client pools & name/background data |
 | **Grid System** | 10 × 8 `ds_grid` (`mansion_map`); rooms occupy 1×1, 2×1, or 2×2 cells |
 | **Floor Mapping** | Derived from `grid_y`: Attic (0–1), First (2–3), Ground (4–5), Basement (6–7). Floor access gated by ally-granted reclamation tags. |
-| **Key Scripts** | `scr_chamber_calc.gml`, `scr_minions.gml`, `scr_minion_tags.gml`, `scr_chamber_types.gml` |
+| **Key Scripts** | `scr_chamber_calc.gml`, `scr_mansion_grid.gml`, `scr_chamber_types.gml`, `scr_people_manager_helpers.gml`. People logic is object-based: `obj_person` / `obj_client` / `obj_minion` driven by `obj_people_manager`. |
 | **UI Approach** | Z-depth layering via Draw GUI events; lerp-based physical transitions |
 
 ### Project Structure
@@ -72,15 +72,18 @@ The game uses a **Diegetic Paper-Doll** aesthetic. The entire presentation is a 
 ```
 Bound2Bordello/
 ├── Bound to the Bordello.yyp      # GameMaker project file
-├── datafiles/                     # JSON game data (room types, upgrades, tracks)
+├── datafiles/                     # JSON game data (room types, upgrades, floors, clients)
 │   ├── chamber_types/             #   succubus.json, necromancer.json, …
 │   ├── upgrades/                  #   per-ally upgrade definitions
-│   └── progression_tracks.json    #   degradation/recovery track definitions
+│   ├── backgrounds/               #   client background pools (village, town, …)
+│   ├── attic/basement/first/ground.json  # per-floor layout & reclamation data
+│   ├── client_pools.json          #   seasonal client pool definitions
+│   └── names.json                 #   client/minion name pools
 ├── docs/
 │   └── screenshots/               # In-game screenshots for README & marketing
-├── objects/                       # GML object instances (obj_chamber, obj_minion, …)
+├── objects/                       # GML object instances (obj_chamber, people system: obj_person/obj_client/obj_minion + managers, …)
 ├── rooms/                         # GameMaker room layouts
-├── scripts/                       # Core logic (chamber calc, minion system, loaders)
+├── scripts/                       # Core logic (chamber calc, mansion grid, people manager helpers, UI)
 ├── sprites/                       # Art assets
 ├── sounds/                        # Audio assets
 ├── fonts/                         # Font definitions
@@ -109,7 +112,7 @@ Bound2Bordello/
 
 ## 📋 Status
 
-🚧 **In active development** – Core systems (chamber contribution, client funnel, minion identity/conversion) are specified and in progress. Nightly tag pipeline, rest rooms, and gated information reveal are designed for post-MVP. Narrative content, art assets, and full playtesting are ongoing.
+🚧 **In active development** – The chamber contribution engine and the day/night/reckoning cycle are implemented, and client pool generation is in place. Minions and clients exist as objects with movement and assignment; the night funnel and guest→minion conversion (The Hunt) remain spec-only pending implementation. Nightly tag pipeline, rest rooms, and gated information reveal are designed for post-MVP. Narrative content, art assets, and full playtesting are ongoing.
 
 ---
 
