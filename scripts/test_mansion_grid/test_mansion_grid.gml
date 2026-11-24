@@ -136,8 +136,23 @@ suite(function () {
             expect(_tags).toContain("tips");
         });
 
-        skip("upgrade tags_added are unioned without duplicates (spec-only: scr_get_upgrade returns [])", function () {
-            // TODO(Phase 1): stub a real upgrade lookup, then assert base + added, no dups.
+        it("upgrade tags_added are unioned with base tags without duplicates", function () {
+            var _c = test_place_chamber("boudoir", 2, 4); // base tags: sex, tips
+            _c.upgrade_id = "whip_set";                    // adds: degradation
+
+            var _tags = scr_get_effective_tags(_c);
+            expect(array_length(_tags)).toBe(3);
+            expect(_tags).toContain("sex");
+            expect(_tags).toContain("tips");
+            expect(_tags).toContain("degradation");
+        });
+
+        it("upgrade tags_added that duplicate a base tag are not repeated", function () {
+            var _c = test_place_chamber("glory_hole", 2, 4); // base tags: tips, degradation
+            _c.upgrade_id = "whip_set";                       // adds: degradation (already present)
+
+            var _tags = scr_get_effective_tags(_c);
+            expect(array_length(_tags)).toBe(2);
         });
     });
 });

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"test_chamber_calc",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"test_chamber_calc",
+  "parent":{
+    "name":"tests",
+    "path":"folders/tests.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

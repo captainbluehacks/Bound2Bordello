@@ -160,6 +160,21 @@
 	}
 
 
+	/// @description Count unique adjacent chambers carrying a given tag (effective tags).
+	/// Capped at _max when provided. Used by the count_adjacent_tag condition.
+	function scr_count_adjacent_tag(_chamber, _tag, _max = noone) {
+	    var _count = 0;
+	    var _adj = scr_get_adjacent_chambers(_chamber); // already deduped
+
+	    for (var i = 0; i < array_length(_adj); i++) {
+	        var _eff_tags = scr_get_effective_tags(_adj[i]);
+	        if (array_contains(_eff_tags, _tag)) _count++;
+	    }
+
+	    return (_max == noone) ? _count : min(_count, _max);
+	}
+
+
 	/// @description Given a rooms Y coord, return the pair of y coords that are on the same floor.
 	function scr_grid_y_to_floor(_y) {
 	    // Adjust these ranges to match your actual grid layout:
