@@ -228,7 +228,9 @@ function scr_eval_condition(_chamber, _cond) {
             return scr_check_adjacent(_chamber, _cond);
             
         case "count_tag_on_floor":
-            return scr_count_tag_on_floor(_chamber, _cond.tag, _cond.max);
+            // Guard max the same way as count_adjacent_tag: data may omit it.
+            var _floor_cap = struct_exists(_cond, "max") ? _cond.max : noone;
+            return scr_count_tag_on_floor(_chamber, _cond.tag, _floor_cap);
             
         case "count_adjacent_tag":
             // Count condition: unique adjacent chambers carrying the tag (effective

@@ -118,6 +118,14 @@ suite(function () {
             expect(scr_count_tag_on_floor(_probe, "tips", 1)).toBe(1);
         });
 
+        it("returns full count when max is omitted from the condition", function () {
+            test_place_chamber("boudoir",    2, 4);
+            test_place_chamber("glory_hole", 3, 4);
+            var _probe = test_place_chamber("counting_room", 5, 4);
+
+            expect(scr_eval_condition(_probe, { type: "count_tag_on_floor", tag: "tips" })).toBe(2);
+        });
+
         it("ignores chambers on other floors", function () {
             // 'tips' room on the attic (row 0), probe on ground (row 4).
             test_place_chamber("boudoir", 2, 0);

@@ -125,7 +125,7 @@
 
 
 	/// @description Count unique chambers on the same floor as _chamber that carry a given tag.
-	function scr_count_tag_on_floor(_chamber, _tag, _max) {
+	function scr_count_tag_on_floor(_chamber, _tag, _max = noone) {
 	    var _count = 0;
 	    var _seen = ds_map_create();
     
@@ -156,7 +156,8 @@
 	    }
 
 	    ds_map_destroy(_seen);
-	    return min(_count, _max);
+	    // No cap (noone) when the condition omits max — mirrors scr_count_adjacent_tag.
+	    return (_max == noone) ? _count : min(_count, _max);
 	}
 
 

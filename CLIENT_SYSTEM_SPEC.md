@@ -45,7 +45,7 @@ objects/
 | `backstory` | string | Random pick from associated json file. Flavour only — but *revealing* it (spending Influence, GDD §7) applies that client's personal conversion-cost discount. Known-vs-unknown is UI state, not generated data: the backstory always exists; spending Influence just unlocks viewing it and the discount. |
 | `visit_frequency` | float (0–1) | Chance to visit on any given night; rolled at pool generation per the town/season profile. |
 | `converted` | bool | `true` once converted — excluded from future visitor rolls permanently. (Instance is destroyed, but this field documents intent for save reconstruction.) |
-| `target_room` | instance or `no` | Current funnel target for the night (set by the search state). Transient; reset each cycle. |
+| `target_room` | instance or `noone` | Current funnel target for the night (set by the search state). Transient; reset each cycle. |
 | `state` | string (`"searching"` / `"moving"` / `"paying"`) | Per-night behaviour machine (below). Existing prototype implements exactly these three states. |
 
 ## Pool Generation & Visit Frequency

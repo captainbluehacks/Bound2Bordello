@@ -103,7 +103,7 @@ function test_make_client(_name = "Guest", _tags = [], _backstory = "", _freq = 
 }
 
 /// Build a minion instance with explicit fields (no RNG) so tests are deterministic.
-function test_make_minion(_tags = [], _quirk = "", _chamber = no, _is_friend = false) {
+function test_make_minion(_tags = [], _quirk = "", _chamber = noone, _is_friend = false) {
     var _m = create(0, 0, obj_minion);
     _m.tags           = array_copy(_tags);
     _m.quirk          = _quirk;
@@ -293,7 +293,7 @@ Build a guest with known tags/backstory/name and a conversion template, then ass
 - **Occupancy gate:** a single-occupancy room (default) rejects a second minion; an `occupancy: N` room accepts up to N and rejects the N+1th.
 - **Reclamation gate:** assigning to an obstacle with a `reclaim.requires_tags` set → allowed only if `minion_has_tags(_minion, requires_tags)` passes; omitted/empty `requires_tags` (Clutter) → any minion may be assigned.
 - **Reference maintenance (`scr_assign_minion`):** reassigning a minion removes it from the old chamber's `minions[]`, pushes into the new one, and updates `current_chamber`. Assert no dangling references in either chamber after a move.
-- **Invariant:** every minion is always in exactly one chamber (no roaming) — assert across create/convert/reassign that a minion never ends up with `current_chamber = no` outside the transient conversion window.
+- **Invariant:** every minion is always in exactly one chamber (no roaming) — assert across create/convert/reassign that a minion never ends up with `current_chamber = noone` outside the transient conversion window.
 
 **C5. Reclamation gating & trade-off (`reclaim` blocks)**
 - Use `each()` over tiers: tier 1 (Clutter, empty `requires_tags`) is open to all; higher tiers require their tag set and reject minions lacking it.

@@ -47,11 +47,11 @@
   *Done when:* The Bar holds 5 clients, The Lobby many minions.
 
 - [ ] **8. Occupied-slot semantics for `clients[]` / `minions[]`**
-  Spec: slots hold `no` for empty; the `requires.client` gate checks "at least one non-`no` entry" and `clients_present_count` returns occupied-slot count (same for `minion_assigned`). Current code uses `array_length`, which overcounts once the funnel pre-fills slots to capacity.
-  *Done when:* a capacity-5 room with 2 guests counts as 2, not 5; empty `no` slots never satisfy gates.
+  Spec: slots hold `noone` for empty; the `requires.client` gate checks "at least one non-`noone` entry" and `clients_present_count` returns occupied-slot count (same for `minion_assigned`). Current code uses `array_length`, which overcounts once the funnel pre-fills slots to capacity.
+  *Done when:* a capacity-5 room with 2 guests counts as 2, not 5; empty `noone` slots never satisfy gates.
 
 - [ ] **9. Per-cycle state reset**
-  Reset every chamber's `clients[]` to `no` at night start (spec: "reset each cycle"), and clear funnel vars on guests (`target_room`, `state`).
+  Reset every chamber's `clients[]` to `noone` at night start (spec: "reset each cycle"), and clear funnel vars on guests (`target_room`, `state`).
   *Done when:* no guest or client slot carries over between cycles.
 
 - [ ] **P0 note — reclamation production gate:** fold into task 12 below: a chamber with `is_reclaiming` / active clearing progress produces nothing that night (GDD §10 trade-off) — add to the prerequisite gate in `scr_calculate_chamber`.
@@ -82,6 +82,7 @@
 
 - [ ] **15. Phase feedback UI** (`obj_ui_manager`)
   Show current phase + season/cycle (e.g. "Spring — Cycle 1, Night"); at Reckoning show a short earnings summary using the per-room breakdown lines from `scr_calculate_night_earnings()` instead of debug messages; make the Done button context-aware ("End Day" / "End Night").
+  Note (PR #47 review): aura applied to an *inactive* room currently lands only in the grand total — `inactive_rooms` entries carry no result/lines, so there's no room-level breakdown line for it. Decide here whether inactive entries should also carry a result map.
   *Done when:* player can tell which phase they're in and what the night earned without the debug console.
 
 ## P3 — The Hunt / conversion *(the strategic tension)*
