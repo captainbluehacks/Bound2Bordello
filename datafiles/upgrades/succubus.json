@@ -4,14 +4,14 @@
     "display_name": "Silk Sheets",
     "compatible_types": ["boudoir"],
     "cost": { "cash": 25 },
-    "effects": { "lust_mana": 2 }
+    "effects": { "lust": 2 }
   },
   {
     "id": "whip_set",
     "display_name": "Whip & Chain Set",
     "compatible_types": ["boudoir", "glory_hole"],
-    "cost": { "cash": 30, "humiliation_mana": 5 },
-    "effects": { "humiliation_mana": 2 },
+    "cost": { "cash": 30, "humiliation": 5 },
+    "effects": { "humiliation": 2 },
     "tags_added": ["degradation"]
   },
   {

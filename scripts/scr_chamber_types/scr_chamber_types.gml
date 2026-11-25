@@ -62,7 +62,41 @@ function scr_get_chamber_tags(_type_string) {
 }
 	
 // Upgrades
-function scr_get_upgrade(_upgrade_id) {
-	return {};
-};
+/// @description Load all upgrade definitions at game start.
+function scr_load_upgrades() {
 	
+	var _upgrade_defs = {data : [], lookup : {}};
+	
+	var _files = [
+		"upgrades/succubus.json"
+		// Future ally upgrade files go here, e.g. "upgrades/<ally>.json".
+	];
+    
+	for (var i = 0; i < array_length(_files); i++) {
+		var _buffer = buffer_load(_files[i]);
+		var _json_string = buffer_read(_buffer, buffer_string);
+		buffer_delete(_buffer);
+        
+		var _entries = json_parse(_json_string);
+		for (var j = 0; j < array_length(_entries); j++) {
+		    // Tag each entry with its source ally for potential gating later
+		    _entries[j].source_ally = scr_filename_to_ally(_files[i]);
+            
+		    var _idx = array_length(_upgrade_defs.data);
+		    array_push(_upgrade_defs.data, _entries[j]);
+			struct_set(_upgrade_defs.lookup, _entries[j].id, _idx);
+		}
+	}
+	
+	return _upgrade_defs;
+}
+
+/// @param {string} _upgrade_id
+/// @return {map|undefined} The full upgrade definition map.
+function scr_get_upgrade(_upgrade_id) {
+	if (!struct_exists(obj_mansion_init.upgrade_defs.lookup, _upgrade_id)) return undefined;
+	
+	var _idx = struct_get(obj_mansion_init.upgrade_defs.lookup, _upgrade_id);
+	return obj_mansion_init.upgrade_defs.data[_idx];
+}
+

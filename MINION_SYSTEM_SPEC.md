@@ -52,7 +52,7 @@ objects/
 | `backstory` | string | Copied verbatim from the converted guest's backstory. Shown in the minion panel alongside history. |
 | `history` | array of `{ cycle: int, text: string }` | Flavour line items, oldest first. Written by conversion (item #1), terminal events, upgrades, story beats, and random room-flavoured entries (see [History](#history)). Never read mechanically. |
 | `upgrade_id` | string or `""` | The single installed minion upgrade ID, or empty if none purchased yet. |
-| `current_chamber` | instance or `no` | Back-reference to the chamber this minion is assigned to (set during day-phase assignment). `no` only transiently (e.g., between conversion and default placement — which happens immediately). |
+| `current_chamber` | instance or `noone` | Back-reference to the chamber this minion is assigned to (set during day-phase assignment). `noone` only transiently (e.g., between conversion and default placement — which happens immediately). |
 | `sprite_id` | sprite ref | Appearance, resolved from `tags` via [Appearance](#appearance). Re-resolved whenever `tags` changes. |
 | `is_friend` | bool | `true` for the drafted friend cast (best-friend arc, GDD §5/§8); these skip the 3-pick naming and use authored identity data instead of pool picks. |
 | `is_pc` | bool | `true` for the player character. The PC is an `obj_minion`, not a separate object type — see note in Overview. Mechanical effects flow through tags (e.g., `"succubus"`); this flag exists only for O(1) identity checks (camera follow, UI panel routing). |

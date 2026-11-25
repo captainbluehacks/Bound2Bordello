@@ -125,7 +125,7 @@
 
 
 	/// @description Count unique chambers on the same floor as _chamber that carry a given tag.
-	function scr_count_tag_on_floor(_chamber, _tag, _max) {
+	function scr_count_tag_on_floor(_chamber, _tag, _max = noone) {
 	    var _count = 0;
 	    var _seen = ds_map_create();
     
@@ -156,7 +156,23 @@
 	    }
 
 	    ds_map_destroy(_seen);
-	    return min(_count, _max);
+	    // No cap (noone) when the condition omits max — mirrors scr_count_adjacent_tag.
+	    return (_max == noone) ? _count : min(_count, _max);
+	}
+
+
+	/// @description Count unique adjacent chambers carrying a given tag (effective tags).
+	/// Capped at _max when provided. Used by the count_adjacent_tag condition.
+	function scr_count_adjacent_tag(_chamber, _tag, _max = noone) {
+	    var _count = 0;
+	    var _adj = scr_get_adjacent_chambers(_chamber); // already deduped
+
+	    for (var i = 0; i < array_length(_adj); i++) {
+	        var _eff_tags = scr_get_effective_tags(_adj[i]);
+	        if (array_contains(_eff_tags, _tag)) _count++;
+	    }
+
+	    return (_max == noone) ? _count : min(_count, _max);
 	}
 
 

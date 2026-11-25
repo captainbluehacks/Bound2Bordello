@@ -50,7 +50,9 @@ function test_make_client(_name = "Guest", _tags = [], _backstory = "", _freq = 
 }
 
 /// Build a minion instance with explicit fields (no RNG).
-function test_make_minion(_tags = [], _quirk = "", _chamber = no, _is_friend = false) {
+/// NOTE: default is `noone`, not bare `no` — this GM build compiles a bare
+/// `no` literal as an unset variable read and throws at runtime.
+function test_make_minion(_tags = [], _quirk = "", _chamber = noone, _is_friend = false) {
     var _m = create(0, 0, obj_minion);
     _m.tags            = array_concat(_tags, []); // workaround for lack of array clone
     _m.quirk           = _quirk;

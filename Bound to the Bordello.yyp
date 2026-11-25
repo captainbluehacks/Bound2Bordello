@@ -115,6 +115,7 @@
     {"id":{"name":"scr_ui_system","path":"scripts/scr_ui_system/scr_ui_system.yy",},},
     {"id":{"name":"scr_utils","path":"scripts/scr_utils/scr_utils.yy",},},
     {"id":{"name":"scr_view_macro","path":"scripts/scr_view_macro/scr_view_macro.yy",},},
+    {"id":{"name":"test_chamber_calc","path":"scripts/test_chamber_calc/test_chamber_calc.yy",},},
     {"id":{"name":"test_helpers","path":"scripts/test_helpers/test_helpers.yy",},},
     {"id":{"name":"test_mansion_grid","path":"scripts/test_mansion_grid/test_mansion_grid.yy",},},
     {"id":{"name":"test_smoke","path":"scripts/test_smoke/test_smoke.yy",},},
