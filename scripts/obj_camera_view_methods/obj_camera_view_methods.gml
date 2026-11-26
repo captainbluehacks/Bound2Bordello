@@ -12,7 +12,7 @@ function __obj_camera_view_methods(){
 	/// @description Returns true if current_target is a live instance or a plain struct (x/y point). No params.
 	/// @return {bool} Whether the current target can be followed.
 	target_is_valid = function(){
-		return (!is_struct(current_target) && instance_exists(current_target) || is_struct(current_target)) ;
+		return (!is_struct(current_target) && instance_exists(current_target) || is_struct(current_target));
 	}
 
 	/// @description Returns the {x,y} point the view should centre on for current_target. Uses x,y + half the sprites height and width if it has one, otherwise falls back to its x/y. No params.
@@ -27,7 +27,6 @@ function __obj_camera_view_methods(){
 		
 		else return {x: current_target.x, y: current_target.y};
 	}
-
 
 	/// @description Instantly clamps and moves the view so the target's focus point is centred, clearing scroll_offset. Exits early if the target is invalid. No return.
 	snap_to_target = function(){
