@@ -34,6 +34,10 @@ function scr_calculate_chamber(_chamber, _type_def = undefined) {
 
 
 
+/// @description Check whether a chamber is running tonight (minion/client requirements).
+/// @param {map} _type_def The chamber type definition.
+/// @param {instance} _chamber The obj_chamber instance.
+/// @return {map} { active: bool, reason?: string } — reason only when inactive.
 function scr_chamber_check_prerequisites(_type_def, _chamber) {
     if (!struct_exists(_type_def, "requires")) return { active: true };
     
@@ -49,6 +53,11 @@ function scr_chamber_check_prerequisites(_type_def, _chamber) {
 }
 
 
+/// @description Add the type's base output to the running total and breakdown.
+/// Mutates _total and _lines in place; no return.
+/// @param {map} _type_def The chamber type definition.
+/// @param {map} _total Accumulated resource totals (mutated).
+/// @param {array} _lines Breakdown lines array (appended to).
 function scr_chamber_apply_base(_type_def, _total, _lines) {
 	
 	// Safety check
@@ -66,6 +75,13 @@ function scr_chamber_apply_base(_type_def, _total, _lines) {
 }
 
 
+/// @description Evaluate the type's bonus rules against the chamber and add any
+/// matching effects (flat or per-match scaled) to the totals. Mutates _total and
+/// _lines in place; no return.
+/// @param {instance} _chamber The obj_chamber instance.
+/// @param {map} _type_def The chamber type definition.
+/// @param {map} _total Accumulated resource totals (mutated).
+/// @param {array} _lines Breakdown lines array (appended to).
 function scr_chamber_apply_bonuses(_chamber, _type_def, _total, _lines) {
     // SAFETY CHECK: If there are no bonuses defined for this type, just exit early.
     if (!struct_exists(_type_def, "bonuses")) return;
@@ -96,6 +112,11 @@ function scr_chamber_apply_bonuses(_chamber, _type_def, _total, _lines) {
 
 
 
+/// @description If the chamber has a compatible upgrade installed, add its effects
+/// to the totals. Mutates _total and _lines in place; no return.
+/// @param {instance} _chamber The obj_chamber instance.
+/// @param {map} _total Accumulated resource totals (mutated).
+/// @param {array} _lines Breakdown lines array (appended to).
 function scr_chamber_apply_upgrades(_chamber, _total, _lines) {
     if (_chamber.upgrade_id == noone || _chamber.upgrade_id == "") return;
     
@@ -124,6 +145,8 @@ function scr_chamber_apply_upgrades(_chamber, _total, _lines) {
 
 
 /// @description Adds values from a source struct into a total struct.
+/// @param {map} _total Accumulated resource totals (mutated).
+/// @param {map} _source Resource effects to add in.
 function scr_chamber_sum_resources(_total, _source) {
     var _keys = variable_struct_get_names(_source);
     for (var i = 0; i < array_length(_keys); i++) {
@@ -207,6 +230,8 @@ function scr_calculate_night_earnings() {
 
 /// @description True if any occupied minion slot in this chamber carries the tag.
 /// Empty slots (noone) are skipped, so multi-slot rooms work as they land.
+/// @param {instance} _chamber The obj_chamber instance.
+/// @param {string} _tag Tag to look for on the minions' tag arrays.
 function scr_chamber_minion_has_tag(_chamber, _tag) {
     for (var i = 0; i < array_length(_chamber.minions); i++) {
         var _m = _chamber.minions[i];

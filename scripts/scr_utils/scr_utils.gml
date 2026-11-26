@@ -2,8 +2,10 @@ enum COUNTER {
 	CHAMBER, CLIENT, MINION, LENGTH };
 
 
-/// @description Generates unique ids when provided by a COUNTER.<enum>
-/// @returns Real  
+/// @description Generates unique ids when provided by a COUNTER enum value.
+/// Returns -1 (with a debug message) if _type is out of range for the counter table.
+/// @param {enum COUNTER} _type Which per-type counter to increment.
+/// @returns Real The next unique id for that type, or -1 for an invalid type.
 function gen_unique_id(_type) {
 	if (_type < 0 || _type >= COUNTER.LENGTH) {
 		show_debug_message("Asked to update Invalid Counter");

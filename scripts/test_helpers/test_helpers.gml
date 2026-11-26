@@ -6,7 +6,10 @@
 // Grid
 // ---------------------------------------------------------------------------
 
-/// Build an empty mansion grid and stash it into global.mansion_map.
+/// @description Builds an empty mansion grid and stashes it into global.mansion_map.
+/// Destroys any existing grid first, then fills every cell with -1 (empty). No return.
+/// @param {real} [_w] Grid width in cells; defaults to 10.
+/// @param {real} [_h] Grid height in rows; defaults to 8.
 function test_setup_grid(_w = 10, _h = 8) {
 	
     if (variable_global_exists("mansion_map") && global.mansion_map != noone) {
@@ -18,10 +21,15 @@ function test_setup_grid(_w = 10, _h = 8) {
 }
 
 
-/// Create an obj_chamber at a grid cell and register it in the map (honouring size).
+/// @description Creates an obj_chamber at a grid cell and registers it in the map (honouring size).
 /// NOTE: relies on a real chamber sprite existing for <_type>/<size> and on
 /// scr_get_chamber_tags() being available. Use valid types
 /// from datafiles/chamber_types/ (e.g. "boudoir", "bar").
+/// @param {string} _type Chamber type key (e.g. "boudoir").
+/// @param {real} _gx Grid x of the chamber's top-left cell.
+/// @param {real} _gy Grid y of the chamber's top-left cell.
+/// @param {ROOM_SIZE} [_size] Chamber size; defaults to ROOM_SIZE.SMALL.
+/// @return {instance} The created obj_chamber instance.
 function test_place_chamber(_type, _gx, _gy, _size = ROOM_SIZE.SMALL) {
     var _inst = instance_create_layer(0, 0, "Instances", obj_chamber,
         { chamber_type: _type, chamber_size: _size, grid_x: _gx, grid_y: _gy });
@@ -38,7 +46,12 @@ function test_place_chamber(_type, _gx, _gy, _size = ROOM_SIZE.SMALL) {
 // Clients / Minions (spec-only objects — will error until they exist)
 // ---------------------------------------------------------------------------
 
-/// Build a guest/client instance with explicit fields (no RNG).
+/// @description Builds a guest/client instance with explicit fields (no RNG).
+/// @param {string} [_name] Client name; defaults to "Guest".
+/// @param {array} [_tags] Tag array; defaults to [].
+/// @param {string} [_backstory] Backstory text; defaults to "".
+/// @param {real} [_freq] Visit frequency; defaults to 1.0.
+/// @return {instance} The created obj_client instance.
 function test_make_client(_name = "Guest", _tags = [], _backstory = "", _freq = 1.0) {
     var _c = create(0, 0, obj_client);
     _c.name            = _name;
@@ -49,9 +62,14 @@ function test_make_client(_name = "Guest", _tags = [], _backstory = "", _freq = 
     return _c;
 }
 
-/// Build a minion instance with explicit fields (no RNG).
+/// @description Builds a minion instance with explicit fields (no RNG).
 /// NOTE: default is `noone`, not bare `no` — this GM build compiles a bare
 /// `no` literal as an unset variable read and throws at runtime.
+/// @param {array} [_tags] Tag array; defaults to [].
+/// @param {string} [_quirk] Quirk key; defaults to "".
+/// @param {instance} [_chamber] Chamber the minion is assigned to; defaults to noone.
+/// @param {bool} [_is_friend] Friend flag; defaults to false.
+/// @return {instance} The created obj_minion instance.
 function test_make_minion(_tags = [], _quirk = "", _chamber = noone, _is_friend = false) {
     var _m = create(0, 0, obj_minion);
     _m.tags            = array_concat(_tags, []); // workaround for lack of array clone
@@ -65,14 +83,14 @@ function test_make_minion(_tags = [], _quirk = "", _chamber = noone, _is_friend 
 // Teardown
 // ---------------------------------------------------------------------------
 
-/// Tear down all chamber/minion/client instances created during a test.
+/// @description Tears down all chamber/minion/client instances created during a test. No params, no return.
 function test_cleanup_instances() {
     with (obj_chamber) instance_destroy();
     if (object_exists(obj_minion))  with (obj_minion)  instance_destroy();
     if (object_exists(obj_client))  with (obj_client)  instance_destroy();
 }
 
-/// Reset the grid AND clear instances. Use in afterEach for full isolation.
+/// @description Resets the grid AND clears instances. Use in afterEach for full isolation. No params, no return.
 function test_teardown() {
     test_cleanup_instances();
     global.mansion_map = noone;

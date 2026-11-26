@@ -28,6 +28,7 @@ function scr_load_chamber_types() {
 }
 
 
+/// @description Look up a chamber type definition by its type string.
 /// @param {string} _type_string
 /// @return {map|undefined} The full type definition map.
 function scr_get_chamber_type(_type_string) {
@@ -40,6 +41,10 @@ function scr_get_chamber_type(_type_string) {
 
 
 
+/// @description Extract the ally name from a datafile path (the filename stem).
+/// e.g. "chamber_types/succubus.json" returns "succubus".
+/// @param {string} _path Path to the JSON file, using forward slashes.
+/// @return {string} The filename without its extension.
 function scr_filename_to_ally(_path) {
 	// "chamber_types/succubus.json" → "succubus"
 	var _parts = string_split(_path, "/");
@@ -47,6 +52,7 @@ function scr_filename_to_ally(_path) {
 	return _fname;
 }
 
+/// @description Get the list of tags a chamber type carries (empty if it has none).
 /// @param {string} _type_string
 /// @return {ds_list} List of tag strings for this type.
 function scr_get_chamber_tags(_type_string) {
@@ -91,6 +97,7 @@ function scr_load_upgrades() {
 	return _upgrade_defs;
 }
 
+/// @description Look up an upgrade definition by its ID.
 /// @param {string} _upgrade_id
 /// @return {map|undefined} The full upgrade definition map.
 function scr_get_upgrade(_upgrade_id) {

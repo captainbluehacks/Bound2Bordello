@@ -1,9 +1,10 @@
 /// @description Creates helper functions for the People manager. Should only be called from obj_people_manager.
 function __obj_people_manager_helpers(){
 
-	/// @description Load specified backgrounds and return an optionally shuffled list
-	/// @param _json_file The json file to be read.
-	/// @param _shuffle  Whether to shuffle the dataset before returning.
+	/// @description Load a JSON file from disk, parse it, and return its top-level entry,
+	/// optionally shuffled. Generic loader used for names, client pools, backgrounds etc.
+	/// @param {string} _json_file The json file to be read.
+	/// @param {bool} [_shuffle] Optional: whether to shuffle the dataset before returning.
 	/// @return An array or struct depending on what the top level entry in the json file is.
 	function scr_load_json_file(_json_file, _shuffle=false) {
 	
@@ -111,9 +112,10 @@ function __obj_people_manager_helpers(){
 		return _clients;
 	}
 	
-	/// @description Move the given minion to the given chamber if allowed.
-	/// @param_pool _minion  The minion object we want to move.
-	/// @param_pool _chamber The chamber object we want to add the minion to.
+	/// @description Move the given minion to the given chamber if allowed (valid types and capacity).
+	/// Sets the minion's current_chamber, adds it to the chamber's minions, and sets its target coords.
+	/// @param {instance} _minion  The obj_minion we want to move.
+	/// @param {instance} _chamber The obj_chamber we want to add the minion to.
 	/// @return boolean True if the minion was moved.
 	function scr_move_minion(_minion, _chamber) {
 		// Check if types are valid
@@ -145,8 +147,9 @@ function __obj_people_manager_helpers(){
 		return true;
 	}
 	
-	/// @description Creates a minion to represent the player and their best friend.
-	/// @return array containing the two new obj_minion objects.
+	/// @description Creates a minion to represent the player (in the boudoir) and their best friend
+	/// (in the adjacent room). If the adjacent-room lookup fails, only the player is created and returned.
+	/// @return array containing the new obj_minion objects: [_pc, _friend], or just [_pc] on failure.
 	function scr_create_first_minions() {
 		
 		var _new_names = scr_get_minion_name();

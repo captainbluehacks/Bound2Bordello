@@ -1,4 +1,8 @@
-/// @func display_write_all_specs([x],[y], [scale])
+/// @description Debug helper: prints the Display, Window, App Surface and GUI
+/// resolutions/aspects plus up to 8 views using draw_text_transformed.
+/// @param {real} [_x] Optional: X position of the text, defaults to 5.
+/// @param {real} [_y] Optional: Y position of the text, defaults to 5.
+/// @param {real} [_scale] Optional: scale factor, defaults to GUI height over window height.
 function display_write_all_specs(_x = 5, _y = 5, _scale = display_get_gui_height() / window_get_height()){
   var _dispW = display_get_width(), _dispH = display_get_height(),
       _winW = window_get_width(), _winH = window_get_height(),

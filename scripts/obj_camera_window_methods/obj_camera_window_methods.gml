@@ -1,4 +1,10 @@
+/// @description Builds and returns the camera's window-method struct (calculate_max_window_scale, init_window, follow_target, camera_set_view_pos_clamped). No params.
+/// @return {map} Struct of window-control closures bound to this camera instance.
 function __obj_camera_window_methods(){
+	/// @description Returns the largest whole-number integer scale that fits DISP_W x DISP_H within BASE_W x BASE_H (capped at 1).
+	/// Unless _full_screen, a whole-number height scale is decremented by one so the window stays inside the display.
+	/// @param {bool} [_full_screen] Allow an exact-fit whole-number scale; defaults to false.
+	/// @return {real} Maximum integer window scale (at least 0).
 	calculate_max_window_scale = function(_full_screen = false){
 		var _max_h_scale = DISP_H / BASE_H ;
 		var _max_v_scale = DISP_W / BASE_W ;
@@ -11,6 +17,7 @@ function __obj_camera_window_methods(){
 		return(floor(min(_max_h_scale, _max_v_scale)));
 	}
 	
+	/// @description Resizes and centres the OS window at BASE_W/BASE_H x window_scale, resizes APP_SURF to BASE_W x BASE_H and sets the GUI size. No params, no return.
 	init_window = function(){
 		window_set_size(BASE_W * window_scale, BASE_H * window_scale);
 		window_center();
@@ -21,6 +28,7 @@ function __obj_camera_window_methods(){
 		display_set_gui_size(BASE_W, BASE_H);
 	}
 	
+	/// @description Smoothly scrolls the view toward current_target (lerped by scroll_speed, offset by scroll_offset) and clamps it to the room. Exits early if the target is invalid. No return.
 	follow_target = function(){
 		if(!target_is_valid()) exit;
 
@@ -38,6 +46,9 @@ function __obj_camera_window_methods(){
 		camera_set_view_pos(VIEW, _tar_x, _tar_y);
 	}
 	
+	/// @description Moves the view to (_tar_x, _tar_y) clamped to the room; if the view is larger than the room on an axis it centres that axis instead. No return.
+	/// @param {real} _tar_x Desired view x position.
+	/// @param {real} _tar_y Desired view y position.
 	camera_set_view_pos_clamped = function(_tar_x, _tar_y){
 		_tar_x = clamp(_tar_x, 0, room_width - VIEW_W);
 		_tar_y = clamp(_tar_y, 0, room_height - VIEW_H);

@@ -1,5 +1,10 @@
 
 
+/// @description Build the mansion layout by picking one random template per floor.
+/// Loads basement/ground/first/attic JSON, picks a random template (up to 10 tries
+/// through validate_template, logging invalid picks; if all fail the last pick is
+/// used), and returns the concatenated `layout` arrays of the chosen templates.
+/// @return {array} Blueprint entries for every chamber in the mansion.
 function define_floors() {
 		
 	var _schema_file = [
@@ -39,11 +44,20 @@ function define_floors() {
 }
 	
 	
+/// @description Validate a floor template before it is used. Stub: always returns true for now.
+/// @param {map} _template The parsed floor template to check.
+/// @return {bool} Always true (validation not implemented yet).
 function validate_template(_template) {
 	// For now lets just return true.
 	return (true);	
 }
 	
+/// @description Create obj_chamber instances for each blueprint entry and fill the mansion map.
+/// Warns if global.mansion_map is missing. Instances are created at cell_size 320 with a
+/// (960, 320) offset on mansion_layer.chamber; the boudoir becomes obj_mansion_manager.first_room,
+/// client/minion capacities come from the type defs when present, and global.mansion_map is
+/// filled per chamber size dims. No return.
+/// @param {array} _blueprints Blueprint entries (type, size, grid_x, grid_y) to instantiate.
 function add_room_instances(_blueprints) {
 		
 	if (!variable_global_exists("mansion_map")) {
