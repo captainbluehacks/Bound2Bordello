@@ -64,3 +64,6 @@ Temporary Items
 
 # GMRT build directory
 Build
+
+# Local scanner reports (jsdoc_scan.py output)
+scan_report*.txt
