@@ -18,9 +18,14 @@ function __obj_camera_view_methods(){
 	/// @description Returns the {x,y} point the view should centre on for current_target. Uses the target's get_focus_point() when it has one (e.g. any obj_selectable), otherwise falls back to its x/y. No params.
 	/// @return {map} Struct with x/y of the focus point.
 	get_focus = function(){
-		if (current_target.get_focus_point != undefined) return current_target.get_focus_point();
-		return {x: current_target.x, y: current_target.y};
+		if(!target_is_valid()) exit;
+		if (!is_struct(current_target) && current_target.sprite_index != -1) {
+			return {x: x + current_target.sprite_width / 2, y: y + current_target.sprite_height / 2};
+		}
+		
+		else return {x: current_target.x, y: current_target.y};
 	}
+
 
 	/// @description Instantly clamps and moves the view so the target's focus point is centred, clearing scroll_offset. Exits early if the target is invalid. No return.
 	snap_to_target = function(){
