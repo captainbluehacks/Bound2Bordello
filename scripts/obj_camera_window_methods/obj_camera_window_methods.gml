@@ -28,12 +28,13 @@ function __obj_camera_window_methods(){
 		display_set_gui_size(BASE_W, BASE_H);
 	}
 	
-	/// @description Smoothly scrolls the view toward current_target (lerped by scroll_speed, offset by scroll_offset) and clamps it to the room. Exits early if the target is invalid. No return.
+	/// @description Smoothly scrolls the view toward current_target's focus point (lerped by scroll_speed, offset by scroll_offset) and clamps it to the room. Exits early if the target is invalid. No return.
 	follow_target = function(){
 		if(!target_is_valid()) exit;
 
-		var _tar_x = current_target.x + scroll_offset.x - VIEW_W / 2;
-		var _tar_y = current_target.y + scroll_offset.y - VIEW_H / 2;
+		var _focus = get_focus();
+		var _tar_x = _focus.x + scroll_offset.x - VIEW_W / 2;
+		var _tar_y = _focus.y + scroll_offset.y - VIEW_H / 2;
 
 		// Smooth Scroll
 		_tar_x = lerp(VIEW_X, _tar_x, scroll_speed);
