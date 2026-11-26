@@ -15,12 +15,14 @@ function __obj_camera_view_methods(){
 		return (!is_struct(current_target) && instance_exists(current_target) || is_struct(current_target)) ;
 	}
 
-	/// @description Returns the {x,y} point the view should centre on for current_target. Uses the target's get_focus_point() when it has one (e.g. any obj_selectable), otherwise falls back to its x/y. No params.
+	/// @description Returns the {x,y} point the view should centre on for current_target. Uses x,y + half the sprites height and width if it has one, otherwise falls back to its x/y. No params.
 	/// @return {map} Struct with x/y of the focus point.
 	get_focus = function(){
 		if(!target_is_valid()) exit;
 		if (!is_struct(current_target) && current_target.sprite_index != -1) {
-			return {x: x + current_target.sprite_width / 2, y: y + current_target.sprite_height / 2};
+			return {
+				x: current_target.x + current_target.sprite_width / 2, 
+				y: current_target.y + current_target.sprite_height / 2};
 		}
 		
 		else return {x: current_target.x, y: current_target.y};
