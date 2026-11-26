@@ -3,7 +3,10 @@
 /// Covers P0 tasks 2–5 in PLAYABLE_TURNS_TASKS.md (count_adjacent_tag, upgrade
 /// loader + scr_get_upgrade, aura pass, minion_has_tag / upgrade_present).
 
-/// Test-local helper: find a chamber's result entry inside a nightly summary.
+/// @description Test-local helper: finds a chamber's result entry inside a nightly summary.
+/// @param {map} _summary Nightly summary map (with an active_rooms array).
+/// @param {instance} _chamber The obj_chamber instance to look up.
+/// @return {map|undefined} The matching .result, or undefined if the chamber is not present.
 function _test_find_result(_summary, _chamber) {
     for (var i = 0; i < array_length(_summary.active_rooms); i++) {
         if (_summary.active_rooms[i].chamber == _chamber) return _summary.active_rooms[i].result;

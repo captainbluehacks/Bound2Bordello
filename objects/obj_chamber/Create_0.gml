@@ -33,10 +33,12 @@ upgrade_id = noone;		// list of upgrade IDs installed this cycle
 is_reclaiming = false;
 
 
-/// @description Get coordinate of where to place the person in the room.
-/// @param_pool _person The person to get the coordinate of.
-/// @param_pool _coord  The x or y coordinate requested.
-/// @return The required coordinate within the room.
+/// @description Gets the pixel coordinate where a person should be placed inside this chamber's sprite.
+/// For "y"/"Y", returns the floor line (chamber y + sprite_height - 35). For "x"/"X", distributes people evenly across the sprite width.
+/// Returns -1 if _person or _coord is invalid, or if the person isn't in this room (with debug messages); returns 0 if the later index lookup unexpectedly fails.
+/// @param {instance} _person The minion or client instance to position.
+/// @param {string} _coord "x"/"X" for horizontal, "y"/"Y" for vertical coordinate.
+/// @return {real} The pixel coordinate within the room; -1 on invalid input or person not in room; 0 if the index lookup unexpectedly fails.
 function get_person_position(_person, _coord) {
 	// Person or coord out of boounds
 	if (_person == noone || _coord == noone || 

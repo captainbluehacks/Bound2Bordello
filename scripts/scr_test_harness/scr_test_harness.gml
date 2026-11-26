@@ -14,8 +14,8 @@
 // NOTE 2: file writes from the game are sandboxed to the user-data folder in
 //         this runner build, so don't rely on writing result files elsewhere.
 
-/// @func	test_mode_active()
-/// Returns true if B2B_TEST_MODE=1 is set in the environment.
+/// @description Returns true if B2B_TEST_MODE=1 is set in the environment. No params.
+/// @return {bool} True when the CI test-mode env var equals "1".
 function test_mode_active() {
 	return string(environment_get_variable("B2B_TEST_MODE")) == "1";
 }

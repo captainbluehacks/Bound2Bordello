@@ -1,4 +1,13 @@
-// scr_draw_box(x1, y1, x2, y2, fill_col, border_col, [radius], [fill_alpha])
+/// @description Draws a rounded rectangle with fill and border colours.
+/// Negative _rad uses the default radius; negative _fill_alpha leaves alpha unchanged. No return.
+/// @param {real} _x1 Left x.
+/// @param {real} _y1 Top y.
+/// @param {real} _x2 Right x.
+/// @param {real} _y2 Bottom y.
+/// @param {colour} _fill Fill colour.
+/// @param {colour} _border Border colour.
+/// @param {real} [_rad] Corner radius; defaults to -1 (built-in default).
+/// @param {real} [_fill_alpha] Fill alpha; defaults to -1 (unchanged).
 function scr_draw_box(_x1, _y1, _x2, _y2, _fill, _border, _rad = -1, _fill_alpha = -1) {
     var _prev_alpha = draw_get_alpha();
     if (_fill_alpha >= 0) draw_set_alpha(_fill_alpha);
@@ -20,7 +29,12 @@ function scr_draw_box(_x1, _y1, _x2, _y2, _fill, _border, _rad = -1, _fill_alpha
     set_ui_defaults();
 }
 
-// scr_draw_section_header(x, y, w, text) -> returns new y
+/// @description Draws an uppercase gold section header with a faded rule line beneath it.
+/// @param {real} _x Left x.
+/// @param {real} _y Top y.
+/// @param {real} _w Width of the rule line.
+/// @param {string} _text Header text (uppercased when drawn).
+/// @return {real} Advanced y position below the header and rule.
 function scr_draw_section_header(_x, _y, _w, _text) {
     draw_set_font(fnt_display_400);
     draw_set_colour(COL_GOLD);
@@ -42,7 +56,16 @@ function scr_draw_section_header(_x, _y, _w, _text) {
 }
 
 
-// scr_draw_breakdown_row(x, y, w, label, value_str, value_col, is_locked) -> returns new y
+/// @description Draws a breakdown row: label on the left, tinted value chip on the right,
+/// dotted separator below. Locked rows are drawn dimmed.
+/// @param {real} _x Left x.
+/// @param {real} _y Top y.
+/// @param {real} _w Row width.
+/// @param {string} _label Row label.
+/// @param {string} _val_str Value text for the chip.
+/// @param {colour} _val_col Resource colour (chip border/text; bg derived via _get_resource_bg).
+/// @param {bool} [_locked] Draw dimmed when locked; defaults to false.
+/// @return {real} Advanced y position below the row and separator.
 function scr_draw_breakdown_row(_x, _y, _w, _label, _val_str, _val_col, _locked = false) {
     if (_locked) draw_set_alpha(COL_LOCKED_ALPHA);
     
@@ -81,8 +104,13 @@ function scr_draw_breakdown_row(_x, _y, _w, _label, _val_str, _val_col, _locked 
 }
 
 
-// scr_draw_tag_pill(x, y, text, variant) -> returns new x
-// variant: TAG_PLAIN, TAG_QUIRK, TAG_UPGRADE
+/// @description Draws a rounded tag pill and advances past it.
+/// Variant 1 = quirk styling, 2 = upgrade styling, anything else plain.
+/// @param {real} _x Left x.
+/// @param {real} _y Top y.
+/// @param {string} _text Tag text.
+/// @param {int} [_variant] Pill variant (1 quirk / 2 upgrade); defaults to 0 (plain).
+/// @return {real} New x position after the pill plus spacing.
 function scr_draw_tag_pill(_x, _y, _text, _variant = 0) {
     draw_set_font(fnt_small);
     
@@ -107,7 +135,14 @@ function scr_draw_tag_pill(_x, _y, _text, _variant = 0) {
 }
 
 
-// scr_draw_total_line(x, y, w, label, value_str, value_col) -> returns new y
+/// @description Draws a totals row with a solid gold rule above it: label left, coloured value right.
+/// @param {real} _x Left x.
+/// @param {real} _y Top y (gold rule drawn here).
+/// @param {real} _w Row width.
+/// @param {string} _label Label text.
+/// @param {string} _val_str Value text.
+/// @param {colour} _val_col Colour for the value text.
+/// @return {real} Advanced y position below the row.
 function scr_draw_total_line(_x, _y, _w, _label, _val_str, _val_col) {
     // Solid gold top border (thicker than regular lines)
     draw_set_colour(COL_GOLD);
@@ -131,7 +166,12 @@ function scr_draw_total_line(_x, _y, _w, _label, _val_str, _val_col) {
 }
 
 
-// scr_draw_progress_bar(x, y, w, h, fraction)
+/// @description Draws a progress bar (track + inset fill). Fill fraction is clamped to 0-1. No return.
+/// @param {real} _x Left x.
+/// @param {real} _y Top y.
+/// @param {real} _w Bar width.
+/// @param {real} [_h] Bar height; defaults to 13.
+/// @param {real} [_frac] Fill fraction 0-1; defaults to 0.
 function scr_draw_progress_bar(_x, _y, _w, _h = 13, _frac = 0.0) {
     // Track
     scr_draw_box(_x, _y, _x + _w, _y + _h, COL_BAR_BG, COL_BAR_BORDER, 7);
@@ -147,7 +187,13 @@ function scr_draw_progress_bar(_x, _y, _w, _h = 13, _frac = 0.0) {
 }
 
 
-// scr_draw_button(x, y, w, h, text, is_primary) -> returns rect for hit-testing
+/// @description Draws a rounded button with centred label; primary buttons use the gold style. No return.
+/// @param {real} _x Left x.
+/// @param {real} _y Top y.
+/// @param {real} _w Button width.
+/// @param {real} [_h] Button height; defaults to 34.
+/// @param {string} _text Button label.
+/// @param {bool} [_primary] Use primary styling; defaults to false.
 function scr_draw_button(_x, _y, _w, _h = 34, _text, _primary = false) {
     var fill, border, text_col;
     if (_primary) {
@@ -173,7 +219,10 @@ function scr_draw_button(_x, _y, _w, _h = 34, _text, _primary = false) {
 
 
 
-// Helper: get the tinted background colour for a resource value chip
+/// @description Maps a known resource colour (COL_CASH/LUST/HUMILIATION/INFLUENCE/VALUE/POWER/STOCK)
+/// to its matching COL_*_BG constant; falls back to the input colour.
+/// @param {colour} _col Resource colour to map.
+/// @return {colour} Tinted background colour for value chips.
 function _get_resource_bg(_col) {
     // Map known resource colours to their pre-computed bg constants
     if (_col == COL_CASH)        return COL_CASH_BG;

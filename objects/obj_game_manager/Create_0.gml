@@ -24,6 +24,9 @@ get_season = function() {
 	return current_season ;
 };
 
+/// @description Advance the game period: day to night (calculating and logging night earnings),
+/// night to reckoning, then reckoning back to day. When cycle passes 12 it moves on to
+/// the next season, or reports End of Game once winter is done.
 function end_turn() {
 	
 	if (current_period == period.day) {

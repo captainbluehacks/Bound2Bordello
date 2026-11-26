@@ -1,6 +1,13 @@
-// _draw_tab_bar(px, py, pw)
-// Draws the two-tab selector at the top of the panel.
-// Uses active_tab (SELECT_TAB enum) to determine which tab is highlighted.
+/// @description Draws the tab selector at the top of the panel (ROOM/OBSTACLE/MINIONS).
+/// Uses active_tab (SELECT_TAB enum) to determine which tab is highlighted; early-returns
+/// for SELECT_TAB.NONE. Clamps _minion_index into range with debug messages, draws a count
+/// badge ("(n)" or "(i/n)"), a gold underline on the active tab, and a separator + frame.
+/// Resets UI state via set_ui_defaults(). No return.
+/// @param {real} _px Left x of the panel.
+/// @param {real} _py Top y of the panel.
+/// @param {real} _pw Panel width.
+/// @param {real} [_minion_count] Total minion count; defaults to 0.
+/// @param {real} [_minion_index] Current minion index (1-based); defaults to -1.
 function _draw_tab_bar(_px, _py, _pw, _minion_count = 0, _minion_index = -1) {
 	
 	// Start with bounds checking.

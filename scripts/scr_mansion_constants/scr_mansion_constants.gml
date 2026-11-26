@@ -12,6 +12,8 @@ enum ROOM_SIZE {
 	LARGE    // 2x2
 }; 
 
+/// @description Set up global mansion constants: global.size_dims, an array of
+/// {w, h, name} structs for the small (1x1), medium (2x1) and large (2x2) room sizes.
 function scr_mansion_constants() {
 
 	// Define the room sizes

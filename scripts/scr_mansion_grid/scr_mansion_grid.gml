@@ -34,6 +34,9 @@
 	}
 
 	/// @description Check if any adjacent chamber matches a room type (optionally in a direction).
+	/// @param {instance} _chamber The obj_chamber instance being evaluated.
+	/// @param {map} _cond Condition map: needs `room_type` (or "*" wildcard); optional `direction` restricts to one side.
+	/// @return {bool} True if a matching adjacent chamber exists.
 	function scr_check_adjacent(_chamber, _cond) {
 	    var _adj = scr_get_adjacent_chambers(_chamber); // This now returns an array []
     
@@ -95,6 +98,8 @@
 	}
 
 	/// @description Get all effective tags for a chamber (type tags + upgrade tags).
+	/// @param {instance} _chamber The obj_chamber instance.
+	/// @return {array} Plain array of tag strings.
 	function scr_get_effective_tags(_chamber) {
 	    var _tags = [];
     
@@ -125,6 +130,12 @@
 
 
 	/// @description Count unique chambers on the same floor as _chamber that carry a given tag.
+	/// Chambers are deduped (multi-cell rooms count once); a chamber matches if its
+	/// effective tags include _tag. No cap when _max is noone, otherwise min(count, _max).
+	/// @param {instance} _chamber The obj_chamber instance whose floor is used.
+	/// @param {string} _tag Tag to look for on chambers' effective tags.
+	/// @param {real} [_max] Cap the count; noone means uncapped.
+	/// @return {int} Number of matching unique chambers on that floor (0 if the floor can't be resolved).
 	function scr_count_tag_on_floor(_chamber, _tag, _max = noone) {
 	    var _count = 0;
 	    var _seen = ds_map_create();
@@ -163,6 +174,10 @@
 
 	/// @description Count unique adjacent chambers carrying a given tag (effective tags).
 	/// Capped at _max when provided. Used by the count_adjacent_tag condition.
+	/// @param {instance} _chamber The obj_chamber instance being evaluated.
+	/// @param {string} _tag Tag to look for on neighbours' effective tags.
+	/// @param {real} [_max] Cap the count; noone means uncapped.
+	/// @return {int} Number of unique adjacent chambers carrying the tag.
 	function scr_count_adjacent_tag(_chamber, _tag, _max = noone) {
 	    var _count = 0;
 	    var _adj = scr_get_adjacent_chambers(_chamber); // already deduped
@@ -177,6 +192,9 @@
 
 
 	/// @description Given a rooms Y coord, return the pair of y coords that are on the same floor.
+	/// Basement = rows 6-7, ground = rows 4-5, first = rows 2-3, attic = rows 0-1.
+	/// @param {real} _y Grid row to resolve.
+	/// @return {array|noone} The two-row floor pair ([6,7], [4,5], [2,3] or [0,1]); noone for an invalid y.
 	function scr_grid_y_to_floor(_y) {
 	    // Adjust these ranges to match your actual grid layout:
 	    // e.g. basement = rows 6-7, ground = rows 4-5, first = rows 2-3, attic = rows 0-1
