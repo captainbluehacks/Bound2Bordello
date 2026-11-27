@@ -182,6 +182,7 @@ See [`MINION_SYSTEM_SPEC.md`](MINION_SYSTEM_SPEC.md) § Minion Upgrades for full
 *   **Reclamation Tiers:** Expansion is gated by minion capabilities (Clutter -> Rubble -> Hazards -> Seals). Higher tiers require specific tags on the assigned minion (data-driven via `requires_tags` in the obstacle's `reclaim` block).
 *   **Spatial Pacing:** New floors are unlocked via narrative phases, but the *usable area* within those floors is expanded through active reclamation.
 *   **Reclaiming a Room:** The player assigns a minion to the blocked zone (a normal assignment). Each night they entice their guests into clearing the room for them (a succubus doesn't do her own manual labor). Clearing takes multiple nights, scaled by the Reclamation Tier; tags and upgrades can reduce this duration.
+*   **Plan at Assignment, Pay When Ready:** Assigning a minion to clear a blocked zone is also where the player chooses what room will stand there once it's cleared. The build cost can be paid any time before then — or deferred: an unpaid site clears into a blueprint that can be funded (or re-planned) later. Reclamation is the only way new rooms enter the mansion; there are no pre-existing empty slots.
 *   **The Reclamation Trade-off:** A room being reclaimed produces nothing for its guests or minion that night — the same applies to rooms under upgrade. This creates a direct tension between immediate operational profit and long-term infrastructure growth.
 
 ## 11. Future Features

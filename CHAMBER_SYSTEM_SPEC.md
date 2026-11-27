@@ -300,11 +300,20 @@ The exact tags per tier are data-driven in the JSON. The check is: does the mini
 
 Once a valid minion is assigned:
 - Each night the minion remains assigned, the obstacle's internal `nights_remaining` counter decrements by 1 (starting from `nights_to_clear`).
-- When `nights_remaining` reaches 0, the obstacle is replaced with a buildable slot of the same footprint.
-- If the minion is reassigned or terminated before clearing completes, progress is **retained** on the obstacle (it does not reset). A different minion can continue the work.
+- When `nights_remaining` reaches 0 the site clears: a **paid** planned build materialises as that room type (a visible Reckoning beat); an unpaid one becomes a **blueprint** — see [Planned Builds](#planned-builds-plan-at-assignment-pay-when-ready).
+- If the minion is reassigned or terminated before clearing completes, progress is **retained** on the obstacle (it does not reset), along with the planned build and any payment made on it. A different minion can continue the work.
 - The room being reclaimed produces nothing for its guests or minion that night (GDD §10 Reclamation Trade-off).
 
 Obstacle types have no `size` of their own; they occupy whatever footprint their pre-placed layout cell defines.
+
+### Planned Builds (plan at assignment, pay when ready)
+
+Reclamation is the **sole source of new build space** — there is no "empty room" type and no pre-existing empty slots. When a minion is assigned to an obstacle, the player also chooses what will stand once it clears (the site's **planned build**), from any chamber type whose `placement.floors` includes the site's floor. The picker previews each candidate's adjacency against the site's current neighbours so placement value is visible before committing (see [docs/mocks/select-panel.html](docs/mocks/select-panel.html), variant C).
+
+- Choosing or changing the plan is **free** while unpaid; the room's cost is a separate, deferrable payment made any time from the obstacle panel (`Pay ▸`).
+- Changing the plan while paid **settles the cost delta**: pay the difference if the new type costs more, receive it back if cheaper.
+- The plan and its payment state live on the obstacle instance (`planned_build`, `build_paid`) and persist if the assigned minion is reassigned or terminated — only clearing resolves them.
+- At clear: **paid** → the room materialises that night as a visible Reckoning beat; **unpaid** → the site becomes a **blueprint** (a ghost of the planned room, same footprint) that can be funded or re-planned any time afterwards. A blueprint produces nothing until paid.
 
 ## obj_chamber Instance Variables
 
@@ -319,7 +328,9 @@ Set at creation (via `instance_create_layer` argument map or post-creation):
 | `minions` | array of up to `occupancy` instances (`noone` = empty slot) | Minions assigned to this chamber (persistent across nights). Capacity comes from the type's optional `occupancy` field, default 1 — single-slot rooms simply hold one entry. Set during Day Phase management; slots stay empty for passive rooms (`requires.minion: false`). Tag/prerequisite checks (`minion_assigned`, `minion_has_tag`) test **any** occupied slot. |
 | `clients` | array of up to `client_capacity` instances (`noone` = empty slot) | Guests present this night. Capacity comes from the type's optional `client_capacity` field, default 1. Set during Night Phase funnel; reset each cycle (all entries set to `noone`). Single-client rooms simply hold one entry. The `requires.client` gate checks for at least one non-`noone` entry; `clients_present_count` returns the count of occupied slots. |
 | `upgrade_id` | string or `""` | Installed upgrade ID, or empty if none. One per room max. |
-| `reclaim_nights_remaining` | int (obstacles only) | Current clearing progress. Initialised to `nights_to_clear` from the type's `reclaim` block. Decrements each night a valid minion is assigned. At 0, the obstacle converts to a buildable slot. |
+| `reclaim_nights_remaining` | int (obstacles only) | Current clearing progress. Initialised to `nights_to_clear` from the type's `reclaim` block. Decrements each night a valid minion is assigned. At 0, the site clears — materialising the planned build if paid, otherwise becoming a blueprint (§Planned Builds). |
+| `planned_build` | string or `""` (obstacles only) | Chamber-type ID chosen when work starts (plan-at-assignment), or `""` while unplanned. Must be valid for the site's floor (`placement.floors`). Persists if the assigned minion is reassigned or terminated. |
+| `build_paid` | bool (obstacles only) | Whether the planned build's cost has been paid. Paid + cleared → room materialises; unpaid + cleared → blueprint. Changing the plan while paid settles the cost delta. |
 
 ## Resource Keys (convention)
 

@@ -239,6 +239,8 @@ Gating is a hard assignment-time check via `scr_can_assign()` — invalid assign
 
 While a minion is assigned to an obstacle, the obstacle produces nothing that night — it *is* the work (GDD §10 trade-off).
 
+Assigning a minion to an obstacle is also where the player chooses what will stand once it clears (**plan-at-assignment with deferred payment** — see [CHAMBER_SYSTEM_SPEC.md](CHAMBER_SYSTEM_SPEC.md) §Planned Builds). The plan and any payment made on it persist if the minion is later reassigned or terminated.
+
 ## Upgrades
 
 - **One slot** per minion (`upgrade_id`), purchased at any point during the day phase from the data-driven list, purchasable whenever resources allow.
@@ -316,7 +318,7 @@ Because history is never read mechanically, writers can add entries freely witho
 | System | Interface |
 |---|---|
 | Chamber production (step 2 night pipeline) | Reads minion presence + `minion_has_tag` conditions from chamber bonus rules; minions never write resources directly. Multi-occupancy: a room with N minions still evaluates its contribution once per night (occupancy affects staffing, not output — unless a future rule says otherwise). |
-| Reclamation (`reclaim` blocks) | Assignment-only gate + `nights_to_clear`; obstacle replaced by buildable slot on completion. |
+| Reclamation (`reclaim` blocks) | Assignment-only gate + `nights_to_clear`; assignment is also where the site's planned build is chosen (deferred payment — CHAMBER_SYSTEM_SPEC.md §Planned Builds). On clear, a paid plan materialises; an unpaid one becomes a fundable blueprint. |
 | Client system | Source of identity/tags/backstory; guest destroyed at conversion; fixed-pool income reduced permanently (GDD §7 trade-off). The Hunt occurs after Production, so the converted guest's current-night income is already banked. |
 | Friends (GDD §5/§8) | `is_friend` minions with authored identities; best friend is the first converted minion via scripted event, not this pipeline's Hunt path. Nerd protection (halts tag accumulation for self + roommates) applies to whatever nightly tag system exists at implementation time — in v1 there are no nightly tags yet, so it's a no-op until the future pipeline lands. |
 

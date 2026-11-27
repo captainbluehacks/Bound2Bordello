@@ -67,8 +67,8 @@
   *Done when:* player can swap PC/friend between rooms and put a minion on a cluttered room.
 
 - [ ] **12. Reclamation pipeline** (`reclaim` blocks already in data)
-  While a minion is assigned to an obstacle, decrement `nights_to_clear` each night (progress retained if the minion is reassigned — spec §Clearing Progression); at 0 the cell becomes buildable/empty. Enforce `requires_tags` at assignment time (Clutter = any minion). Add the production gate: a room being reclaimed produces nothing that night. Note: the friend starts assigned to the cluttered room beside the boudoir, so this gives them automatic first work.
-  *Done when:* a minion on a Cluttered Room clears it after 2 nights and the cell can be built on; an obstacle with a minion assigned shows zero output in the breakdown.
+  While a minion is assigned to an obstacle, decrement `nights_to_clear` each night (progress, plan and payment all retained if the minion is reassigned or terminated — spec §Clearing Progression). **Planned builds:** assignment also sets the site's planned build (any type valid for its floor, picked from the obstacle panel with per-candidate adjacency previews); cost is paid separately via `Pay ▸` any time before clearing, and changing a paid plan settles the cost delta. At 0: paid → the room materialises that night (Reckoning beat); unpaid → the site becomes a blueprint (ghost of the planned room) that can be funded or re-planned later. Enforce `requires_tags` at assignment time (Clutter = any minion). Add the production gate: a room being reclaimed produces nothing that night. Note: the friend starts assigned to the cluttered room beside the boudoir, so this gives them automatic first work.
+  *Done when:* a minion on a Cluttered Room clears it after 2 nights — materialising its paid plan, or becoming a fundable blueprint if unpaid; reassigning the minion keeps progress, plan and payment; an obstacle with a minion assigned shows zero output in the breakdown.
 
 ## P2 — Night phase *(the operation feel)*
 

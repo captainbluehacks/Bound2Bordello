@@ -298,6 +298,8 @@ Build a guest with known tags/backstory/name and a conversion template, then ass
 **C5. Reclamation gating & trade-off (`reclaim` blocks)**
 - Use `each()` over tiers: tier 1 (Clutter, empty `requires_tags`) is open to all; higher tiers require their tag set and reject minions lacking it.
 - While a minion is assigned to an obstacle, the obstacle **produces nothing** that night — assert its contribution is zero for that cycle (the "it *is* the work" trade-off).
+- **Planned builds:** setting/changing `planned_build` to a type invalid for the site's floor (`placement.floors`) is rejected; changing it while paid settles the cost delta (charge if more expensive, refund if cheaper); reassigning or terminating the minion retains `reclaim_nights_remaining`, `planned_build` and `build_paid`.
+- **Clear outcomes:** at 0 nights remaining with `build_paid = true` → a chamber of the planned type exists on the site that night; with `build_paid = false` → the site is a blueprint (no production, fundable/re-plannable) until paid.
 
 **C6. Minion upgrades (`minion_upgrades.json` + purchase procedure)**
 - **Gate:** `gate.requires_tags` must all be present on the minion and `gate.requires_rooms` must exist built, or the upgrade is not selectable (e.g. a `[broken]` quirk-restricted upgrade only applies to broken minions).
