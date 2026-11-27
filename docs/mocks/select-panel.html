@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>B2B — Side Panel Mock (Parchment)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* parchment + ink */
+  --bg:#2b241c;            /* desk / page surround (dark to frame the paper) */
+  --paper:#ece1c8;         /* base parchment */
+  --paper2:#e3d5b6;        /* deeper parchment tint */
+  --panel-edge:#7a5f3a;    /* burnt edge / border ink */
+  --line:#b6a079;          /* faded rule lines */
+  --ink:#2c2418;           /* main writing */
+  --muted:#6f6249;         /* secondary text */
+  --faint:#8d7e63;         /* tertiary / hints */
+  --gold:#8a6a25;          /* antique gold accent (reads on light) */
+  --golddim:#a08a55;
+
+  /* spendable resources — saturated enough to sit on cream */
+  --cash:#9c6f14; --lust:#b5305f; --hum:#bd5217; --infl:#34549e;
+  /* scores (never spent) */
+  --value:#1d8a93; --power:#7a3aa8; --stock:#3c8a46;
+
+  --font-display:"Cinzel",Georgia,serif;
+  --font-body:"EB Garamond",Georgia,serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:#e7dcc2;font-family:var(--font-body);
+  font-size:14px/1.45 system-ui,"Segoe UI",sans-serif;
+  padding:26px 20px;display:flex;flex-wrap:wrap;gap:30px;justify-content:center;align-items:flex-start}
+h1{width:100%;text-align:center;color:#d8c79a;font-family:var(--font-display);font-weight:500;
+  font-size:16px;letter-spacing:.6px;margin-bottom:-4px}
+.legend{width:100%;display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:2px 0 10px;color:#bda97f;font-size:12px}
+.wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
+.cap{color:#d8c79a;font-family:var(--font-display);font-size:14px;letter-spacing:.5px}
+
+/* ---- panel = parchment sheet (drop your image as the first layer) ---- */
+.panel{width:400px;height:800px;border-radius:3px;display:flex;flex-direction:column;overflow:hidden;
+  color:var(--ink);font-family:var(--font-body);
+  border:1px solid #5a462c;
+  box-shadow:0 10px 34px #000d, inset 0 0 60px rgba(90,70,40,.28), inset 0 0 4px rgba(60,45,25,.4);
+  /* first layer = your parchment.png; the gradients are a fallback if it's absent */
+  background-image:
+    url('parchment.png'),
+    radial-gradient(120% 90% at 50% 8%, rgba(120,90,45,.30), transparent 60%),
+    radial-gradient(120% 90% at 50% 96%, rgba(110,80,40,.34), transparent 60%),
+    radial-gradient(70% 50% at 12% 18%, rgba(90,65,35,.22), transparent 70%),
+    radial-gradient(70% 50% at 88% 82%, rgba(90,65,35,.22), transparent 70%),
+    linear-gradient(180deg,#efe4cb,#e6d8b8);
+  background-size:cover, cover, cover, cover, cover, cover;
+  background-position:center;
+}
+
+/* tabs */
+.tabs{display:flex;border-bottom:1px solid var(--line);background:rgba(120,95,55,.14)}
+.tab{flex:1;padding:10px 8px;text-align:center;font-family:var(--font-display);font-size:12px;letter-spacing:.6px;
+  color:var(--muted);cursor:pointer;border-right:1px solid var(--line)}
+.tab:last-child{border-right:none}
+.tab.on{color:var(--ink);background:rgba(255,250,238,.45);box-shadow:inset 0 -2px 0 var(--gold);font-weight:600}
+.tab .cnt{font-size:10px;color:var(--golddim)}
+
+/* header */
+.head{display:flex;gap:11px;padding:12px;border-bottom:1px solid var(--line);align-items:center}
+.thumb{width:54px;height:54px;border-radius:6px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;
+  font-size:22px;color:#3a2c18;background:radial-gradient(120% 120% at 30% 20%,#caa46e,#9c7a45);border:1px solid #8a6f42}
+.bust{width:62px;height:62px;border-radius:50%;background:radial-gradient(circle at 40% 30%,#bda98a,#8a7455);border:1px solid #8a6f42}
+.head .t{font-family:var(--font-display);font-size:18px;letter-spacing:.4px;color:var(--ink)}
+.sub{color:var(--muted);font-size:12px;margin-top:2px}
+
+/* generic */
+.sec{padding:10px 13px;border-bottom:1px solid var(--line)}
+.lbl{font-family:var(--font-display);font-size:11px;letter-spacing:1.6px;color:var(--gold);text-transform:uppercase;margin-bottom:7px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:3px 0;font-size:13px}
+
+/* chips */
+.chip{display:inline-flex;align-items:center;gap:4px;padding:2px 9px;border-radius:11px;font-size:12px;white-space:nowrap;
+  border:1px solid;background:transparent}
+.chip .v{font-weight:600}
+.chip.score{box-shadow:0 0 0 1px rgba(40,30,15,.18)}
+.tg{display:inline-block;padding:2px 8px;border-radius:9px;font-size:12px;margin:0 4px 5px 0;
+  background:rgba(120,95,55,.16);color:#4a3d28;border:1px solid var(--line)}
+.tg.quirk{background:rgba(122,58,168,.14);color:#5e2f86;border-color:#b79ad0}
+.tg.up{background:rgba(138,106,37,.16);color:#6f5418;border-color:var(--golddim)}
+
+/* resource color helpers */
+.c-cash{color:var(--cash)}.c-lust{color:var(--lust)}.c-hum{color:var(--hum)}
+.c-infl{color:var(--infl)}.c-value{color:var(--value)}.c-power{color:var(--power)}.c-stock{color:var(--stock)}
+.rc{display:inline-flex;align-items:center;gap:3px;font-size:12.5px;padding:2px 9px;border-radius:9px}
+.rc.c-cash{background:#9c6f1422}.rc.c-lust{background:#b5305f22}.rc.c-hum{background:#bd521722}
+.rc.c-infl{background:#34549e22}.rc.c-value{background:#1d8a9322}.rc.c-power{background:#7a3aa822}.rc.c-stock{background:#3c8a4622}
+
+/* net bar (pinned) */
+.netbar{display:flex;align-items:center;gap:8px;padding:10px 13px;border-bottom:1px solid var(--line);
+  background:rgba(120,95,55,.14);font-size:13px}
+.netbar .h{color:var(--muted)}
+
+/* locked / potential */
+.locked{opacity:.5}
+.locked .rc,.locked .chip{border-style:dashed}
+.key{display:inline-flex;align-items:center;gap:3px;color:var(--stock);font-size:12px}
+.nok{color:#a8402f;font-size:12px}
+
+/* breakdown line */
+.line{display:flex;justify-content:space-between;gap:8px;padding:5px 2px;border-bottom:1px dotted #b6a079;font-size:13px}
+.line .d{color:#4a3f2c}
+.totline{margin-top:8px;padding-top:7px;border-top:1px solid var(--gold);font-weight:600;font-size:14px;display:flex;justify-content:space-between}
+
+/* upgrade slot */
+.slot{border:1px solid var(--line);background:rgba(255,250,238,.4);border-radius:5px;padding:8px 10px;margin-bottom:6px;display:flex;gap:9px;align-items:center}
+.slot .icn,.pick .icn{width:30px;height:30px;border-radius:5px;background:rgba(120,95,55,.2);display:flex;align-items:center;justify-content:center;font-size:15px;color:#4a3d28}
+.pick{border:1px solid var(--line);border-radius:5px;padding:7px 9px;margin-bottom:6px;background:rgba(255,250,238,.4)}
+.pick.on{border-color:var(--gold);background:rgba(138,106,37,.10);box-shadow:inset 0 0 0 1px rgba(138,106,37,.25)}
+.availed{border:1px dashed var(--line);border-radius:5px;padding:7px 10px;margin-top:6px;font-size:12px;color:var(--muted);cursor:pointer}
+
+/* adjacency */
+.adj .row .dirn{display:inline-flex;gap:8px;align-items:center;min-width:0}
+.dirarrow{width:14px;text-align:center;color:#5a4d36;font-size:14px}
+.neigh{color:#3f3524;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.flow{display:inline-flex;align-items:center;gap:4px;font-size:12.5px}
+
+/* footer */
+.foot{margin-top:auto;display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--line);background:rgba(120,95,55,.16)}
+.btn{flex:1;text-align:center;padding:9px 6px;border-radius:5px;background:rgba(255,250,238,.4);border:1px solid var(--line);color:#3f3524;font-family:var(--font-display);font-size:12px;letter-spacing:.4px;cursor:pointer}
+.btn.pri{background:linear-gradient(180deg,#a9862f,#8a6a25);border-color:#6f5418;color:#fdf6e3;font-weight:600}
+
+/* obstacle */
+.bar{height:13px;border-radius:7px;background:rgba(60,45,25,.18);border:1px solid var(--line);overflow:hidden;margin:5px 0}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,#a9862f,#c7a23e)}
+.note{font-size:12px;color:var(--muted);font-style:italic;margin-top:7px;line-height:1.5}
+.star{color:#7a3aa8;font-size:10px;vertical-align:super}
+
+/* cycle control (header) */
+.cycle{margin-left:auto;display:flex;align-items:center;gap:5px;flex:0 0 auto}
+.cy{min-width:26px;height:26px;border-radius:5px;border:1px solid var(--line);background:rgba(255,250,238,.4);color:#4a3d28;font-size:13px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.cy.off{opacity:.35;cursor:default}
+.cycle b{font-family:var(--font-display);font-size:12px;color:var(--ink);letter-spacing:.4px}
+.kind{font-family:var(--font-display);font-size:10px;letter-spacing:.8px;color:#6f5418;border:1px solid var(--golddim);border-radius:5px;background:rgba(138,106,37,.12);padding:4px 8px;cursor:pointer}
+.kind.off{opacity:.35;cursor:default}
+
+/* locked backstory */
+.lockbox{border:1px dashed var(--line);border-radius:5px;padding:9px 10px;background:rgba(255,250,238,.3)}
+.blurred{filter:blur(2.2px);opacity:.75;font-style:italic;color:#5a4d36;line-height:1.5;user-select:none}
+</style>
+</head>
+<body>
+<h1>B2B · Side-Panel Mock — 400×800 (true scale) · view at ~1920×1080</h1>
+<div class="legend">
+<span>Scores (never spent): </span>
+<span class="rc c-value score">Value</span><span class="rc c-power score">Power</span><span class="rc c-stock score">Stock</span>
+<span style="margin-left:8px">Spendable:</span>
+<span class="rc c-cash">Cash</span><span class="rc c-lust">Lust</span><span class="rc c-hum">Humiliation</span><span class="rc c-infl">Influence</span>
+<span style="margin-left:8px">Line states:</span>
+<span style="color:#efe4cb">active</span>&nbsp;/&nbsp;<span class="locked" style="opacity:.55;border-bottom:1px dashed #bda97f">potential / locked</span>
+<span style="margin-left:8px">Tab 2 label:</span>
+<span>kind + count · <b>PEOPLE (n)</b> when a room mixes minions &amp; clients</span>
+<span style="margin-left:8px">Header pill — <b>KIND</b> word jumps to the other kind (dimmed if none) · ◂ ▸ cycles within kind (wraps)</span>
+</div>
+
+<!-- ============ VARIANT A — ROOM SELECTED (The Boudoir) ============ -->
+<div class="wrap"><div class="cap">A · Room selected — mixed occupants (3 minions + guest), so tab 2 reads PEOPLE</div><div class="panel" id="a">
+<div class="tabs">
+<div class="tab on">◉ ROOM</div>
+<div class="tab">PEOPLE <span class="cnt">(4)</span></div>
+</div>
+<div class="head">
+<div class="thumb"></div>
+<div>
+<div class="t">The Boudoir</div>
+<div style="margin:2px 0"><span class="tg">sex</span><span class="tg">tips</span></div>
+<div class="sub">⌂ Ground floor · small · needs minion + guest</div>
+</div>
+</div>
+<div class="netbar"><span class="h">Per night →</span>
+<span class="rc c-lust">+7 Lust</span><span class="rc c-cash">+2 Cash</span>
+</div>
+<div style="flex:1;overflow-y:auto">
+<div class="sec">
+<div class="lbl">Breakdown</div>
+<div class="line"><span class="d">Base output</span><span><span class="rc c-lust">+5</span> <span class="rc c-cash">+2</span></span></div>
+<div class="line"><span class="d">Silk Sheets (upgrade)</span><span class="rc c-lust">+2</span></div>
+<div class="lbl" style="margin-top:10px">Bonuses<span class="star"></span></div>
+<div class="line"><span class="d">A Guest is present ✓</span><span class="rc c-lust">+3</span></div>
+<div class="line locked"><span class="d">Per 'luxury' tag on floor 0/5</span><span class="rc c-cash">+0</span></div>
+<div class="totline"><span>Total (active)</span><span><span class="rc c-lust">+10 Lust</span> <span class="rc c-cash">+2 Cash</span></span></div>
+</div>
+<div class="sec">
+<div class="lbl">Upgrades · 1/1 slot used</div>
+<div class="slot"><div class="icn"></div><div style="flex:1"><b>Silk Sheets</b><div class="sub">+2 Lust / night</div></div></div>
+<div class="availed">▸ Available — 2 &nbsp;·&nbsp; Whip &amp; Chain Set (30 Cash, 5 Hum) → +2 Hum, tag[degradation]…</div>
+</div>
+<div class="sec adj">
+<div class="lbl">Adjacency <span style="letter-spacing:0;text-transform:none;color:var(--faint);font-family:var(--font-body)">· icon = resource this room feeds a neighbour</span></div>
+<div class="row"><span class="dirn"><span class="dirarrow"></span><span class="neigh">The Bar</span></span><span style="color:#8d7e63">—</span></div>
+<div class="row"><span class="dirn"><span class="dirarrow"></span><span class="neigh">Mana Crystal</span></span><span class="flow c-power" title="boudoir has 'sex' tag">▲ +1 Power ✓</span></div>
+<div class="row"><span class="dirn"><span class="dirarrow"></span><span class="neigh">Counting Room</span></span><span class="flow c-value" title="boudoir has 'tips' tag">▲ +1 Value ✓</span></div>
+<div class="row locked"><span class="dirn"><span class="dirarrow"></span><span class="neigh">Cluttered Room </span></span><span class="nok">blocked</span></div>
+</div>
+</div>
+<div class="foot">
+<div class="btn pri">Assign minion</div>
+<div class="btn">Available ▸</div>
+</div>
+</div></div>
+
+<!-- ============ VARIANT B — MINION SELECTED ============ -->
+<div class="wrap"><div class="cap">B · Minion selected — ◂ ▸ cycles this room's minions; MINION jumps to the boudoir's guest</div><div class="panel" id="b">
+<div class="tabs">
+<div class="tab">ROOM</div>
+<div class="tab on"> MINION <span class="cnt">(1/3)</span></div>
+</div>
+<div class="head">
+<div class="bust"></div>
+<div style="flex:1;min-width:0">
+<div class="t">Margaret</div>
+<div class="sub">Formerly: Mrs. Whitmore &nbsp;<span style="color:#8d7e63">·</span>&nbsp; ⌂ The Boudoir ◂</div>
+</div>
+<div class="cycle"><span class="kind" title="Jump to the guest in this room">MINION</span><span class="cy">◂</span><b>1/3</b><span class="cy">▸</span></div>
+</div>
+<div class="netbar"><span class="h">Contributes to Boudoir →</span><span class="rc c-lust">+5 Lust</span></div>
+<div style="flex:1;overflow-y:auto">
+<div class="sec">
+<div class="lbl">Tags <span style="letter-spacing:0;text-transform:none;color:var(--faint);font-family:var(--font-body)">· the only mechanical surface</span></div>
+<div style="margin-bottom:6px"><span class="tg quirk" title="quirk (lives in tag list)">devoted</span><span class="tg up" title="from upgrade">loyal</span><span class="tg">submissive</span><span class="tg">faithful</span></div>
+<div style="color:#8d7e63;font-size:12px"><span class="tg quirk">&nbsp;</span>quirk&nbsp;&nbsp;<span class="tg up">&nbsp;</span>from upgrade&nbsp;&nbsp;plain = inherited / identity</div>
+</div>
+<div class="sec">
+<div class="lbl">Minion Upgrade · 1/1</div>
+<div class="slot"><div class="icn">✧</div><div style="flex:1"><b>Rite of Devotion</b><div class="sub">grants tag[loyal] · serves willingly</div></div></div>
+<div class="availed">▸ Available minion upgrades…</div>
+</div>
+<div class="sec">
+<div class="lbl">Recent History</div>
+<div style="font-size:13px;color:#4a3f2c;font-style:italic">Cycle 12 — She lingered by the boudoir door all night, watching the candles gutter.</div>
+<div style="margin-top:6px"><span class="tg" style="cursor:pointer">view full history (9 more) ▸</span></div>
+</div>
+<div class="sec" style="border-bottom:none">
+<div class="lbl">About</div>
+<div style="font-size:13px;color:#5a4d36;font-style:italic;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">A widow from the low town, taken in on her third visit and never… <span class="tg" style="cursor:pointer">more ▸</span></div>
+</div>
+</div>
+<div class="foot">
+<div class="btn pri">◂ Back to Boudoir</div>
+<div class="btn">Upgrades ▸</div>
+</div>
+</div></div>
+
+<!-- ============ VARIANT C — OBSTACLE SELECTED (Rubble) ============ -->
+<div class="wrap"><div class="cap">C · Obstacle — plan chosen &amp; unpaid; picker shown open with per-candidate adjacency previews</div><div class="panel" id="c">
+<div class="tabs">
+<div class="tab on">◉ OBSTACLE</div>
+<div class="tab">MINIONS <span class="cnt">(1)</span></div>
+</div>
+<div class="head">
+<div class="thumb" style="background:radial-gradient(120% 120% at 30% 20%,#bda98a,#8a7455)"></div>
+<div>
+<div class="t">Rubble</div>
+<div style="margin:2px 0"><span class="tg">obstacle</span></div>
+<div class="sub">Tier 2 · ⌂ Ground floor · beside Boudoir &amp; Bar</div>
+</div>
+</div>
+<div class="netbar"><span class="h">Clears in</span><b style="color:var(--gold)">3 more nights</b></div>
+<div style="flex:1;overflow-y:auto">
+<div class="sec">
+<div class="lbl">Reclamation Progress · 4 nights total</div>
+<div class="bar"><i style="width:25%"></i></div>
+<div class="sub" style="margin-top:3px">1 of 4 nights worked · resets if unassigned (plan stays)</div>
+</div>
+<div class="sec">
+<div class="lbl">Planned Build <span style="letter-spacing:0;text-transform:none;color:var(--faint);font-family:var(--font-body)">· changeable any time before it stands</span></div>
+<div class="slot"><div class="icn"></div><div style="flex:1"><b>Mana Crystal</b><div class="sub">utility · sacred</div></div><span class="rc c-cash">60 Cash</span></div>
+<div class="row" style="margin-top:5px"><span>Status</span><span><b style="color:var(--gold)">Unpaid</b> <span style="color:#8d7e63;font-size:12px">— pay any time; reads Paid ✓ once funded</span></span></div>
+<div class="note">Paid by clear → materialises that night. Still unpaid when it clears → the site becomes a <b>blueprint</b>: fund or re-plan it any time after.</div>
+</div>
+<div class="sec">
+<div class="lbl">Choose Room Type <span style="letter-spacing:0;text-transform:none;color:var(--faint);font-family:var(--font-body)">· floor-valid types · adjacency previewed for this site</span></div>
+<div class="pick on">
+<div style="display:flex;gap:9px;align-items:center"><div class="icn"></div><div style="flex:1;min-width:0"><b>Mana Crystal</b><div class="sub">utility · sacred</div></div><span class="rc c-cash">60 Cash</span></div>
+<div class="flow c-power" style="margin-top:5px;padding-left:39px" title="Boudoir has 'sex' tag">▲ +1 Power ← Boudoir ✓</div>
+</div>
+<div class="pick">
+<div style="display:flex;gap:9px;align-items:center"><div class="icn"></div><div style="flex:1;min-width:0"><b>The Counting Room</b><div class="sub">utility</div></div><span class="rc c-cash">55 Cash</span></div>
+<div class="flow c-value" style="margin-top:5px;padding-left:39px" title="Boudoir and Bar have 'tips' tags">▲ +2 Value ← Boudoir · Bar ✓</div>
+</div>
+<div class="pick">
+<div style="display:flex;gap:9px;align-items:center"><div class="icn"></div><div style="flex:1;min-width:0"><b>The Filing Room</b><div class="sub">utility</div></div><span class="rc c-cash">55 Cash</span></div>
+<div class="flow c-stock" style="margin-top:5px;padding-left:39px" title="Bar has 'flirt' tag">▲ +1 Stock ← Bar ✓</div>
+</div>
+<div class="pick">
+<div style="display:flex;gap:9px;align-items:center"><div class="icn"></div><div style="flex:1;min-width:0"><b>The Boudoir</b><div class="sub">sex · tips</div></div><span class="rc c-cash">40 Cash</span> <span class="rc c-lust">8 Lust</span></div>
+<div class="flow" style="margin-top:5px;padding-left:39px;color:#8d7e63">— no collectors adjacent yet</div>
+</div>
+</div>
+<div class="sec" style="border-bottom:none">
+<div class="lbl">Assigned Minion · gate check</div>
+<div class="slot"><div class="icn"></div><div style="flex:1"><b>Margaret</b><div class="sub">No special tags required for Tier 2 → <span class="key">✓ can clear</span></div></div></div>
+<div class="note">Sealed Room (Tier 4) would list its gate here, e.g. requires [sacred] — minions without the tag show greyed until a match is assigned.</div>
+</div>
+
+</div>
+<div class="foot">
+<div class="btn pri">Pay 60 Cash ▸</div>
+<div class="btn">Change plan ▸</div>
+</div>
+</div></div>
+
+<!-- ============ VARIANT D — CLIENT SELECTED (Percy, The Sex Dungeon) ============ -->
+<div class="wrap"><div class="cap">D · Client selected — single-slot room: ◂ ▸ dimmed at (1/1) (live in multi-client rooms); CLIENT word still jumps to the assigned minion</div><div class="panel" id="d">
+<div class="tabs">
+<div class="tab">ROOM</div>
+<div class="tab on">CLIENT <span class="cnt">(1/1)</span></div>
+</div>
+<div class="head">
+<div class="bust"></div>
+<div style="flex:1;min-width:0">
+<div class="t">Percy</div>
+<div class="sub">⌂ The Sex Dungeon ◂ &nbsp;<span style="color:#8d7e63">·</span>&nbsp; visiting tonight</div>
+</div>
+<div class="cycle"><span class="kind" title="Jump to minions in this room">CLIENT</span><span class="cy off">◂</span><b>1/1</b><span class="cy off">▸</span></div>
+</div>
+<div class="netbar"><span class="h">Pays tonight →</span><span class="rc c-cash">+3 Cash</span></div>
+<div style="flex:1;overflow-y:auto">
+<div class="sec">
+<div class="lbl">Preferences <span style="letter-spacing:0;text-transform:none;color:var(--faint);font-family:var(--font-body)">· matched against the room each night</span></div>
+<div><span class="tg" title="preference">arrogant</span><span class="tg" title="preference">dominant</span><span class="tg" title="preference">violent</span></div>
+</div>
+<div class="sec">
+<div class="lbl">Tonight at The Sex Dungeon</div>
+<div class="line"><span class="d">Base pay</span><span class="rc c-cash">+2 Cash</span></div>
+<div class="line"><span class="d">Preferences met ✓ <span style="color:#8d7e63">(dominant · violent suit this room)</span></span><span class="rc c-cash">+1 Cash</span></div>
+<div class="totline"><span>Total tonight</span><span class="rc c-cash">+3 Cash</span></div>
+</div>
+<div class="sec">
+<div class="lbl">Visit habit</div>
+<div class="row"><span>Visits ~6 of 10 nights</span><span style="color:#8d7e63;font-size:12px">rolled each cycle</span></div>
+<div class="note">If converted, he stops visiting — this income is gone for the rest of the run.</div>
+</div>
+<div class="sec">
+<div class="lbl">Background <span style="letter-spacing:0;text-transform:none;color:var(--faint);font-family:var(--font-body)">· locked</span></div>
+<div class="lockbox"><div class="blurred">A man of 'impeccable' standing who spends his days deciding whose land to seize for the next road project. He treats the town's poor like footstools and expects absolute obedience from everyone…</div></div>
+<div class="availed" style="margin-top:7px">▸ Reveal background — 5 Influence</div>
+<div class="note">Revealing also unlocks the background discount on his conversion cost (below).</div>
+</div>
+<div class="sec" style="border-bottom:none">
+<div class="lbl">Conversion · The Breaking</div>
+<div class="slot"><div class="icn">✧</div><div style="flex:1"><b>The Breaking</b><div class="sub">grants tag[broken] · serves in fear &nbsp;·&nbsp; <span class="tg" style="cursor:pointer">▾ other rites (2)</span></div></div></div>
+<div class="line"><span class="d">Base cost</span><span class="rc c-hum">40 Hum</span></div>
+<div class="line"><span class="d">Match [dominant] ✓</span><span class="c-hum" style="font-weight:600">−10 Hum</span></div>
+<div class="line"><span class="d">Match [violent] ✓ <span style="color:#8d7e63">(max 2)</span></span><span class="c-hum" style="font-weight:600">−10 Hum</span></div>
+<div class="line locked"><span class="d">Background known — reveal to unlock</span><span class="rc c-hum" style="border-style:dashed">−? Hum</span></div>
+<div class="totline"><span>Total cost</span><span class="rc c-hum">20 Hum</span></div>
+</div>
+</div>
+<div class="foot">
+<div class="btn pri">Convert ▸</div>
+<div class="btn">◂ Back to Dungeon</div>
+</div>
+</div></div>
+
+</body>
+</html>
